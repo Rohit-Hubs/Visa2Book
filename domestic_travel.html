@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domestic Travel - Visa2Book</title>
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #3a86ff;
+            --secondary-color: #8338ec;
+            --accent-color: #ff006e;
+            --light-bg: #f8f9fa;
+            --dark-text: #212529;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1506929562872-bb421503ef21?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--dark-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background: rgba(0, 0, 0, 0.8) !important;
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1rem;
+        }
+
+        .navbar-brand img {
+            height: 155px;
+            width: 175px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand img:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-link {
+            color: white !important;
+            font-weight: 500;
+            padding: 0.5rem 1.2rem !important;
+            margin: 0 0.2rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-link.active {
+            color: var(--primary-color) !important;
+            font-weight: 600;
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 70%;
+            left: 15%;
+        }
+
+        /* Updated Search Container */
+        .search-container {
+            max-width: 800px;  /* Increased max width */
+            margin: 2rem auto;
+            width: 90%;  /* Reduced width percentage */
+        }
+
+        .search-box {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+        }
+
+        .search-box input {
+            border: none;
+            background: transparent;
+            outline: none;
+            width: 85%;
+            padding: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .search-box button {
+            background: var(--primary-color);
+            border: none;
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            color: white;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .search-box button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .main-title {
+            color: white;
+            text-align: center;
+            margin: 2rem 0;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .main-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: var(--accent-color);
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        .content-wrapper {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .intro-text {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--dark-text);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            height: 100%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-img-top {
+            transform: scale(1.1);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.75rem;
+        }
+
+        .card-text {
+            color: #666;
+            margin-bottom: 1.25rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-explore {
+            background: var(--primary-color);
+            border: none;
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            color: white;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            width: 100%;
+        }
+
+        .btn-explore:hover {
+            background: var(--secondary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Updated Footer Styles */
+        footer {
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-links h5 {
+            color: var(--accent-color);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            position: relative;
+            font-size: 1.1rem;
+        }
+
+        .footer-links h5::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 50px;
+            height: 3px;
+            background: var(--accent-color);
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+
+        .footer-links i {
+            margin-right: 8px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .payment-methods {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .payment-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .payment-group i {
+            transition: transform 0.3s;
+        }
+
+        .payment-group i:hover {
+            transform: scale(1.1);
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1.5rem;
+            margin-top: 2rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        .btn-outline-light {
+            border-color: rgba(255, 255, 255, 0.3);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-light:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            .navbar-brand img {
+                height: 100px;
+                width: 120px;
+            }
+            
+            .nav-link {
+                padding: 0.5rem !important;
+                margin: 0.1rem;
+            }
+            
+            .card {
+                margin-bottom: 1rem;
+            }
+
+            .search-container {
+                max-width: 100%;
+                width: 95%;
+            }
+
+            .footer-links h5::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .payment-methods {
+                justify-content: center;
+            }
+
+            .text-md-start, 
+            .text-md-end {
+                text-align: center !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="V2B.png" alt="Visa2Book" style="height: 120px; width: 140px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="popular_routes.html">Popular Routes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="domestic_travel.html">Domestic Travel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="international_travel.html">International Travel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="city_guides.html">City Guides</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Section -->
+    <div class="search-container">
+        <div class="search-box d-flex align-items-center">
+            <input type="text" placeholder="Search destinations, hotels, or experiences..." class="flex-grow-1">
+            <button type="submit"><i class="fas fa-search me-2"></i> Search</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1 class="main-title">Discover India's Hidden Gems</h1>
+        
+        <div class="content-wrapper">
+            <p class="intro-text">
+                India is a land of diverse landscapes, rich heritage, and vibrant cultures. From the snow-capped Himalayas 
+                to the sun-kissed beaches of Goa, from the royal palaces of Rajasthan to the serene backwaters of Kerala, 
+                each destination offers a unique experience. Explore our curated collection of domestic destinations and 
+                plan your next unforgettable journey across this incredible country.
+            </p>
+            
+            <div class="row">
+                <!-- Destination Cards -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card">
+                        <img src="hyd.jpg" class="card-img-top" alt="Hyderabad">
+                        <div class="card-body">
+                            <h5 class="card-title">Hyderabad</h5>
+                            <p class="card-text">
+                                The City of Pearls blends ancient heritage with modern technology. Explore the iconic 
+                                Charminar, savor world-famous Hyderabadi biryani, and witness the high-tech HITEC City.
+                            </p>
+                            <a href="#" class="btn btn-explore">Explore <i class="fas fa-arrow-right ms-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="card">
+                        <img src="ap.jpg" class="card-img-top" alt="Andhra Pradesh">
+                        <div class="card-body">
+                            <h5 class="card-title">Andhra Pradesh</h5>
+                            <p class="card-text">
+                                Discover the rich cultural heritage, pristine beaches of Visakhapatnam, the spiritual 
+                                Tirupati Temple, and the delicious Andhra cuisine known for its fiery flavors.
+                            </p>
+                            <a href="#" class="btn btn-explore">Explore <i class="fas fa-arrow-right ms-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="card">
+                        <img src="rajasthan.jpg" class="card-img-top" alt="Rajasthan">
+                        <div class="card-body">
+                            <h5 class="card-title">Rajasthan</h5>
+                            <p class="card-text">
+                                The Land of Kings boasts magnificent forts, desert landscapes, colorful festivals, and 
+                                warm hospitality. Visit Jaipur, Udaipur, Jodhpur, and experience royal India.
+                            </p>
+                            <a href="#" class="btn btn-explore">Explore <i class="fas fa-arrow-right ms-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="card">
+                        <img src="manali.jpg" class="card-img-top" alt="Manali">
+                        <div class="card-body">
+                            <h5 class="card-title">Manali</h5>
+                            <p class="card-text">
+                                Nestled in the Himalayas, Manali offers breathtaking mountain views, adventure sports, 
+                                ancient temples, and cozy cafes. A perfect getaway for nature lovers and thrill-seekers.
+                            </p>
+                            <a href="#" class="btn btn-explore">Explore <i class="fas fa-arrow-right ms-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="card">
+                        <img src="rishikesh.jpg" class="card-img-top" alt="Rishikesh">
+                        <div class="card-body">
+                            <h5 class="card-title">Rishikesh</h5>
+                            <p class="card-text">
+                                The Yoga Capital of the World, where the Ganges flows through lush hills. Experience 
+                                meditation, white-water rafting, and the famous evening Ganga Aarti.
+                            </p>
+                            <a href="#" class="btn btn-explore">Explore <i class="fas fa-arrow-right ms-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="card">
+                        <img src="jaipur.jpg" class="card-img-top" alt="Jaipur">
+                        <div class="card-body">
+                            <h5 class="card-title">Jaipur</h5>
+                            <p class="card-text">
+                                The Pink City is famous for its stunning palaces, vibrant bazaars, and rich history. 
+                                Visit Amber Fort, Hawa Mahal, and enjoy authentic Rajasthani cuisine.
+                            </p>
+                            <a href="#" class="btn btn-explore">Explore <i class="fas fa-arrow-right ms-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Additional Destination Cards -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card">
+                        <img src="tamilnadu.jpg" class="card-img-top" alt="Tamil Nadu">
+                        <div class="card-body">
+                            <h5 class="card-title">Tamil Nadu</h5>
+                            <p class="card-text">
+                                Land of magnificent temples, classical dance, and aromatic filter coffee. Explore 
+                                Chennai's beaches, Madurai's Meenakshi Temple, and the hill stations of Ooty and Kodaikanal.
+                            </p>
+                            <a href="#" class="btn btn-explore">Explore <i class="fas fa-arrow-right ms-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="card">
+                        <img src="odisha.jpg" class="card-img-top" alt="Odisha">
+                        <div class="card-body">
+                            <h5 class="card-title">Odisha</h5>
+                            <p class="card-text">
+                                Home to the Sun Temple at Konark, pristine beaches at Puri, and unique tribal cultures. 
+                                Don't miss the classical Odissi dance and delicious seafood.
+                            </p>
+                            <a href="#" class="btn btn-explore">Explore <i class="fas fa-arrow-right ms-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="card">
+                        <img src="andaman.jpg" class="card-img-top" alt="Andaman Islands">
+                        <div class="card-body">
+                            <h5 class="card-title">Andaman Islands</h5>
+                            <p class="card-text">
+                                Tropical paradise with crystal-clear waters, white sandy beaches, and vibrant coral reefs. 
+                                Perfect for scuba diving, snorkeling, and relaxing in beachside resorts.
+                            </p>
+                            <a href="#" class="btn btn-explore">Explore <i class="fas fa-arrow-right ms-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 3 More Destination Cards -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1582972236019-ea9eab4b0c10?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Goa">
+                        <div class="card-body">
+                            <h5 class="card-title">Goa</h5>
+                            <p class="card-text">
+                                India's beach paradise with Portuguese heritage, vibrant nightlife, and delicious seafood. 
+                                From quiet beaches to exciting water sports, Goa has something for everyone.
+                            </p>
+                            <a href="#" class="btn btn-explore">Explore <i class="fas fa-arrow-right ms-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Kerala">
+                        <div class="card-body">
+                            <h5 class="card-title">Kerala</h5>
+                            <p class="card-text">
+                                God's Own Country offers serene backwaters, lush tea plantations, Ayurvedic treatments, 
+                                and exotic wildlife. Experience the unique houseboat stays in Alleppey.
+                            </p>
+                            <a href="#" class="btn btn-explore">Explore <i class="fas fa-arrow-right ms-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1564507592333-c60657eea523?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Varanasi">
+                        <div class="card-body">
+                            <h5 class="card-title">Varanasi</h5>
+                            <p class="card-text">
+                                The spiritual capital of India, where the Ganges flows past ancient ghats. Witness 
+                                mesmerizing Ganga Aarti, explore narrow alleys, and experience India's timeless traditions.
+                            </p>
+                            <a href="#" class="btn btn-explore">Explore <i class="fas fa-arrow-right ms-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase mb-4">Company Information</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-info-circle me-2"></i> About</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-envelope me-2"></i> Contact Us</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-shield-alt me-2"></i> Privacy Policy</a></li>
+                        <li><a href="#" class="text-white"><i class="fas fa-file-contract me-2"></i> Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase mb-4">Quick Links</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-undo me-2"></i> Refund Policy</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-question-circle me-2"></i> FAQs</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-headset me-2"></i> Customer Support</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="text-uppercase mb-4">Connect With Us</h5>
+                    <ul class="list-unstyled footer-links mb-4">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-facebook-f me-2"></i> Facebook</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-twitter me-2"></i> Twitter</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-instagram me-2"></i> Instagram</a></li>
+                        <li><a href="#" class="text-white"><i class="fab fa-linkedin-in me-2"></i> LinkedIn</a></li>
+                    </ul>
+                    <div class="mb-4">
+                        <h6 class="mb-3">Download Our App</h6>
+                        <div class="d-flex gap-2">
+                            <a href="#" class="btn btn-sm btn-outline-light">
+                                <i class="fab fa-apple me-2"></i> App Store
+                            </a>
+                            <a href="#" class="btn btn-sm btn-outline-light">
+                                <i class="fab fa-google-play me-2"></i> Play Store
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4 bg-light opacity-10">
+
+            <!-- Payment Methods -->
+            <div class="row align-items-center py-3">
+                <div class="col-md-8 mb-3 mb-md-0">
+                    <h6 class="mb-3">Accepted Payment Methods:</h6>
+                    <div class="payment-methods d-flex flex-wrap gap-3 align-items-center">
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fab fa-cc-visa fa-2x me-2" style="color: #1a1f71;"></i>
+                            <i class="fab fa-cc-mastercard fa-2x me-3" style="color: #eb001b;"></i>
+                            <span class="text-white-50">Cards</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fas fa-rupee-sign fa-2x me-2" style="color: #6cbe45;"></i>
+                            <span class="text-white-50">UPI</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fab fa-google-pay fa-2x me-2" style="color: #4285f4;"></i>
+                            <i class="fas fa-wallet fa-2x me-3" style="color: #ff9500;"></i>
+                            <span class="text-white-50">Wallets</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <span class="badge bg-light text-dark me-2">Pay Later:</span>
+                            <span class="badge bg-primary me-2">Simple Pay</span>
+                            <span class="badge bg-info text-dark">Lazy Pay</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <div class="d-flex flex-column">
+                        <p class="mb-2"><i class="fas fa-phone-alt me-2"></i> 24/7 Support: +1 (555) 987-6543</p>
+                        <p class="mb-0"><i class="fas fa-envelope me-2"></i> support@visa2book.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-2 bg-light opacity-10">
+
+            <!-- Copyright -->
+            <div class="row py-3">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <p class="mb-0">&copy; 2023 Visa2Book. All Rights Reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

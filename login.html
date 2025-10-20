@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Visa2Book</title>
+    <link rel="shortcut icon" href="V2B.png" type="image/png">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3a86ff;
+            --primary-dark: #2667d9;
+            --secondary: #8338ec;
+            --accent: #ff006e;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: url('https://images.unsplash.com/photo-1506929562872-bb421503ef21?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1925&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.85);
+            z-index: 0;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Logo */
+        .logo-container {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .logo-container img {
+            height: 155px;
+            width: 175px;
+            object-fit: contain;
+        }
+
+        /* Login Container */
+        .login-container {
+            max-width: 500px;
+            margin: 0 auto 3rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-header {
+            background: var(--gradient);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .login-body {
+            padding: 2rem;
+        }
+
+        /* Form Styles */
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            padding: 0.8rem 1rem;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 1rem;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(58, 134, 255, 0.25);
+        }
+
+        /* Login Tabs */
+        .login-tabs {
+            display: flex;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 1.5rem;
+        }
+
+        .login-tab {
+            flex: 1;
+            text-align: center;
+            padding: 0.75rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .login-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* OTP Input */
+        .otp-input-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .otp-input {
+            width: 15%;
+            height: 50px;
+            text-align: center;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Buttons */
+        .btn-login {
+            width: 100%;
+            border-radius: 50px;
+            padding: 0.8rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .btn-primary-login {
+            background: var(--gradient);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary-login:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(58, 134, 255, 0.3);
+        }
+
+        .btn-social {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: 1px solid #e2e8f0;
+            color: var(--dark);
+        }
+
+        .btn-social:hover {
+            background: #f8f9fa;
+        }
+
+        .btn-social i {
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .btn-google {
+            color: #DB4437;
+        }
+
+        .btn-facebook {
+            color: #4267B2;
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: #94a3b8;
+        }
+
+        .divider::before, .divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .divider::before {
+            margin-right: 1rem;
+        }
+
+        .divider::after {
+            margin-left: 1rem;
+        }
+
+        /* Forgot Password */
+        .forgot-password {
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+
+        .forgot-password a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Sign Up Link */
+        .signup-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #64748b;
+        }
+
+        .signup-link a {
+            color: var(--primary);
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        /* 2FA Section */
+        .two-factor-section {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+
+        .two-factor-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .form-check-input:checked {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 576px) {
+            .logo-container img {
+                height: 120px;
+                width: 140px;
+            }
+            
+            .login-container {
+                margin: 0 1rem 2rem;
+                border-radius: 15px;
+            }
+            
+            .login-header {
+                padding: 1.5rem;
+            }
+            
+            .login-body {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Logo Only -->
+        <div class="logo-container">
+            <img src="V2B.png" alt="Visa2Book">
+        </div>
+
+        <!-- Login Container -->
+        <div class="container">
+            <div class="login-container">
+                <div class="login-header">
+                    <h2>Welcome Back</h2>
+                    <p class="mb-0">Login to access your bookings and preferences</p>
+                </div>
+                
+                <div class="login-body">
+                    <!-- Login Tabs -->
+                    <div class="login-tabs">
+                        <div class="login-tab active" onclick="switchTab('email')">Email Login</div>
+                        <div class="login-tab" onclick="switchTab('otp')">OTP Login</div>
+                    </div>
+                    
+                    <!-- Email Login Form -->
+                    <div id="emailTab" class="tab-content active">
+                        <form id="emailLoginForm">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email Address</label>
+                                <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                            </div>
+                            
+                            <!-- 2FA Toggle for Email Login -->
+                            <div class="two-factor-section">
+                                <div class="two-factor-toggle">
+                                    <div>
+                                        <strong>Two-Factor Authentication</strong>
+                                        <p class="small mb-0">Extra security with OTP verification</p>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="email2faToggle" checked>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary-login btn-login">
+                                <i class="fas fa-sign-in-alt me-2"></i> Login
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <!-- OTP Login Form -->
+                    <div id="otpTab" class="tab-content">
+                        <form id="otpLoginForm">
+                            <div class="mb-3">
+                                <label for="mobile" class="form-label">Mobile Number</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">+91</span>
+                                    <input type="tel" class="form-control" id="mobile" placeholder="Enter 10-digit mobile number" required>
+                                </div>
+                            </div>
+                            
+                            <div id="otpRequestSection">
+                                <button type="button" class="btn btn-primary-login btn-login" onclick="requestOTP()">
+                                    <i class="fas fa-mobile-alt me-2"></i> Send OTP
+                                </button>
+                            </div>
+                            
+                            <div id="otpVerificationSection" style="display: none;">
+                                <div class="mb-3">
+                                    <label class="form-label">Enter 6-digit OTP</label>
+                                    <div class="otp-input-group">
+                                        <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                                        <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                                        <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                                        <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                                        <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                                        <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                                    </div>
+                                    <p class="text-muted small">OTP sent to +91 XXXXXXX<span id="lastTwoDigits"></span></p>
+                                </div>
+                                <button type="submit" class="btn btn-primary-login btn-login">
+                                    <i class="fas fa-check-circle me-2"></i> Verify OTP
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary btn-login" onclick="resendOTP()">
+                                    <i class="fas fa-redo me-2"></i> Resend OTP
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Forgot Password -->
+                    <div class="forgot-password">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">Forgot your password?</a>
+                    </div>
+                    
+                    <!-- Social Login Divider -->
+                    <div class="divider">or continue with</div>
+                    
+                    <!-- Social Login Buttons -->
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <button class="btn btn-social btn-google btn-login" onclick="socialLogin('google')">
+                                <i class="fab fa-google"></i> Google
+                            </button>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <button class="btn btn-social btn-facebook btn-login" onclick="socialLogin('facebook')">
+                                <i class="fab fa-facebook-f"></i> Facebook
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Sign Up Link -->
+                    <div class="signup-link">
+                        Don't have an account? <a href="signup.html">Sign up</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Forgot Password Modal -->
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Reset Your Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="nav nav-tabs mb-3" id="forgotPasswordTabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bs-toggle="tab" href="#emailResetTab">Via Email</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#otpResetTab">Via OTP</a>
+                        </li>
+                    </ul>
+                    
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="emailResetTab">
+                            <form id="emailResetForm">
+                                <div class="mb-3">
+                                    <label for="resetEmail" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="resetEmail" placeholder="Enter your registered email" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary-login btn-login">
+                                    <i class="fas fa-paper-plane me-2"></i> Send Reset Link
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <div class="tab-pane fade" id="otpResetTab">
+                            <form id="otpResetForm">
+                                <div class="mb-3">
+                                    <label for="resetMobile" class="form-label">Mobile Number</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">+91</span>
+                                        <input type="tel" class="form-control" id="resetMobile" placeholder="Enter registered mobile number" required>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary-login btn-login">
+                                    <i class="fas fa-mobile-alt me-2"></i> Send OTP
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2FA Verification Modal -->
+    <div class="modal fade" id="twoFactorModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Two-Factor Authentication</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>For your security, we've sent a 6-digit verification code to your registered mobile number ending with <span id="twoFactorMobile"></span></p>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Enter 6-digit OTP</label>
+                        <div class="otp-input-group">
+                            <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                            <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                            <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                            <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                            <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                            <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                        </div>
+                    </div>
+                    
+                    <button type="button" class="btn btn-primary-login btn-login" onclick="verifyTwoFactor()">
+                        <i class="fas fa-check-circle me-2"></i> Verify & Continue
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary btn-login" onclick="resendTwoFactorOTP()">
+                        <i class="fas fa-redo me-2"></i> Resend OTP
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Firebase Auth (for social login) -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Initialize Firebase (replace with your config)
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+        
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        
+        // Switch between email and OTP login tabs
+        function switchTab(tabName) {
+            // Update tabs
+            document.querySelectorAll('.login-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`.login-tab:nth-child(${tabName === 'email' ? 1 : 2})`).classList.add('active');
+            
+            // Update content
+            document.getElementById('emailTab').classList.remove('active');
+            document.getElementById('otpTab').classList.remove('active');
+            document.getElementById(`${tabName}Tab`).classList.add('active');
+        }
+        
+        // OTP Request Functionality
+        function requestOTP() {
+            const mobile = document.getElementById('mobile').value;
+            if (mobile.length === 10 && /^\d+$/.test(mobile)) {
+                // Show OTP verification section
+                document.getElementById('otpRequestSection').style.display = 'none';
+                document.getElementById('otpVerificationSection').style.display = 'block';
+                
+                // Show last two digits of mobile number
+                document.getElementById('lastTwoDigits').textContent = mobile.slice(-2);
+                
+                // Auto-focus first OTP input
+                document.querySelector('.otp-input').focus();
+                
+                // Simulate OTP sending (in real app, this would be an API call)
+                console.log(`OTP sent to +91 ${mobile}`);
+                alert(`OTP has been sent to +91 ${mobile}`);
+            } else {
+                alert('Please enter a valid 10-digit mobile number');
+            }
+        }
+        
+        // Resend OTP Functionality
+        function resendOTP() {
+            const mobile = document.getElementById('mobile').value;
+            console.log(`Resending OTP to +91 ${mobile}`);
+            // In a real app, this would call your backend to resend OTP
+            alert('New OTP has been sent to your mobile');
+        }
+        
+        // OTP Input Auto-Tabbing
+        document.querySelectorAll('.otp-input').forEach((input, index, inputs) => {
+            input.addEventListener('input', (e) => {
+                if (e.target.value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+            });
+            
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && e.target.value.length === 0 && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+        });
+        
+        // Social Login
+        function socialLogin(provider) {
+            let authProvider;
+            
+            if (provider === 'google') {
+                authProvider = new firebase.auth.GoogleAuthProvider();
+            } else if (provider === 'facebook') {
+                authProvider = new firebase.auth.FacebookAuthProvider();
+            }
+            
+            firebase.auth().signInWithPopup(authProvider)
+                .then((result) => {
+                    // User signed in successfully
+                    const user = result.user;
+                    console.log(`${provider} login successful`, user);
+                    alert(`Welcome ${user.displayName}! You've logged in via ${provider}.`);
+                    // Redirect to dashboard or home page
+                    window.location.href = 'dashboard.html';
+                })
+                .catch((error) => {
+                    console.error(`${provider} login error`, error);
+                    alert(`Error during ${provider} login: ${error.message}`);
+                });
+        }
+        
+        // Form Submissions (would be connected to your backend in real app)
+        document.getElementById('emailLoginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const use2FA = document.getElementById('email2faToggle').checked;
+            
+            console.log('Email login submitted', { email, password, use2FA });
+            
+            if (use2FA) {
+                // Show 2FA modal (simulating last two digits of mobile)
+                document.getElementById('twoFactorMobile').textContent = 'XX89';
+                const twoFactorModal = new bootstrap.Modal(document.getElementById('twoFactorModal'));
+                twoFactorModal.show();
+            } else {
+                // Proceed with login
+                alert('Welcome back! Logging you in...');
+                // Here you would validate and submit to your backend
+                // window.location.href = 'dashboard.html';
+            }
+        });
+        
+        document.getElementById('otpLoginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const mobile = document.getElementById('mobile').value;
+            const otpInputs = document.querySelectorAll('.otp-input');
+            const otp = Array.from(otpInputs).map(input => input.value).join('');
+            
+            if (otp.length === 6) {
+                console.log('OTP login submitted', { mobile, otp });
+                alert('Welcome! Logging you in...');
+                // Here you would validate OTP with your backend
+                // window.location.href = 'dashboard.html';
+            } else {
+                alert('Please enter the complete 6-digit OTP');
+            }
+        });
+        
+        document.getElementById('emailResetForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('resetEmail').value;
+            console.log(`Password reset requested for ${email}`);
+            alert(`Password reset link sent to ${email}`);
+            // Hide modal after submission
+            bootstrap.Modal.getInstance(document.getElementById('forgotPasswordModal')).hide();
+        });
+        
+        document.getElementById('otpResetForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const mobile = document.getElementById('resetMobile').value;
+            console.log(`OTP reset requested for +91 ${mobile}`);
+            alert(`OTP sent to +91 ${mobile}`);
+            // Here you would proceed to OTP verification in a real app
+            // Hide modal after submission
+            bootstrap.Modal.getInstance(document.getElementById('forgotPasswordModal')).hide();
+        });
+        
+        // 2FA Verification
+        function verifyTwoFactor() {
+            const otpInputs = document.querySelectorAll('#twoFactorModal .otp-input');
+            const otp = Array.from(otpInputs).map(input => input.value).join('');
+            
+            if (otp.length === 6) {
+                console.log('2FA verification successful');
+                alert('Two-factor authentication successful! Logging you in...');
+                const twoFactorModal = bootstrap.Modal.getInstance(document.getElementById('twoFactorModal'));
+                twoFactorModal.hide();
+                // Redirect to dashboard
+                window.location.href = 'dashboard.html';
+            } else {
+                alert('Please enter the complete 6-digit OTP');
+            }
+        }
+        
+        function resendTwoFactorOTP() {
+            console.log('Resending 2FA OTP');
+            alert('New verification code has been sent');
+        }
+    </script>
+</body>
+</html>

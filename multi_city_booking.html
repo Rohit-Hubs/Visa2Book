@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-city Booking - Visa2Book</title>
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1e3c72;
+            --secondary-blue: #2a5298;
+            --accent-green: #1cda49;
+            --train-color: #ff6b35;
+            --bus-color: #00a896;
+            --flight-color: #3a86ff;
+            --light-gray: #f8f9fa;
+            --dark-gray: #212529;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background: rgba(0, 0, 0, 0.9) !important;
+            padding: 0.5rem 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        .navbar-brand img {
+            height: 155px;
+            width: 175px;
+            transition: transform 0.3s;
+        }
+        
+        .navbar-brand img:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-link {
+            color: white !important;
+            font-weight: 500;
+            padding: 0.75rem 1.25rem !important;
+            margin: 0 5px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-link i {
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background-color: rgba(28, 218, 73, 0.2);
+            color: var(--accent-green) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80') no-repeat center center/cover;
+            height: 60vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+            margin-bottom: 2rem;
+        }
+
+        /* Form Container */
+        .form-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin: -50px auto 3rem auto;
+            width: 90%;
+            max-width: 900px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-container h2 {
+            color: var(--accent-green);
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 700;
+            font-size: 2rem;
+        }
+        
+        .form-control, .form-select {
+            background-color: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.8rem 1.2rem;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            background-color: rgba(255, 255, 255, 0.25);
+            border-color: var(--accent-green);
+            box-shadow: 0 0 0 0.25rem rgba(28, 218, 73, 0.25);
+            color: white;
+        }
+        
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.8rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary {
+            background-color: var(--accent-green);
+            border: none;
+            padding: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background-color: #15b53d;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Transport Type Selector */
+        .transport-type {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .transport-type-btn {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            background: transparent;
+            color: white;
+            font-weight: 500;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .transport-type-btn i {
+            margin-right: 8px;
+        }
+        
+        .transport-type-btn.active {
+            background: var(--flight-color);
+        }
+        
+        .transport-type-btn[data-type="train"].active {
+            background: var(--train-color);
+        }
+        
+        .transport-type-btn[data-type="bus"].active {
+            background: var(--bus-color);
+        }
+
+        /* Destination Leg Styling */
+        .destination-leg {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .destination-leg h5 {
+            color: var(--accent-green);
+            margin-bottom: 1.5rem;
+        }
+
+        .remove-leg {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .remove-leg:hover {
+            background: rgba(255, 0, 0, 0.5);
+            transform: scale(1.1);
+        }
+
+        /* Styled Dropdowns */
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='white' d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 16px 12px;
+        }
+        
+        /* Passenger Counter */
+        .passenger-counter {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .counter-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .counter-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .counter-value {
+            flex: 1;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        /* Class Options Styling */
+        .class-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .class-option {
+            flex: 1;
+            min-width: 100px;
+        }
+        
+        .class-option input[type="radio"] {
+            display: none;
+        }
+        
+        .class-option label {
+            display: block;
+            padding: 0.5rem;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .class-option input[type="radio"]:checked + label {
+            background: var(--accent-green);
+            color: black;
+            font-weight: 600;
+        }
+        
+        /* Footer */
+        .main-footer {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 40px 0 20px;
+            margin-top: auto;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-green);
+            transform: translateX(5px);
+        }
+
+        .footer-links i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .payment-methods i {
+            margin-right: 5px;
+        }
+
+        .payment-group {
+            margin-right: 15px;
+            margin-bottom: 10px;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .navbar-brand img {
+                height: 120px;
+                width: 140px;
+            }
+            
+            .nav-link {
+                padding: 0.6rem 1rem !important;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar-brand img {
+                height: 100px;
+                width: 120px;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .form-container {
+                padding: 1.5rem;
+            }
+            
+            .transport-type {
+                flex-direction: column;
+            }
+            
+            .class-options {
+                flex-direction: column;
+            }
+            
+            .class-option {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="V2B.png" alt="Visa2Book" style="height: 120px; width: 140px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="fas fa-home"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="itinerary_planner.html"><i class="fas fa-route"></i> Itinerary Planner</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="multi_city_booking.html"><i class="fas fa-map-marked-alt"></i> Multi-city Booking</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="group_travel.html"><i class="fas fa-users"></i> Group Travel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="holiday_packages.html"><i class="fas fa-gift"></i> Holiday Packages</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Multi-City Travel Made Simple</h1>
+            <p>Plan and book your complex multi-destination trips with flights, trains or buses</p>
+        </div>
+    </div>
+
+    <!-- Form Section -->
+    <div class="form-container">
+        <h2><i class="fas fa-globe-americas me-2"></i> Plan Your Journey</h2>
+        <form id="multiCityForm">
+            <!-- Destination legs will be added here by JavaScript -->
+            <div id="destinationLegsContainer">
+                <!-- First leg is added by default -->
+                <div class="destination-leg" id="leg1">
+                    <button type="button" class="remove-leg" onclick="removeLeg('leg1')" style="display: none;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <h5><i class="fas fa-plane-departure me-2"></i>Travel Leg 1</h5>
+                    
+                    <!-- Transport Type Selector -->
+                    <div class="transport-type mb-3">
+                        <button type="button" class="transport-type-btn active" data-type="flight">
+                            <i class="fas fa-plane"></i> Flight
+                        </button>
+                        <button type="button" class="transport-type-btn" data-type="train">
+                            <i class="fas fa-train"></i> Train
+                        </button>
+                        <button type="button" class="transport-type-btn" data-type="bus">
+                            <i class="fas fa-bus"></i> Bus
+                        </button>
+                    </div>
+                    
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="fromCity1" class="form-label">From</label>
+                            <input type="text" class="form-control" id="fromCity1" placeholder="Departure city" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="toCity1" class="form-label">To</label>
+                            <input type="text" class="form-control" id="toCity1" placeholder="Destination city" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="departureDate1" class="form-label">Departure Date</label>
+                            <input type="date" class="form-control" id="departureDate1" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Class</label>
+                            <div class="class-options">
+                                <div class="class-option">
+                                    <input type="radio" id="class1_economy" name="class1" value="economy" checked>
+                                    <label for="class1_economy">Economy</label>
+                                </div>
+                                <div class="class-option">
+                                    <input type="radio" id="class1_premium" name="class1" value="premium">
+                                    <label for="class1_premium">Premium</label>
+                                </div>
+                                <div class="class-option">
+                                    <input type="radio" id="class1_business" name="class1" value="business">
+                                    <label for="class1_business">Business</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Passengers</label>
+                            <div class="passenger-counter">
+                                <button type="button" class="counter-btn minus-btn">-</button>
+                                <div class="counter-value">1</div>
+                                <button type="button" class="counter-btn plus-btn">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Add Leg Button -->
+            <button type="button" class="btn btn-secondary w-100 mb-4" id="addLegBtn">
+                <i class="fas fa-plus-circle me-2"></i>Add Another Destination
+            </button>
+            
+            <!-- Search Button -->
+            <button type="submit" class="btn btn-primary w-100">
+                <i class="fas fa-search me-2"></i>Search All Options
+            </button>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase mb-4">Company Information</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-info-circle me-2"></i> About</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-envelope me-2"></i> Contact Us</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-shield-alt me-2"></i> Privacy Policy</a></li>
+                        <li><a href="#" class="text-white"><i class="fas fa-file-contract me-2"></i> Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase mb-4">Quick Links</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-undo me-2"></i> Refund Policy</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-question-circle me-2"></i> FAQs</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-headset me-2"></i> Customer Support</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="text-uppercase mb-4">Connect With Us</h5>
+                    <ul class="list-unstyled footer-links mb-4">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-facebook-f me-2"></i> Facebook</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-twitter me-2"></i> Twitter</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-instagram me-2"></i> Instagram</a></li>
+                        <li><a href="#" class="text-white"><i class="fab fa-linkedin-in me-2"></i> LinkedIn</a></li>
+                    </ul>
+                    <div class="mb-4">
+                        <h6 class="mb-3">Download Our App</h6>
+                        <div class="d-flex gap-2">
+                            <a href="#" class="btn btn-sm btn-outline-light">
+                                <i class="fab fa-apple me-2"></i> App Store
+                            </a>
+                            <a href="#" class="btn btn-sm btn-outline-light">
+                                <i class="fab fa-google-play me-2"></i> Play Store
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4 bg-light opacity-10">
+
+            <!-- Payment Methods -->
+            <div class="row align-items-center py-3">
+                <div class="col-md-8 mb-3 mb-md-0">
+                    <h6 class="mb-3">Accepted Payment Methods:</h6>
+                    <div class="payment-methods d-flex flex-wrap gap-3 align-items-center">
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fab fa-cc-visa fa-2x me-2" style="color: #1a1f71;"></i>
+                            <i class="fab fa-cc-mastercard fa-2x me-3" style="color: #eb001b;"></i>
+                            <span class="text-white-50">Cards</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fas fa-rupee-sign fa-2x me-2" style="color: #6cbe45;"></i>
+                            <span class="text-white-50">UPI</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fab fa-google-pay fa-2x me-2" style="color: #4285f4;"></i>
+                            <i class="fas fa-wallet fa-2x me-3" style="color: #ff9500;"></i>
+                            <span class="text-white-50">Wallets</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <span class="badge bg-light text-dark me-2">Pay Later:</span>
+                            <span class="badge bg-primary me-2">Simple Pay</span>
+                            <span class="badge bg-info text-dark">Lazy Pay</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <div class="d-flex flex-column">
+                        <p class="mb-2"><i class="fas fa-phone-alt me-2"></i> 24/7 Support: +1 (555) 987-6543</p>
+                        <p class="mb-0"><i class="fas fa-envelope me-2"></i> support@visa2book.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Counter for tracking the number of legs
+        let legCounter = 1;
+        
+        // Function to add a new destination leg
+        function addDestinationLeg() {
+            legCounter++;
+            const newLeg = document.createElement('div');
+            newLeg.className = 'destination-leg';
+            newLeg.id = 'leg' + legCounter;
+            
+            newLeg.innerHTML = `
+                <button type="button" class="remove-leg" onclick="removeLeg('leg${legCounter}')">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h5><i class="fas fa-plane-departure me-2"></i>Travel Leg ${legCounter}</h5>
+                
+                <!-- Transport Type Selector -->
+                <div class="transport-type mb-3">
+                    <button type="button" class="transport-type-btn active" data-type="flight">
+                        <i class="fas fa-plane"></i> Flight
+                    </button>
+                    <button type="button" class="transport-type-btn" data-type="train">
+                        <i class="fas fa-train"></i> Train
+                    </button>
+                    <button type="button" class="transport-type-btn" data-type="bus">
+                        <i class="fas fa-bus"></i> Bus
+                    </button>
+                </div>
+                
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="fromCity${legCounter}" class="form-label">From</label>
+                        <input type="text" class="form-control" id="fromCity${legCounter}" placeholder="Departure city" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="toCity${legCounter}" class="form-label">To</label>
+                        <input type="text" class="form-control" id="toCity${legCounter}" placeholder="Destination city" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="departureDate${legCounter}" class="form-label">Departure Date</label>
+                        <input type="date" class="form-control" id="departureDate${legCounter}" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Class</label>
+                        <div class="class-options">
+                            <div class="class-option">
+                                <input type="radio" id="class${legCounter}_economy" name="class${legCounter}" value="economy" checked>
+                                <label for="class${legCounter}_economy">Economy</label>
+                            </div>
+                            <div class="class-option">
+                                <input type="radio" id="class${legCounter}_premium" name="class${legCounter}" value="premium">
+                                <label for="class${legCounter}_premium">Premium</label>
+                            </div>
+                            <div class="class-option">
+                                <input type="radio" id="class${legCounter}_business" name="class${legCounter}" value="business">
+                                <label for="class${legCounter}_business">Business</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Passengers</label>
+                        <div class="passenger-counter">
+                            <button type="button" class="counter-btn minus-btn">-</button>
+                            <div class="counter-value">1</div>
+                            <button type="button" class="counter-btn plus-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('destinationLegsContainer').appendChild(newLeg);
+            
+            // Initialize transport type buttons for the new leg
+            initTransportTypeButtons(newLeg);
+            
+            // Initialize passenger counter for the new leg
+            initPassengerCounter(newLeg);
+            
+            // Show remove button on first leg when there are multiple legs
+            if (legCounter === 2) {
+                document.querySelector('#leg1 .remove-leg').style.display = 'flex';
+            }
+            
+            // Scroll to the new leg
+            newLeg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        
+        // Function to remove a destination leg
+        function removeLeg(legId) {
+            const legToRemove = document.getElementById(legId);
+            if (legToRemove) {
+                legToRemove.remove();
+                legCounter--;
+                
+                // Update leg numbers
+                const legs = document.querySelectorAll('.destination-leg');
+                legs.forEach((leg, index) => {
+                    const legNumber = index + 1;
+                    leg.id = 'leg' + legNumber;
+                    leg.querySelector('h5').innerHTML = `<i class="fas fa-plane-departure me-2"></i>Travel Leg ${legNumber}`;
+                    
+                    // Update all input IDs
+                    const inputs = leg.querySelectorAll('input, select');
+                    inputs.forEach(input => {
+                        const oldId = input.id;
+                        const newId = oldId.replace(/[0-9]+$/, legNumber);
+                        input.id = newId;
+                        input.name = newId;
+                    });
+                    
+                    // Update radio button names
+                    const radios = leg.querySelectorAll('input[type="radio"]');
+                    radios.forEach(radio => {
+                        radio.name = 'class' + legNumber;
+                    });
+                    
+                    // Update remove button onclick
+                    const removeBtn = leg.querySelector('.remove-leg');
+                    if (removeBtn) {
+                        removeBtn.onclick = function() { removeLeg('leg' + legNumber); };
+                    }
+                });
+                
+                // Hide remove button on first leg if only one remains
+                if (legCounter === 1) {
+                    document.querySelector('#leg1 .remove-leg').style.display = 'none';
+                }
+            }
+        }
+        
+        // Initialize transport type buttons
+        function initTransportTypeButtons(container) {
+            const buttons = container.querySelectorAll('.transport-type-btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons in this group
+                    buttons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Update icon based on transport type
+                    const legTitle = container.querySelector('h5');
+                    const type = this.getAttribute('data-type');
+                    let iconClass = 'fa-plane-departure';
+                    if (type === 'train') iconClass = 'fa-train';
+                    if (type === 'bus') iconClass = 'fa-bus';
+                    
+                    legTitle.innerHTML = `<i class="fas ${iconClass} me-2"></i>Travel Leg ${container.id.replace('leg', '')}`;
+                });
+            });
+        }
+        
+        // Initialize passenger counter
+        function initPassengerCounter(container) {
+            const minusBtn = container.querySelector('.minus-btn');
+            const plusBtn = container.querySelector('.plus-btn');
+            const counterValue = container.querySelector('.counter-value');
+            
+            let count = 1;
+            
+            minusBtn.addEventListener('click', function() {
+                if (count > 1) {
+                    count--;
+                    counterValue.textContent = count;
+                }
+            });
+            
+            plusBtn.addEventListener('click', function() {
+                if (count < 10) {
+                    count++;
+                    counterValue.textContent = count;
+                }
+            });
+        }
+        
+        // Add event listener to the "Add Another Destination" button
+        document.getElementById('addLegBtn').addEventListener('click', addDestinationLeg);
+        
+        // Initialize transport type buttons for the first leg
+        initTransportTypeButtons(document.getElementById('leg1'));
+        
+        // Initialize passenger counter for the first leg
+        initPassengerCounter(document.getElementById('leg1'));
+        
+        // Form submission handler
+        document.getElementById('multiCityForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Here you would collect all the form data and process it
+            alert('Form submitted! In a real application, this would send the data to your server.');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Exchange - Visa2Book</title>
+    <link rel="shortcut icon" href="V2B.png" type="image/x-icon">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3a86ff;
+            --secondary-color: #2667d9;
+            --accent-color: #ffbe0b;
+            --dark-color: #1a1a2e;
+            --light-color: #f8f9fa;
+            --gradient-blue: linear-gradient(135deg, #3a86ff 0%, #2667d9 100%);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: #f0f5ff;
+        }
+
+        /* Glass Morphism Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.85) !important;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .navbar-brand img {
+            height: 50px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand:hover img {
+            transform: scale(1.05);
+        }
+
+        .nav-link {
+            color: var(--dark-color) !important;
+            font-weight: 600;
+            padding: 0.75rem 1.25rem !important;
+            margin: 0 0.5rem;
+            border-radius: 50px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--accent-color);
+            transition: width 0.4s ease;
+            border-radius: 3px;
+        }
+
+        .nav-link:hover::before, .nav-link.active::before {
+            width: 100%;
+        }
+
+        .nav-link i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover i, .nav-link.active i {
+            transform: translateY(-3px);
+            color: var(--primary-color);
+        }
+
+        /* Hero Section with Parallax Effect */
+        .hero-section {
+            background: linear-gradient(rgba(26, 26, 46, 0.7), rgba(26, 26, 46, 0.7)), 
+                        url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            height: 80vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to bottom, rgba(26, 26, 46, 0.7), transparent);
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero-cta {
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Exchange Calculator */
+        .exchange-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: 100%;
+            margin-bottom: 2rem;
+            border: none;
+            position: relative;
+            z-index: 2;
+        }
+
+        .exchange-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .exchange-header {
+            background: var(--gradient-blue);
+            color: white;
+            padding: 2rem;
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+
+        .exchange-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: white;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .exchange-body {
+            padding: 2rem;
+            position: relative;
+        }
+
+        .exchange-body::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: var(--gradient-blue);
+            opacity: 0.2;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(58, 134, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(58, 134, 255, 0.25);
+        }
+
+        .btn-exchange {
+            background: var(--gradient-blue);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            transition: all 0.4s ease;
+            width: 100%;
+            box-shadow: 0 5px 20px rgba(58, 134, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-exchange::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-exchange:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(58, 134, 255, 0.4);
+        }
+
+        .btn-exchange:hover::before {
+            left: 100%;
+        }
+
+        .result-box {
+            background: rgba(58, 134, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            text-align: center;
+            border: 1px dashed rgba(58, 134, 255, 0.3);
+        }
+
+        .result-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Rates Table */
+        .rates-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .rates-table th {
+            background: var(--gradient-blue);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .rates-table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(58, 134, 255, 0.1);
+            background: white;
+        }
+
+        .rates-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .rates-table tr:hover td {
+            background: rgba(58, 134, 255, 0.03);
+        }
+
+        .trend-up {
+            color: #10b981;
+        }
+
+        .trend-down {
+            color: #ef4444;
+        }
+
+        .trend-neutral {
+            color: #64748b;
+        }
+
+        /* Features Section */
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            height: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            border-top: 5px solid var(--primary-color);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(58, 134, 255, 0.1);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            font-size: 2rem;
+            transition: all 0.4s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            background: var(--gradient-blue);
+            color: white;
+            transform: rotate(15deg) scale(1.1);
+        }
+
+        /* Globe Visualization */
+        .globe-section {
+            position: relative;
+            padding: 5rem 0;
+            background: url('https://images.unsplash.com/photo-1534957753291-64d667ce2927?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover fixed;
+            background-attachment: fixed;
+            color: white;
+            text-align: center;
+            margin: 5rem 0;
+        }
+
+        .globe-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 26, 46, 0.85);
+        }
+
+        .globe-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--dark-color);
+            position: relative;
+            display: inline-block;
+            margin-bottom: 3rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        .section-title.light {
+            color: white;
+        }
+
+        .section-title.light::after {
+            background: white;
+        }
+
+        /* FAQ Section - Modern Accordion */
+        .faq-accordion {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .faq-question {
+            background: white;
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .faq-item.active .faq-question::after {
+            content: '-';
+        }
+
+        .faq-question h5 {
+            margin-bottom: 0;
+            transition: color 0.3s ease;
+        }
+
+        .faq-item.active .faq-question {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .faq-item.active .faq-question h5 {
+            color: white;
+        }
+
+        .faq-answer {
+            background: #f9fafc;
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 1.5rem;
+            max-height: 500px;
+        }
+
+        /* Footer - Wave Design */
+
+        /* ========== Footer Styles ========== */
+        .main-footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 0 0;
+            margin-top: 5rem;
+        }
+
+        .main-footer .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .main-footer .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .main-footer .footer-links i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .main-footer .btn-outline-light {
+            border-radius: 30px;
+            padding: 0.25rem 0.75rem;
+        }
+
+        .main-footer .payment-methods i {
+            opacity: 0.9;
+            transition: all 0.3s ease;
+        }
+
+        .main-footer .payment-methods i:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .main-footer .payment-group {
+            margin-right: 1.5rem;
+            padding-right: 1.5rem;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .main-footer .payment-group:last-child {
+            border-right: none;
+        }
+
+        .main-footer hr {
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        
+        footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 6rem 0 2rem;
+            margin-top: 6rem;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path fill="%23f0f5ff" d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25"/><path fill="%23f0f5ff" d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5"/><path fill="%23f0f5ff" d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"/></svg>');
+            background-size: cover;
+        }
+
+        .footer-logo {
+            height: 60px;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-link {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: block;
+            margin-bottom: 1rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .footer-link::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .footer-link:hover::before {
+            opacity: 1;
+            left: 5px;
+        }
+
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            transition: all 0.4s ease;
+            color: white;
+        }
+
+        .social-icon:hover {
+            background: var(--accent-color);
+            transform: translateY(-5px) rotate(10deg);
+            color: var(--dark-color);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.25rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0.5rem 1rem;
+            }
+            
+            .hero-section {
+                height: 70vh;
+                min-height: 500px;
+                background-attachment: scroll;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .globe-section {
+                background-attachment: scroll;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-section {
+                height: 60vh;
+                min-height: 400px;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .nav-link {
+                padding: 0.5rem 1rem !important;
+                margin: 0.25rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="V2B.png" alt="Visa2Book" style="height: 120px; width: 140px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="visa_travel_insurance.html">
+                            <i class="fas fa-passport"></i>
+                            <span>Visa & Travel Insurance</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="currency_exchange.html">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>Currency Exchange</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="packing_safety_tips.html">
+                            <i class="fas fa-suitcase"></i>
+                            <span>Packing Safety Tips</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">Global Currency Exchange</h1>
+            <p class="hero-subtitle">Get the best exchange rates with zero hidden fees and secure transactions for your international travel</p>
+            <div class="hero-cta">
+                <button class="btn btn-primary btn-lg px-5 py-3 rounded-pill">
+                    <i class="fas fa-money-bill-wave me-2"></i> Check Live Rates
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exchange Calculator Section -->
+    <div class="container my-5 py-5">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-title">Currency Calculator</h2>
+                <p class="lead">Compare exchange rates and calculate how much you'll get for your money</p>
+            </div>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="exchange-card">
+                    <div class="exchange-header">
+                        <div class="exchange-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <h3 class="text-white">Exchange Calculator</h3>
+                    </div>
+                    <div class="exchange-body">
+                        <form id="exchangeForm">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="amount" class="form-label">Amount</label>
+                                        <input type="number" class="form-control" id="amount" placeholder="Enter amount" min="1" step="0.01" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="fromCurrency" class="form-label">From Currency</label>
+                                        <select class="form-control" id="fromCurrency" required>
+                                            <option value="USD">US Dollar (USD)</option>
+                                            <option value="EUR">Euro (EUR)</option>
+                                            <option value="GBP">British Pound (GBP)</option>
+                                            <option value="INR" selected>Indian Rupee (INR)</option>
+                                            <option value="JPY">Japanese Yen (JPY)</option>
+                                            <option value="AUD">Australian Dollar (AUD)</option>
+                                            <option value="CAD">Canadian Dollar (CAD)</option>
+                                            <option value="AED">UAE Dirham (AED)</option>
+                                            <option value="SGD">Singapore Dollar (SGD)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="toCurrency" class="form-label">To Currency</label>
+                                        <select class="form-control" id="toCurrency" required>
+                                            <option value="USD" selected>US Dollar (USD)</option>
+                                            <option value="EUR">Euro (EUR)</option>
+                                            <option value="GBP">British Pound (GBP)</option>
+                                            <option value="INR">Indian Rupee (INR)</option>
+                                            <option value="JPY">Japanese Yen (JPY)</option>
+                                            <option value="AUD">Australian Dollar (AUD)</option>
+                                            <option value="CAD">Canadian Dollar (CAD)</option>
+                                            <option value="AED">UAE Dirham (AED)</option>
+                                            <option value="SGD">Singapore Dollar (SGD)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="date" class="form-label">Date (Optional)</label>
+                                        <input type="date" class="form-control" id="date">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button type="button" class="btn-exchange" onclick="calculateExchange()">
+                                <i class="fas fa-exchange-alt me-2"></i> Convert Currency
+                            </button>
+                            
+                            <div class="result-box" id="exchangeResult">
+                                <div class="result-amount">0.00</div>
+                                <div id="conversionText">Enter amount to see conversion</div>
+                                <div id="rateText" class="text-muted small mt-2"></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Exchange Rates Section -->
+    <div class="container my-5 py-5">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-title">Live Exchange Rates</h2>
+                <p class="lead">Real-time currency rates updated every minute</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <div class="table-responsive">
+                    <table class="rates-table">
+                        <thead>
+                            <tr>
+                                <th>Currency</th>
+                                <th>Code</th>
+                                <th>Rate (1 USD)</th>
+                                <th>24h Change</th>
+                                <th>Last Updated</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Euro</td>
+                                <td>EUR</td>
+                                <td>0.92</td>
+                                <td class="trend-up"><i class="fas fa-caret-up me-1"></i> 0.12%</td>
+                                <td>Just now</td>
+                            </tr>
+                            <tr>
+                                <td>British Pound</td>
+                                <td>GBP</td>
+                                <td>0.79</td>
+                                <td class="trend-down"><i class="fas fa-caret-down me-1"></i> 0.24%</td>
+                                <td>Just now</td>
+                            </tr>
+                            <tr>
+                                <td>Indian Rupee</td>
+                                <td>INR</td>
+                                <td>83.12</td>
+                                <td class="trend-neutral"><i class="fas fa-minus me-1"></i> 0.00%</td>
+                                <td>Just now</td>
+                            </tr>
+                            <tr>
+                                <td>Japanese Yen</td>
+                                <td>JPY</td>
+                                <td>151.43</td>
+                                <td class="trend-up"><i class="fas fa-caret-up me-1"></i> 0.35%</td>
+                                <td>Just now</td>
+                            </tr>
+                            <tr>
+                                <td>Australian Dollar</td>
+                                <td>AUD</td>
+                                <td>1.52</td>
+                                <td class="trend-down"><i class="fas fa-caret-down me-1"></i> 0.18%</td>
+                                <td>Just now</td>
+                            </tr>
+                            <tr>
+                                <td>Canadian Dollar</td>
+                                <td>CAD</td>
+                                <td>1.36</td>
+                                <td class="trend-up"><i class="fas fa-caret-up me-1"></i> 0.07%</td>
+                                <td>Just now</td>
+                            </tr>
+                            <tr>
+                                <td>UAE Dirham</td>
+                                <td>AED</td>
+                                <td>3.67</td>
+                                <td class="trend-neutral"><i class="fas fa-minus me-1"></i> 0.00%</td>
+                                <td>Just now</td>
+                            </tr>
+                            <tr>
+                                <td>Singapore Dollar</td>
+                                <td>SGD</td>
+                                <td>1.35</td>
+                                <td class="trend-down"><i class="fas fa-caret-down me-1"></i> 0.11%</td>
+                                <td>Just now</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <small class="text-muted">Rates are indicative only. Actual rates may vary based on amount and payment method.</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="container my-5 py-5">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-title">Why Exchange With Us</h2>
+                <p class="lead">Get more value for your money with our premium services</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <h4>Best Rates</h4>
+                    <p class="text-muted">We offer rates up to 2% better than banks with no hidden fees or commissions.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h4>Secure Transactions</h4>
+                    <p class="text-muted">Bank-level security with 256-bit encryption for all your currency exchanges.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h4>Fast Delivery</h4>
+                    <p class="text-muted">Get your foreign currency delivered within 24 hours or pick up at airport kiosks.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-undo"></i>
+                    </div>
+                    <h4>Buyback Guarantee</h4>
+                    <p class="text-muted">Unused currency? Sell it back to us at guaranteed rates with no questions asked.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Globe Visualization Section -->
+    <div class="globe-section">
+        <div class="container">
+            <div class="globe-content">
+                <h2 class="section-title light">Global Currency Network</h2>
+                <p class="lead mb-5">Access competitive exchange rates in 120+ currencies worldwide</p>
+                
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="text-center p-4">
+                            <div class="display-4 text-primary mb-3">0%</div>
+                            <h5>Commission</h5>
+                            <p>No hidden fees on any currency exchange transactions</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="text-center p-4">
+                            <div class="display-4 text-primary mb-3">24/7</div>
+                            <h5>Service</h5>
+                            <p>Online currency exchange available anytime, anywhere</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="text-center p-4">
+                            <div class="display-4 text-primary mb-3">50+</div>
+                            <h5>Pickup Locations</h5>
+                            <p>Convenient airport and city center locations worldwide</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="container my-5 py-5">
+        <h2 class="section-title text-center">Currency Exchange FAQs</h2>
+        <p class="text-center lead mb-5">Answers to common questions about foreign exchange</p>
+        
+        <div class="faq-accordion">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h5>How do I get the best exchange rate?</h5>
+                </div>
+                <div class="faq-answer">
+                    <p>To get the best exchange rates:</p>
+                    <ul>
+                        <li><strong>Compare rates:</strong> Check our live rates against banks and other providers</li>
+                        <li><strong>Avoid airports:</strong> Airport exchange counters typically offer poor rates</li>
+                        <li><strong>Exchange larger amounts:</strong> We offer better rates for higher value transactions</li>
+                        <li><strong>Use limit orders:</strong> Set your target rate and we'll exchange when it's reached</li>
+                        <li><strong>Watch market trends:</strong> Exchange when your target currency is strong</li>
+                    </ul>
+                    <p>Our rate alert feature can notify you when your desired rate is available.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h5>What payment methods do you accept?</h5>
+                </div>
+                <div class="faq-answer">
+                    <p>We accept multiple payment methods for currency exchange:</p>
+                    <ul>
+                        <li><strong>Bank transfer:</strong> Most secure method with best rates</li>
+                        <li><strong>Credit/Debit cards:</strong> Visa, Mastercard, Amex (2.5% fee applies)</li>
+                        <li><strong>UPI/NetBanking:</strong> For instant INR transfers</li>
+                        <li><strong>Cash:</strong> At our physical branches only</li>
+                        <li><strong>Digital wallets:</strong> PayPal, Paytm, and others</li>
+                    </ul>
+                    <p>For amounts over ₹200,000, bank transfer is required due to regulatory requirements.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h5>How long does currency delivery take?</h5>
+                </div>
+                <div class="faq-answer">
+                    <p>Delivery times depend on your location and the currency:</p>
+                    <ul>
+                        <li><strong>Major cities:</strong> Next-day delivery for orders placed before 2pm</li>
+                        <li><strong>Tier 2/3 cities:</strong> 2-3 business days</li>
+                        <li><strong>Airport pickup:</strong> Available within 4 hours at select airports</li>
+                        <li><strong>Exotic currencies:</strong> May take 3-5 business days as we source them</li>
+                    </ul>
+                    <p>We provide real-time tracking for all currency deliveries. For urgent needs, our airport kiosks offer 50+ currencies for immediate pickup.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h5>Is there a limit on how much currency I can exchange?</h5>
+                </div>
+                <div class="faq-answer">
+                    <p>Exchange limits vary based on regulations and payment method:</p>
+                    <ul>
+                        <li><strong>Online transactions:</strong> Up to ₹1,000,000 per transaction</li>
+                        <li><strong>In-person exchanges:</strong> Up to ₹500,000 without documentation</li>
+                        <li><strong>Foreign currency:</strong> No limit on buying, but RBI restricts selling INR for foreign currency</li>
+                        <li><strong>Larger amounts:</strong> Requires PAN card and additional KYC documentation</li>
+                    </ul>
+                    <p>For amounts over ₹10,00,000, please contact our corporate team for special rates and arrangements.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="container my-5 py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="bg-primary text-white rounded-4 p-5 text-center position-relative overflow-hidden" style="background: var(--gradient-blue);">
+                    <div class="position-absolute top-0 end-0 w-100 h-100 opacity-10" style="background: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" preserveAspectRatio=\"none\"><path fill=\"white\" d=\"M0,0 L100,0 L100,100 Q50,80 0,100 L0,100 Z\"/></svg>') no-repeat; background-size: cover;"></div>
+                    <h2 class="mb-4 position-relative">Ready to Exchange Currency?</h2>
+                    <p class="mb-4 lead position-relative">Get started with the best rates and service in the industry</p>
+                    <div class="d-flex flex-wrap justify-content-center gap-3 position-relative">
+                        <button class="btn btn-light btn-lg px-4 py-3 rounded-pill">
+                            <i class="fas fa-exchange-alt me-2"></i> Exchange Now
+                        </button>
+                        <button class="btn btn-outline-light btn-lg px-4 py-3 rounded-pill">
+                            <i class="fas fa-phone-alt me-2"></i> +1 (234) 567-8900
+                        </button>
+                        <button class="btn btn-outline-light btn-lg px-4 py-3 rounded-pill">
+                            <i class="fas fa-comment-dots me-2"></i> Live Chat
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    Footer
+
+
+
+    <footer class="main-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 mb-4 mb-lg-0">
+                        <h5 class="text-uppercase mb-4">Company Information</h5>
+                        <ul class="list-unstyled footer-links">
+                            <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-info-circle me-2"></i> About</a></li>
+                            <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-envelope me-2"></i> Contact Us</a></li>
+                            <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-shield-alt me-2"></i> Privacy Policy</a></li>
+                            <li><a href="#" class="text-white"><i class="fas fa-file-contract me-2"></i> Terms & Conditions</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4 mb-4 mb-lg-0">
+                        <h5 class="text-uppercase mb-4">Quick Links</h5>
+                        <ul class="list-unstyled footer-links">
+                            <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-undo me-2"></i> Refund Policy</a></li>
+                            <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-question-circle me-2"></i> FAQs</a></li>
+                            <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-headset me-2"></i> Customer Support</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4">
+                        <h5 class="text-uppercase mb-4">Connect With Us</h5>
+                        <ul class="list-unstyled footer-links mb-4">
+                            <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-facebook-f me-2"></i> Facebook</a></li>
+                            <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-twitter me-2"></i> Twitter</a></li>
+                            <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-instagram me-2"></i> Instagram</a></li>
+                            <li><a href="#" class="text-white"><i class="fab fa-linkedin-in me-2"></i> LinkedIn</a></li>
+                        </ul>
+                        <div class="mb-4">
+                            <h6 class="mb-3">Download Our App</h6>
+                            <div class="d-flex gap-2">
+                                <a href="#" class="btn btn-sm btn-outline-light">
+                                    <i class="fab fa-apple me-2"></i> App Store
+                                </a>
+                                <a href="#" class="btn btn-sm btn-outline-light">
+                                    <i class="fab fa-google-play me-2"></i> Play Store
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <hr class="my-4 bg-light opacity-10">
+    
+                <!-- Payment Methods -->
+                <div class="row align-items-center py-3">
+                    <div class="col-md-8 mb-3 mb-md-0">
+                        <h6 class="mb-3">Accepted Payment Methods:</h6>
+                        <div class="payment-methods d-flex flex-wrap gap-3 align-items-center">
+                            <div class="payment-group d-flex align-items-center">
+                                <i class="fab fa-cc-visa fa-2x me-2" style="color: #1a1f71;"></i>
+                                <i class="fab fa-cc-mastercard fa-2x me-3" style="color: #eb001b;"></i>
+                                <span class="text-white-50">Cards</span>
+                            </div>
+                            
+                            <div class="payment-group d-flex align-items-center">
+                                <i class="fas fa-rupee-sign fa-2x me-2" style="color: #6cbe45;"></i>
+                                <span class="text-white-50">UPI</span>
+                            </div>
+                            
+                            <div class="payment-group d-flex align-items-center">
+                                <i class="fab fa-google-pay fa-2x me-2" style="color: #4285f4;"></i>
+                                <i class="fas fa-wallet fa-2x me-3" style="color: #ff9500;"></i>
+                                <span class="text-white-50">Wallets</span>
+                            </div>
+                            
+                            <div class="payment-group d-flex align-items-center">
+                                <span class="badge bg-light text-dark me-2">Pay Later:</span>
+                                <span class="badge bg-primary me-2">Simple Pay</span>
+                                <span class="badge bg-info text-dark">Lazy Pay</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-md-end">
+                        <div class="d-flex flex-column">
+                            <p class="mb-2"><i class="fas fa-phone-alt me-2"></i> 24/7 Support: +1 (555) 987-6543</p>
+                            <p class="mb-0"><i class="fas fa-envelope me-2"></i> support@visa2book.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Sample exchange rates (in a real app, you'd fetch these from an API)
+        const exchangeRates = {
+            "USD": {
+                "EUR": 0.92,
+                "GBP": 0.79,
+                "INR": 83.12,
+                "JPY": 151.43,
+                "AUD": 1.52,
+                "CAD": 1.36,
+                "AED": 3.67,
+                "SGD": 1.35
+            },
+            "EUR": {
+                "USD": 1.09,
+                "GBP": 0.86,
+                "INR": 90.35,
+                "JPY": 164.60,
+                "AUD": 1.65,
+                "CAD": 1.48,
+                "AED": 4.00,
+                "SGD": 1.47
+            },
+            "GBP": {
+                "USD": 1.27,
+                "EUR": 1.16,
+                "INR": 105.20,
+                "JPY": 191.68,
+                "AUD": 1.92,
+                "CAD": 1.72,
+                "AED": 4.66,
+                "SGD": 1.71
+            },
+            "INR": {
+                "USD": 0.012,
+                "EUR": 0.011,
+                "GBP": 0.0095,
+                "JPY": 1.82,
+                "AUD": 0.018,
+                "CAD": 0.016,
+                "AED": 0.044,
+                "SGD": 0.016
+            }
+        };
+
+        // Calculate exchange function
+        function calculateExchange() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            const fromCurrency = document.getElementById('fromCurrency').value;
+            const toCurrency = document.getElementById('toCurrency').value;
+            
+            if (isNaN(amount) || amount <= 0) {
+                document.getElementById('exchangeResult').innerHTML = `
+                    <div class="text-danger">Please enter a valid amount</div>
+                `;
+                return;
+            }
+            
+            // In a real app, you would fetch live rates from an API
+            // This is a simplified version with sample rates
+            let rate;
+            
+            if (fromCurrency === toCurrency) {
+                rate = 1;
+            } else if (exchangeRates[fromCurrency] && exchangeRates[fromCurrency][toCurrency]) {
+                rate = exchangeRates[fromCurrency][toCurrency];
+            } else if (exchangeRates[toCurrency] && exchangeRates[toCurrency][fromCurrency]) {
+                rate = 1 / exchangeRates[toCurrency][fromCurrency];
+            } else {
+                // Default to USD as base if direct conversion not available
+                const fromRate = exchangeRates.USD[fromCurrency] ? (1 / exchangeRates.USD[fromCurrency]) : 1;
+                const toRate = exchangeRates.USD[toCurrency] || 1;
+                rate = fromRate * toRate;
+            }
+            
+            const convertedAmount = amount * rate;
+            
+            document.getElementById('exchangeResult').innerHTML = `
+                <div class="result-amount">${convertedAmount.toFixed(2)} ${toCurrency}</div>
+                <div>${amount.toFixed(2)} ${fromCurrency} = ${convertedAmount.toFixed(2)} ${toCurrency}</div>
+                <div class="text-muted small mt-2">1 ${fromCurrency} = ${rate.toFixed(6)} ${toCurrency}</div>
+            `;
+        }
+
+        // FAQ Accordion Functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('active');
+                
+                // Close other open items
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (item !== faqItem && item.classList.contains('active')) {
+                        item.classList.remove('active');
+                    }
+                });
+            });
+        });
+
+        // Animate elements when they come into view
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.exchange-card, .feature-card');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementPosition < windowHeight - 100) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+
+        // Set initial state for animation
+        document.querySelectorAll('.exchange-card, .feature-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+        });
+
+        // Run on load and scroll
+        window.addEventListener('load', animateOnScroll);
+        window.addEventListener('scroll', animateOnScroll);
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Initialize with a sample calculation
+        window.addEventListener('load', function() {
+            document.getElementById('amount').value = '1000';
+            calculateExchange();
+        });
+    </script>
+</body>
+</html>

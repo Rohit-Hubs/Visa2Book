@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PNR Status | Visa2Book</title>
+    <link rel="shortcut icon" href="V2B.png" type="image/png">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3a86ff;
+            --primary-dark: #2667d9;
+            --secondary: #8338ec;
+            --accent: #ff006e;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc;
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: white;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            padding: 1rem 2rem;
+        }
+
+        .navbar-brand img {
+            height: 40px;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            padding: 0.6rem 1.5rem;
+            margin: 0 0.5rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link.active {
+            background: rgba(58, 134, 255, 0.1);
+            color: var(--primary);
+        }
+
+        .navbar {
+    background: linear-gradient(135deg, #0a4b4e 0%, #2a9d8f 100%) !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    padding: 1rem 2rem;
+}
+
+.nav-link {
+    color: white !important;
+    font-weight: 500;
+}
+
+.nav-link.active {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+}
+
+        /* Hero Section */
+        .pnr-hero {
+            background: linear-gradient(rgba(26, 26, 46, 0.9), rgba(26, 26, 46, 0.9)), 
+                        url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2053&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 5rem 0;
+            color: white;
+            text-align: center;
+        }
+
+        /* PNR Form */
+        .pnr-form {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            margin-top: -50px;
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            padding: 0.8rem 1rem;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(58, 134, 255, 0.25);
+        }
+
+        /* PNR Results */
+        .pnr-result {
+            display: none;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .pnr-status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-confirmed {
+            background: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+        }
+
+        .status-waiting {
+            background: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+        }
+
+        .status-cancelled {
+            background: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+        }
+
+        /* Passenger Table */
+        .passenger-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .passenger-table th {
+            background: #f8f9fa;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .passenger-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        /* Buttons */
+        .btn-pnr {
+            border-radius: 50px;
+            padding: 0.8rem 1.8rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-pnr {
+            background: var(--gradient);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary-pnr:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(58, 134, 255, 0.3);
+        }
+
+        /* FAQ Section */
+        .faq-item {
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .faq-header {
+            background: white;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-header:hover {
+            background: #f8f9fa;
+        }
+
+        .faq-body {
+            background: #f8f9fa;
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-body.show {
+            padding: 1rem 1.5rem;
+            max-height: 500px;
+        }
+
+        /* ========== Footer Styles ========== */
+        
+        .main-footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 0 0;
+            margin-top: 5rem;
+        }
+
+        .main-footer .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .main-footer .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .main-footer .footer-links i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .main-footer .btn-outline-light {
+            border-radius: 30px;
+            padding: 0.25rem 0.75rem;
+        }
+
+        .main-footer .payment-methods i {
+            opacity: 0.9;
+            transition: all 0.3s ease;
+        }
+
+        .main-footer .payment-methods i:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .main-footer .payment-group {
+            margin-right: 1.5rem;
+            padding-right: 1.5rem;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .main-footer .payment-group:last-child {
+            border-right: none;
+        }
+
+        .main-footer hr {
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .main-footer {
+    background: linear-gradient(135deg, #1d3c45 0%, #2a9d8f 100%);
+    color: white;
+    padding: 3rem 0 0;
+    margin-top: 5rem;
+}
+.main-footer .footer-links a:hover {
+    color: #2a9d8f !important;
+    transform: translateX(5px);
+}
+
+.social-icons a:hover {
+    background: #2a9d8f !important;
+    color: white !important;
+}
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .pnr-form {
+                padding: 1.5rem;
+            }
+            
+            .passenger-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="V2B.png" alt="Visa2Book" style="height: 120px; width: 140px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="my_trips.html">
+                            <i class="fas fa-suitcase-rolling"></i>
+                            <span>My Trips</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="modify_cancel_booking.html">
+                            <i class="fas fa-edit"></i>
+                            <span>Modify/Cancel</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        
+                        
+                        
+                        <a class="nav-link active" href="check_pnr_status.html">
+                            <i class="fas fa-search"></i>
+                            <span>PNR Status</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="refund_cancellation_policy.html">
+                            <i class="fas fa-file-contract"></i>
+                            <span>Refund Policy</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="pnr-hero">
+        <div class="container">
+            <h1 class="display-5 fw-bold mb-3">Check PNR Status</h1>
+            <p class="lead mb-0">Track your train or flight booking status in real-time</p>
+        </div>
+    </div>
+
+    <!-- PNR Form -->
+    <div class="container">
+        <div class="pnr-form">
+            <h2 class="mb-4">Enter PNR Details</h2>
+            <form id="pnrForm">
+                <div class="row">
+                    <div class="col-md-8 mb-3">
+                        <label for="pnrNumber" class="form-label">PNR Number</label>
+                        <input type="text" class="form-control" id="pnrNumber" placeholder="Enter 10-digit PNR number" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="travelDate" class="form-label">Travel Date</label>
+                        <input type="date" class="form-control" id="travelDate" required>
+                    </div>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary-pnr">
+                        <i class="fas fa-search me-2"></i> Check Status
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- PNR Results (Initially Hidden) -->
+        <div class="pnr-result" id="pnrResult">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h3 class="mb-1">PNR: <strong>PNR12345678</strong></h3>
+                    <p class="text-muted mb-0">Last Updated: May 10, 2023 at 14:30</p>
+                </div>
+                <div>
+                    <span class="pnr-status-badge status-confirmed">
+                        <i class="fas fa-check-circle me-1"></i> Confirmed
+                    </span>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <h6 class="text-muted mb-1">Train/Flight Number</h6>
+                        <p class="mb-0">AF 387 (Air France)</p>
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="text-muted mb-1">From</h6>
+                        <p class="mb-0">New York (JFK)</p>
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="text-muted mb-1">Departure</h6>
+                        <p class="mb-0">May 15, 2023 at 10:30 AM</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <h6 class="text-muted mb-1">Class</h6>
+                        <p class="mb-0">Business Class</p>
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="text-muted mb-1">To</h6>
+                        <p class="mb-0">Paris (CDG)</p>
+                    </div>
+                    <div class="mb-3">
+                        <h6 class="text-muted mb-1">Arrival</h6>
+                        <p class="mb-0">May 16, 2023 at 8:15 AM</p>
+                    </div>
+                </div>
+            </div>
+
+            <h4 class="mb-3">Passenger Details</h4>
+            <div class="table-responsive">
+                <table class="passenger-table">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Passenger Name</th>
+                            <th>Age/Gender</th>
+                            <th>Status</th>
+                            <th>Seat/Berth</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Sarah Johnson</td>
+                            <td>32/F</td>
+                            <td><span class="pnr-status-badge status-confirmed">Confirmed</span></td>
+                            <td>12A</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Michael Johnson</td>
+                            <td>35/M</td>
+                            <td><span class="pnr-status-badge status-confirmed">Confirmed</span></td>
+                            <td>12B</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="alert alert-info mt-4">
+                <i class="fas fa-info-circle me-2"></i> 
+                <strong>Note:</strong> PNR status is updated in real-time. For latest updates, check again closer to your travel date.
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="container my-5 py-5">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-title">PNR Status FAQs</h2>
+                <p class="lead">Common questions about PNR status checking</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="faq-item">
+                    <div class="faq-header" onclick="toggleFAQ(this)">
+                        <h5>What is a PNR number?</h5>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-body">
+                        <p>PNR (Passenger Name Record) is a unique 10-digit number assigned to your booking when you make a reservation. It helps identify your journey details in the system.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-header" onclick="toggleFAQ(this)">
+                        <h5>Where can I find my PNR number?</h5>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-body">
+                        <p>Your PNR number is provided in your booking confirmation email and SMS. It's also printed on your e-ticket or physical ticket.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-header" onclick="toggleFAQ(this)">
+                        <h5>How often is PNR status updated?</h5>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-body">
+                        <p>PNR status is updated in real-time as changes occur in the system. However, for flights, the status typically becomes final 48 hours before departure.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-header" onclick="toggleFAQ(this)">
+                        <h5>What does "Waitlisted" status mean?</h5>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-body">
+                        <p>A Waitlisted status means your booking hasn't been confirmed yet. You'll be automatically confirmed if seats become available due to cancellations.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-header" onclick="toggleFAQ(this)">
+                        <h5>Can I check PNR status without internet?</h5>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-body">
+                        <p>Yes, you can check PNR status via SMS by sending your PNR number to the designated railway/airline shortcode.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<footer class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase mb-4">Company Information</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-info-circle me-2"></i> About</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-envelope me-2"></i> Contact Us</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-shield-alt me-2"></i> Privacy Policy</a></li>
+                        <li><a href="#" class="text-white"><i class="fas fa-file-contract me-2"></i> Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase mb-4">Quick Links</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-undo me-2"></i> Refund Policy</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-question-circle me-2"></i> FAQs</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-headset me-2"></i> Customer Support</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="text-uppercase mb-4">Connect With Us</h5>
+                    <ul class="list-unstyled footer-links mb-4">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-facebook-f me-2"></i> Facebook</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-twitter me-2"></i> Twitter</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-instagram me-2"></i> Instagram</a></li>
+                        <li><a href="#" class="text-white"><i class="fab fa-linkedin-in me-2"></i> LinkedIn</a></li>
+                    </ul>
+                    <div class="mb-4">
+                        <h6 class="mb-3">Download Our App</h6>
+                        <div class="d-flex gap-2">
+                            <a href="#" class="btn btn-sm btn-outline-light">
+                                <i class="fab fa-apple me-2"></i> App Store
+                            </a>
+                            <a href="#" class="btn btn-sm btn-outline-light">
+                                <i class="fab fa-google-play me-2"></i> Play Store
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4 bg-light opacity-10">
+
+            <!-- Payment Methods -->
+            <div class="row align-items-center py-3">
+                <div class="col-md-8 mb-3 mb-md-0">
+                    <h6 class="mb-3">Accepted Payment Methods:</h6>
+                    <div class="payment-methods d-flex flex-wrap gap-3 align-items-center">
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fab fa-cc-visa fa-2x me-2" style="color: #1a1f71;"></i>
+                            <i class="fab fa-cc-mastercard fa-2x me-3" style="color: #eb001b;"></i>
+                            <span class="text-white-50">Cards</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fas fa-rupee-sign fa-2x me-2" style="color: #6cbe45;"></i>
+                            <span class="text-white-50">UPI</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fab fa-google-pay fa-2x me-2" style="color: #4285f4;"></i>
+                            <i class="fas fa-wallet fa-2x me-3" style="color: #ff9500;"></i>
+                            <span class="text-white-50">Wallets</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <span class="badge bg-light text-dark me-2">Pay Later:</span>
+                            <span class="badge bg-primary me-2">Simple Pay</span>
+                            <span class="badge bg-info text-dark">Lazy Pay</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <div class="d-flex flex-column">
+                        <p class="mb-2"><i class="fas fa-phone-alt me-2"></i> 24/7 Support: +1 (555) 987-6543</p>
+                        <p class="mb-0"><i class="fas fa-envelope me-2"></i> support@visa2book.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Form submission to show results
+        document.getElementById('pnrForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('pnrResult').style.display = 'block';
+            window.scrollTo({
+                top: document.getElementById('pnrResult').offsetTop - 100,
+                behavior: 'smooth'
+            });
+        });
+
+        // FAQ toggle functionality
+        function toggleFAQ(element) {
+            const faqBody = element.nextElementSibling;
+            const icon = element.querySelector('i');
+            
+            faqBody.classList.toggle('show');
+            icon.classList.toggle('fa-chevron-down');
+            icon.classList.toggle('fa-chevron-up');
+        }
+    </script>
+</body>
+</html>

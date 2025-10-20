@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homestays - Visa2Book</title>
+    <link rel="shortcut icon" href="V2B.png" type="image/x-icon">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #10b981;
+            --secondary-color: #059669;
+            --accent-color: #f59e0b;
+            --dark-color: #1e293b;
+            --light-color: #f8fafc;
+        }
+
+        body {
+            background-color: #f0fdf4;
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 1rem;
+        }
+
+        .navbar-brand img {
+            height: 155px;
+            width: 175px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand:hover img {
+            transform: scale(1.05);
+        }
+
+        .nav-link {
+            color: var(--dark-color) !important;
+            font-weight: 500;
+            padding: 0.75rem 1.25rem !important;
+            margin: 0 0.25rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .nav-link i {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .nav-link span {
+            font-size: 0.85rem;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-color) !important;
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .nav-link.active {
+            color: white !important;
+            background: var(--primary-color);
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                        url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center;
+            background-size: cover;
+            height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+
+
+        /* Counter Dropdown Styles */
+.dropdown-toggle {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    height: 58px;
+    text-align: left;
+}
+
+.dropdown-menu {
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(16, 185, 129, 0.1);
+}
+
+.counter-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid var(--primary-color);
+    background: white;
+    color: var(--primary-color);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.counter-btn:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+.counter-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: #ccc;
+    color: #ccc;
+}
+
+.counter-btn:disabled:hover {
+    background: white;
+    color: #ccc;
+}
+
+.counter-value {
+    min-width: 30px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.form-check-input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+        .search-container {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: -80px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .search-card {
+            background: var(--light-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            height: 100%;
+            border: 1px solid #dcfce7;
+        }
+
+        .search-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .search-card img {
+            height: 120px;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .homestay-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            height: 100%;
+            margin-bottom: 1.5rem;
+            border: 1px solid #dcfce7;
+        }
+
+        .homestay-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .homestay-img {
+            height: 220px;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .homestay-card:hover .homestay-img {
+            transform: scale(1.03);
+        }
+
+        .homestay-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .rating-badge {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .amenity-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .price small {
+            font-size: 0.9rem;
+            color: #64748b;
+            font-weight: 400;
+        }
+
+        .btn-book {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-book:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .filter-section {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+            border: 1px solid #dcfce7;
+        }
+
+        .filter-title {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #dcfce7;
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            font-size: 1.25rem;
+        }
+
+        .host-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+        }
+
+        .main-footer {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: white;
+    padding: 3rem 0 1rem;
+    margin-top: auto;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.footer-links a:hover {
+    color: var(--primary-color);
+    transform: translateX(5px);
+}
+
+.payment-methods i {
+    transition: transform 0.3s ease;
+}
+
+.payment-methods i:hover {
+    transform: scale(1.2);
+}
+
+.btn-outline-light {
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-light:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.25rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .navbar-brand img {
+                height: 120px;
+                width: 140px;
+            }
+            
+            .nav-link {
+                padding: 0.5rem !important;
+                min-width: 70px;
+            }
+            
+            .nav-link i {
+                font-size: 1rem;
+            }
+            
+            .nav-link span {
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="V2B.png" alt="Visa2Book" style="height: 120px; width: 140px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="hotels.html">
+                            <i class="fas fa-hotel"></i>
+                            <span>Hotels</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="resorts.html">
+                            <i class="fas fa-umbrella-beach"></i>
+                            <span>Resorts</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="homestays.html">
+                            <i class="fas fa-house-user"></i>
+                            <span>Homestays</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="hostels.html">
+                            <i class="fas fa-bed"></i>
+                            <span>Hostels</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">Authentic Homestay Experiences</h1>
+            <p class="hero-subtitle">Live like a local with welcoming hosts, home-cooked meals, and unique cultural experiences</p>
+        </div>
+    </div>
+
+    <!-- Search Section -->
+    <div class="container">
+        <div class="search-container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="search-card text-center">
+                        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="City Homestays">
+                        <h5>City Homestays</h5>
+                        <p class="text-muted">Experience urban living with local families</p>
+                        <a href="#" class="btn btn-primary btn-sm">Explore</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="search-card text-center">
+                        <img src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Village Homestays">
+                        <h5>Village Homestays</h5>
+                        <p class="text-muted">Traditional rural life and cultural immersion</p>
+                        <a href="#" class="btn btn-primary btn-sm">Explore</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="search-card text-center">
+                        <img src="https://images.unsplash.com/photo-1601918774946-25832a4be0d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Farmstays">
+                        <h5>Farmstays</h5>
+                        <p class="text-muted">Agricultural experiences and fresh farm food</p>
+                        <a href="#" class="btn btn-primary btn-sm">Explore</a>
+                    </div>
+                </div>
+            </div>
+            
+            <form class="mt-4">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="destination" placeholder="Destination">
+                            <label for="destination"><i class="fas fa-map-marker-alt me-2"></i> Where do you want to stay?</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-floating">
+                            <input type="date" class="form-control" id="checkin" placeholder="Check-in">
+                            <label for="checkin"><i class="far fa-calendar me-2"></i> Check-in</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-floating">
+                            <input type="date" class="form-control" id="checkout" placeholder="Check-out">
+                            <label for="checkout"><i class="far fa-calendar me-2"></i> Check-out</label>
+                        </div>
+                    </div>
+                     <!-- Guests Dropdown -->
+                <div class="col-md-6">
+                    <div class="dropdown guest-dropdown">
+                        <button class="btn btn-light dropdown-toggle w-100 text-start py-3" type="button" id="guestDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-friends me-2"></i>
+                            <span id="guestSummary">2 Guests</span>
+                        </button>
+                        <ul class="dropdown-menu w-100 p-3" aria-labelledby="guestDropdown">
+                            <li class="dropdown-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span>Adults</span>
+                                    <div class="d-flex align-items-center">
+                                        <button type="button" class="counter-btn minus" data-target="adults">-</button>
+                                        <span class="counter-value mx-2" id="adults">0</span>
+                                        <button type="button" class="counter-btn plus" data-target="adults">+</button>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="dropdown-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span>Children (2-12)</span>
+                                    <div class="d-flex align-items-center">
+                                        <button type="button" class="counter-btn minus" data-target="children">-</button>
+                                        <span class="counter-value mx-2" id="children">0</span>
+                                        <button type="button" class="counter-btn plus" data-target="children">+</button>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="dropdown-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span>Seniors (60+)</span>
+                                    <div class="d-flex align-items-center">
+                                        <button type="button" class="counter-btn minus" data-target="seniors">-</button>
+                                        <span class="counter-value mx-2" id="seniors">0</span>
+                                        <button type="button" class="counter-btn plus" data-target="seniors">+</button>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Accommodation Dropdown -->
+                <div class="col-md-3">
+                    <div class="dropdown room-dropdown">
+                        <button class="btn btn-light dropdown-toggle w-100 text-start py-3" type="button" id="roomDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-bed me-2"></i> 
+                            <span id="roomSummary">1 Room</span>
+                        </button>
+                        <ul class="dropdown-menu w-100 p-3" aria-labelledby="roomDropdown">
+                            <li class="dropdown-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span>Rooms</span>
+                                    <div class="d-flex align-items-center">
+                                        <button type="button" class="counter-btn minus" data-target="rooms">-</button>
+                                        <span class="counter-value mx-2" id="rooms">1</span>
+                                        <button type="button" class="counter-btn plus" data-target="rooms">+</button>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="dropdown-item">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="entireHome">
+                                    <label class="form-check-label" for="entireHome">
+                                        Entire Home
+                                    </label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+               
+                    <div class="col-md-3">
+                        <div class="form-floating">
+                            <select class="form-select" id="type">
+                                <option selected>Any Homestay Type</option>
+                                <option>City Homestay</option>
+                                <option>Village Homestay</option>
+                                <option>Farmstay</option>
+                                <option>Heritage Home</option>
+                                <option>Eco Homestay</option>
+                            </select>
+                            <label for="type"><i class="fas fa-home me-2"></i> Homestay Type</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-primary w-100 h-100">
+                            <i class="fas fa-search me-2"></i> Find Homestays
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Homestay Features -->
+    <div class="container my-5">
+        <div class="text-center mb-5">
+            <h2 class="mb-3">Why Choose Homestays?</h2>
+            <p class="text-muted">Experience authentic local living with these unique benefits</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="text-center p-3">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h5>Warm Hospitality</h5>
+                    <p class="text-muted">Personal care from your local hosts</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center p-3">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h5>Home-Cooked Meals</h5>
+                    <p class="text-muted">Authentic local cuisine prepared fresh</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center p-3">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-rupee-sign"></i>
+                    </div>
+                    <h5>Budget-Friendly</h5>
+                    <p class="text-muted">Affordable alternative to hotels</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center p-3">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h5>Local Insights</h5>
+                    <p class="text-muted">Discover hidden gems only locals know</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Homestay Listings -->
+    <div class="container my-5">
+        <div class="row">
+            <!-- Filters -->
+            <div class="col-lg-3">
+                <div class="filter-section">
+                    <h5 class="filter-title"><i class="fas fa-sliders-h me-2"></i> Refine Your Search</h5>
+                    
+                    <div class="mb-4">
+                        <h6><i class="fas fa-indian-rupee-sign me-2"></i> Price Range</h6>
+                        <input type="range" class="form-range" id="priceRange" min="500" max="5000" step="100" value="2000">
+                        <div class="d-flex justify-content-between">
+                            <span>₹500</span>
+                            <span>₹5,000+</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h6><i class="fas fa-home me-2"></i> Homestay Type</h6>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="city" checked>
+                            <label class="form-check-label" for="city">
+                                City Homestay
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="village" checked>
+                            <label class="form-check-label" for="village">
+                                Village Homestay
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="farmstay">
+                            <label class="form-check-label" for="farmstay">
+                                Farmstay
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h6><i class="fas fa-check-circle me-2"></i> Amenities</h6>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="meals" checked>
+                            <label class="form-check-label" for="meals">
+                                Meals Included
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="wifi">
+                            <label class="form-check-label" for="wifi">
+                                Free WiFi
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="family">
+                            <label class="form-check-label" for="family">
+                                Family Friendly
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="activities">
+                            <label class="form-check-label" for="activities">
+                                Local Activities
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary w-100">Apply Filters</button>
+                </div>
+            </div>
+            
+            <!-- Homestay Listings -->
+            <div class="col-lg-9">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="mb-0">Featured Homestays in India</h4>
+                    <div>
+                        <span class="me-3">Sort by:</span>
+                        <div class="btn-group">
+                            <button class="btn btn-outline-primary btn-sm active">Recommended</button>
+                            <button class="btn btn-outline-primary btn-sm">Price</button>
+                            <button class="btn btn-outline-primary btn-sm">Rating</button>
+                            <button class="btn btn-outline-primary btn-sm">Host Language</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <!-- Homestay 1 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="homestay-card">
+                            <div class="position-relative">
+                                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="homestay-img" alt="Heritage Homestay">
+                                <span class="homestay-badge">Heritage Home</span>
+                            </div>
+                            <div class="p-3">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="mb-0">Chettinad Heritage Home</h5>
+                                    <span class="rating-badge">4.8 <i class="fas fa-star ms-1"></i></span>
+                                </div>
+                                <p class="text-muted mb-2"><i class="fas fa-map-marker-alt me-2"></i> Karaikudi, Tamil Nadu</p>
+                                
+                                <div class="d-flex align-items-center mb-3">
+                                    <img src="https://randomuser.me/api/portraits/women/45.jpg" class="host-img me-3" alt="Host">
+                                    <div>
+                                        <p class="mb-0 fw-bold">Hosted by Lakshmi</p>
+                                        <small class="text-muted">Speaks English, Tamil</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <p class="mb-1"><i class="fas fa-utensils amenity-icon"></i> Authentic Chettinad meals</p>
+                                    <p class="mb-1"><i class="fas fa-home amenity-icon"></i> Heritage mansion</p>
+                                    <p class="mb-0"><i class="fas fa-hands-helping amenity-icon"></i> Cooking classes</p>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="price">₹2,500</span>
+                                        <small>/ night</small>
+                                    </div>
+                                    <button class="btn-book">Book Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Homestay 2 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="homestay-card">
+                            <div class="position-relative">
+                                <img src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="homestay-img" alt="Goan Villa">
+                                <span class="homestay-badge">Family Friendly</span>
+                            </div>
+                            <div class="p-3">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="mb-0">Goan Portuguese Villa</h5>
+                                    <span class="rating-badge">4.9 <i class="fas fa-star ms-1"></i></span>
+                                </div>
+                                <p class="text-muted mb-2"><i class="fas fa-map-marker-alt me-2"></i> Panjim, Goa</p>
+                                
+                                <div class="d-flex align-items-center mb-3">
+                                    <img src="https://randomuser.me/api/portraits/men/32.jpg" class="host-img me-3" alt="Host">
+                                    <div>
+                                        <p class="mb-0 fw-bold">Hosted by Fernando</p>
+                                        <small class="text-muted">Speaks English, Konkani</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <p class="mb-1"><i class="fas fa-swimming-pool amenity-icon"></i> Private pool</p>
+                                    <p class="mb-1"><i class="fas fa-bicycle amenity-icon"></i> Bicycles provided</p>
+                                    <p class="mb-0"><i class="fas fa-fish amenity-icon"></i> Seafood cooking demo</p>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="price">₹3,200</span>
+                                        <small>/ night</small>
+                                    </div>
+                                    <button class="btn-book">Book Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Homestay 3 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="homestay-card">
+                            <div class="position-relative">
+                                <img src="https://images.unsplash.com/photo-1601918774946-25832a4be0d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="homestay-img" alt="Organic Farmstay">
+                                <span class="homestay-badge">Eco Friendly</span>
+                            </div>
+                            <div class="p-3">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="mb-0">Organic Farmstay</h5>
+                                    <span class="rating-badge">4.7 <i class="fas fa-star ms-1"></i></span>
+                                </div>
+                                <p class="text-muted mb-2"><i class="fas fa-map-marker-alt me-2"></i> Coorg, Karnataka</p>
+                                
+                                <div class="d-flex align-items-center mb-3">
+                                    <img src="https://randomuser.me/api/portraits/women/68.jpg" class="host-img me-3" alt="Host">
+                                    <div>
+                                        <p class="mb-0 fw-bold">Hosted by Priya</p>
+                                        <small class="text-muted">Speaks English, Kannada</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <p class="mb-1"><i class="fas fa-leaf amenity-icon"></i> Organic farm-to-table meals</p>
+                                    <p class="mb-1"><i class="fas fa-coffee amenity-icon"></i> Coffee plantation tour</p>
+                                    <p class="mb-0"><i class="fas fa-hiking amenity-icon"></i> Nature walks</p>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="price">₹1,800</span>
+                                        <small>/ night</small>
+                                    </div>
+                                    <button class="btn-book">Book Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Homestay 4 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="homestay-card">
+                            <div class="position-relative">
+                                <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="homestay-img" alt="Himalayan Homestay">
+                                <span class="homestay-badge">Mountain View</span>
+                            </div>
+                            <div class="p-3">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="mb-0">Himalayan Cottage</h5>
+                                    <span class="rating-badge">4.9 <i class="fas fa-star ms-1"></i></span>
+                                </div>
+                                <p class="text-muted mb-2"><i class="fas fa-map-marker-alt me-2"></i> Manali, Himachal</p>
+                                
+                                <div class="d-flex align-items-center mb-3">
+                                    <img src="https://randomuser.me/api/portraits/men/55.jpg" class="host-img me-3" alt="Host">
+                                    <div>
+                                        <p class="mb-0 fw-bold">Hosted by Rajesh</p>
+                                        <small class="text-muted">Speaks English, Hindi</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <p class="mb-1"><i class="fas fa-mountain amenity-icon"></i> Panoramic mountain views</p>
+                                    <p class="mb-1"><i class="fas fa-fire amenity-icon"></i> Bonfire nights</p>
+                                    <p class="mb-0"><i class="fas fa-route amenity-icon"></i> Trekking guidance</p>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="price">₹2,200</span>
+                                        <small>/ night</small>
+                                    </div>
+                                    <button class="btn-book">Book Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Homestay 5 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="homestay-card">
+                            <div class="position-relative">
+                                <img src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="homestay-img" alt="Kerala Houseboat">
+                                <span class="homestay-badge">Unique Stay</span>
+                            </div>
+                            <div class="p-3">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="mb-0">Kerala Houseboat</h5>
+                                    <span class="rating-badge">4.8 <i class="fas fa-star ms-1"></i></span>
+                                </div>
+                                <p class="text-muted mb-2"><i class="fas fa-map-marker-alt me-2"></i> Alleppey, Kerala</p>
+                                
+                                <div class="d-flex align-items-center mb-3">
+                                    <img src="https://randomuser.me/api/portraits/men/68.jpg" class="host-img me-3" alt="Host">
+                                    <div>
+                                        <p class="mb-0 fw-bold">Hosted by Mohan</p>
+                                        <small class="text-muted">Speaks English, Malayalam</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <p class="mb-1"><i class="fas fa-water amenity-icon"></i> Backwater cruise</p>
+                                    <p class="mb-1"><i class="fas fa-fish amenity-icon"></i> Fresh catch meals</p>
+                                    <p class="mb-0"><i class="fas fa-umbrella-beach amenity-icon"></i> Village visits</p>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="price">₹3,500</span>
+                                        <small>/ night</small>
+                                    </div>
+                                    <button class="btn-book">Book Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Homestay 6 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="homestay-card">
+                            <div class="position-relative">
+                                <img src="https://images.unsplash.com/photo-1566669437689-1d0a1a0c127e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="homestay-img" alt="Rajasthan Haveli">
+                                <span class="homestay-badge">Cultural Experience</span>
+                            </div>
+                            <div class="p-3">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="mb-0">Rajasthani Haveli</h5>
+                                    <span class="rating-badge">4.9 <i class="fas fa-star ms-1"></i></span>
+                                </div>
+                                <p class="text-muted mb-2"><i class="fas fa-map-marker-alt me-2"></i> Jodhpur, Rajasthan</p>
+                                
+                                <div class="d-flex align-items-center mb-3">
+                                    <img src="https://randomuser.me/api/portraits/women/55.jpg" class="host-img me-3" alt="Host">
+                                    <div>
+                                        <p class="mb-0 fw-bold">Hosted by Kavita</p>
+                                        <small class="text-muted">Speaks English, Hindi</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <p class="mb-1"><i class="fas fa-archway amenity-icon"></i> 150-year-old mansion</p>
+                                    <p class="mb-1"><i class="fas fa-music amenity-icon"></i> Folk music nights</p>
+                                    <p class="mb-0"><i class="fas fa-tshirt amenity-icon"></i> Traditional attire</p>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="price">₹2,800</span>
+                                        <small>/ night</small>
+                                    </div>
+                                    <button class="btn-book">Book Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <nav aria-label="Page navigation" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Previous</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="bg-light py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2>What Our Guests Say</h2>
+                <p class="text-muted">Hear from travelers who've experienced our homestays</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                            </div>
+                            <p class="card-text">"Staying at the Chettinad Heritage Home was the highlight of our South India trip. Lakshmi's hospitality and the authentic meals made us feel like family."</p>
+                            <div class="d-flex align-items-center mt-3">
+                                <img src="https://randomuser.me/api/portraits/women/32.jpg" class="rounded-circle me-3" width="50" alt="Guest">
+                                <div>
+                                    <h6 class="mb-0">Priya Sharma</h6>
+                                    <small class="text-muted">Mumbai, India</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                            </div>
+                            <p class="card-text">"Fernando's Goan villa was paradise! His local tips helped us discover hidden beaches and restaurants we'd never have found on our own."</p>
+                            <div class="d-flex align-items-center mt-3">
+                                <img src="https://randomuser.me/api/portraits/men/45.jpg" class="rounded-circle me-3" width="50" alt="Guest">
+                                <div>
+                                    <h6 class="mb-0">Rahul Patel</h6>
+                                    <small class="text-muted">Delhi, India</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star-half-alt text-warning"></i>
+                            </div>
+                            <p class="card-text">"The Coorg farmstay was magical. Waking up to misty coffee plantations and eating fresh organic food was an experience we'll cherish forever."</p>
+                            <div class="d-flex align-items-center mt-3">
+                                <img src="https://randomuser.me/api/portraits/women/68.jpg" class="rounded-circle me-3" width="50" alt="Guest">
+                                <div>
+                                    <h6 class="mb-0">Ananya Gupta</h6>
+                                    <small class="text-muted">Bangalore, India</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Host Section -->
+    <div class="container my-5 py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <img src="https://images.unsplash.com/photo-1582719471381-cdfb8c9bf128?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="img-fluid rounded" alt="Become a Host">
+            </div>
+            <div class="col-lg-6">
+                <h2>Become a Homestay Host</h2>
+                <p class="lead">Share your home and culture with travelers from around the world</p>
+                <ul class="list-unstyled">
+                    <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i> Earn extra income from your spare room</li>
+                    <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i> Meet interesting people from different cultures</li>
+                    <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i> Showcase your local traditions and cuisine</li>
+                    <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i> Get support from our dedicated host team</li>
+                </ul>
+                <button class="btn btn-primary btn-lg">Learn More About Hosting</button>
+            </div>
+        </div>
+    </div>
+
+   <!-- Footer -->
+<footer class="main-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <h5 class="text-uppercase mb-4">Company Information</h5>
+                <ul class="list-unstyled footer-links">
+                    <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-info-circle me-2"></i> About</a></li>
+                    <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-envelope me-2"></i> Contact Us</a></li>
+                    <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-shield-alt me-2"></i> Privacy Policy</a></li>
+                    <li><a href="#" class="text-white"><i class="fas fa-file-contract me-2"></i> Terms & Conditions</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <h5 class="text-uppercase mb-4">Quick Links</h5>
+                <ul class="list-unstyled footer-links">
+                    <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-undo me-2"></i> Refund Policy</a></li>
+                    <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-question-circle me-2"></i> FAQs</a></li>
+                    <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-headset me-2"></i> Customer Support</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4">
+                <h5 class="text-uppercase mb-4">Connect With Us</h5>
+                <ul class="list-unstyled footer-links mb-4">
+                    <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-facebook-f me-2"></i> Facebook</a></li>
+                    <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-twitter me-2"></i> Twitter</a></li>
+                    <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-instagram me-2"></i> Instagram</a></li>
+                    <li><a href="#" class="text-white"><i class="fab fa-linkedin-in me-2"></i> LinkedIn</a></li>
+                </ul>
+                <div class="mb-4">
+                    <h6 class="mb-3">Download Our App</h6>
+                    <div class="d-flex gap-2">
+                        <a href="#" class="btn btn-sm btn-outline-light">
+                            <i class="fab fa-apple me-2"></i> App Store
+                        </a>
+                        <a href="#" class="btn btn-sm btn-outline-light">
+                            <i class="fab fa-google-play me-2"></i> Play Store
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="my-4 bg-light opacity-10">
+
+        <!-- Payment Methods -->
+        <div class="row align-items-center py-3">
+            <div class="col-md-8 mb-3 mb-md-0">
+                <h6 class="mb-3">Accepted Payment Methods:</h6>
+                <div class="payment-methods d-flex flex-wrap gap-3 align-items-center">
+                    <div class="payment-group d-flex align-items-center">
+                        <i class="fab fa-cc-visa fa-2x me-2" style="color: #1a1f71;"></i>
+                        <i class="fab fa-cc-mastercard fa-2x me-3" style="color: #eb001b;"></i>
+                        <span class="text-white-50">Cards</span>
+                    </div>
+                    
+                    <div class="payment-group d-flex align-items-center">
+                        <i class="fas fa-rupee-sign fa-2x me-2" style="color: #6cbe45;"></i>
+                        <span class="text-white-50">UPI</span>
+                    </div>
+                    
+                    <div class="payment-group d-flex align-items-center">
+                        <i class="fab fa-google-pay fa-2x me-2" style="color: #4285f4;"></i>
+                        <i class="fas fa-wallet fa-2x me-3" style="color: #ff9500;"></i>
+                        <span class="text-white-50">Wallets</span>
+                    </div>
+                    
+                    <div class="payment-group d-flex align-items-center">
+                        <span class="badge bg-light text-dark me-2">Pay Later:</span>
+                        <span class="badge bg-primary me-2">Simple Pay</span>
+                        <span class="badge bg-info text-dark">Lazy Pay</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 text-md-end">
+                <div class="d-flex flex-column">
+                    <p class="mb-2"><i class="fas fa-phone-alt me-2"></i> 24/7 Support: +1 (555) 987-6543</p>
+                    <p class="mb-0"><i class="fas fa-envelope me-2"></i> support@visa2book.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize counters
+            const counters = {
+                adults: 2,
+                children: 0,
+                seniors: 0,
+                rooms: 1
+            };
+    
+            // Update summary text
+            function updateSummary() {
+                const guestSummary = [];
+                if (counters.adults > 0) guestSummary.push(`${counters.adults} Adult${counters.adults > 1 ? 's' : ''}`);
+                if (counters.children > 0) guestSummary.push(`${counters.children} Child${counters.children > 1 ? 'ren' : ''}`);
+                if (counters.seniors > 0) guestSummary.push(`${counters.seniors} Senior${counters.seniors > 1 ? 's' : ''}`);
+                
+                document.getElementById('guestSummary').textContent = 
+                    guestSummary.length > 0 ? guestSummary.join(', ') : '0 Guests';
+                
+                const entireHome = document.getElementById('entireHome').checked;
+                document.getElementById('roomSummary').textContent = 
+                    entireHome ? 'Entire Home' : `${counters.rooms} Room${counters.rooms > 1 ? 's' : ''}`;
+            }
+    
+            // Handle counter buttons
+            document.querySelectorAll('.counter-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const target = this.getAttribute('data-target');
+                    const isPlus = this.classList.contains('plus');
+                    
+                    if (isPlus) {
+                        counters[target]++;
+                    } else if (counters[target] > (target === 'rooms' ? 1 : 0)) {
+                        counters[target]--;
+                    }
+                    
+                    document.getElementById(target).textContent = counters[target];
+                    updateSummary();
+                });
+            });
+    
+            // Handle entire home checkbox
+            document.getElementById('entireHome').addEventListener('change', updateSummary);
+    
+            // Initialize
+            document.getElementById('adults').textContent = counters.adults;
+            updateSummary();
+        });
+    </script>
+</body>
+</html>

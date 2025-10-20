@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holiday Packages - Visa2Book</title>
+    <link rel="shortcut icon" href="V2B.png" type="image/x-icon">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2a4b7c;
+            --secondary-color: #5b8cba;
+            --accent-color: #ff7e5f;
+            --dark-color: #1a2a3a;
+            --light-color: #f8f9fa;
+        }
+
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                        url('https://images.unsplash.com/photo-1505832018823-50331d70d237?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2108&q=80') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--light-color);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+         /* Navigation Bar */
+         .navbar {
+            background: rgba(26, 42, 58, 0.9) !important;
+            backdrop-filter: blur(8px);
+            padding: 0.5rem 1rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .navbar-brand img {
+            height: 155px;
+            width: 175px;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+        
+        .navbar-brand img:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-link {
+            color: white !important;
+            font-weight: 500;
+            padding: 0.75rem 1.25rem !important;
+            margin: 0 5px;
+            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-link i {
+            margin-right: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .nav-link.active {
+            background: linear-gradient(135deg, rgba(28, 218, 73, 0.3), rgba(28, 218, 73, 0.1));
+            color: white !important;
+            border-left: 3px solid var(--accent-color);
+        }
+        
+        .nav-link.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(28, 218, 73, 0.2), transparent);
+            z-index: -1;
+        }
+        .hero-section {
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .search-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: -50px auto 3rem auto;
+            width: 90%;
+            max-width: 1000px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            transform: translateY(-50px);
+        }
+
+        .search-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+            position: relative;
+        }
+
+        .search-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--accent-color);
+        }
+
+        /* Enhanced search section */
+        .search-feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .search-feature i {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-right: 0.8rem;
+            width: 25px;
+            text-align: center;
+        }
+
+        .search-feature-text {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .content-wrapper {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            font-weight: 600;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--accent-color);
+        }
+
+        /* Add this to your CSS */
+.form-floating label {
+    color: #666; /* Dark gray color */
+    opacity: 0.8;
+    transition: all 0.2s ease;
+}
+
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label,
+.form-floating > .form-select ~ label {
+    color: var(--primary-color); /* Use your primary color when focused/active */
+    opacity: 1;
+    transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+}
+
+/* Style for the icons in the labels */
+.form-floating label i {
+    margin-right: 8px;
+    transition: all 0.2s ease;
+}
+
+.form-floating > .form-control:focus ~ label i,
+.form-floating > .form-control:not(:placeholder-shown) ~ label i,
+.form-floating > .form-select ~ label i {
+    color: var(--accent-color); /* Accent color for icons when focused/active */
+}
+        .intro-text {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        /* Consistent package card sizing */
+        .package-card {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            height: 100%;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .package-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .package-img-container {
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .package-img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .package-card:hover .package-img {
+            transform: scale(1.05);
+        }
+
+        .package-body {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .package-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.75rem;
+            font-size: 1.25rem;
+            min-height: 60px;
+        }
+
+        .package-destination {
+            color: var(--secondary-color);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .package-duration {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .package-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .package-price span {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .btn-explore {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: auto;
+        }
+
+        .btn-explore:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(42, 75, 124, 0.3);
+        }
+
+        .package-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 1;
+        }
+
+        /* Advanced search filters */
+        .search-advanced {
+            background: rgba(248, 249, 250, 0.8);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .search-advanced-title {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .search-advanced-title i {
+            margin-right: 0.5rem;
+            transition: transform 0.3s;
+        }
+
+        .search-advanced-content {
+            display: none;
+            padding-top: 1rem;
+        }
+
+        .search-advanced.active .search-advanced-title i {
+            transform: rotate(90deg);
+        }
+
+        .search-advanced.active .search-advanced-content {
+            display: block;
+        }
+
+        footer {
+            background: rgba(26, 42, 58, 0.9);
+            color: white;
+            padding: 3rem 0;
+            margin-top: auto;
+        }
+
+        .footer-logo img {
+            height: 120px;
+            width: auto;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links h5 {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.2rem;
+            margin-right: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1.5rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        @media (max-width: 1200px) {
+            .nav-link {
+                padding: 0.5rem 0.8rem !important;
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .navbar-brand img {
+                height: 120px;
+                width: 140px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .search-container {
+                padding: 1.5rem;
+                transform: translateY(-30px);
+            }
+
+            .navbar-brand img {
+                height: 100px;
+                width: 120px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .search-container {
+                padding: 1.25rem;
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="V2B.png" alt="Visa2Book" style="height: 120px; width: 140px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="fas fa-home"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="itinerary_planner.html"><i class="fas fa-route"></i> Itinerary Planner</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="multi_city_booking.html"><i class="fas fa-map-marked-alt"></i> Multi City Booking</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="group_travel.html"><i class="fas fa-users"></i> Group Travel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="holiday_packages.html"><i class="fas fa-gift"></i> Holiday Packages</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Discover India's Hidden Gems</h1>
+            <p class="hero-subtitle">
+                From the snow-capped Himalayas to the sun-kissed beaches of Goa, India offers diverse landscapes and 
+                rich cultural experiences. Explore our curated holiday packages for unforgettable journeys across this incredible country.
+            </p>
+        </div>
+    </div>
+
+    <!-- Enhanced Search Section -->
+    <div class="search-container">
+        <h2 class="search-title"><i class="fas fa-search me-2"></i> Find Your Perfect Holiday</h2>
+        
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="destination" placeholder="Destination">
+                    <label for="destination"><i class="fas fa-map-marker-alt me-2"></i> Destination</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="travelDate" placeholder="Travel Dates">
+                    <label for="travelDate"><i class="far fa-calendar-alt me-2"></i> Travel Dates</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-floating">
+                    <select class="form-select" id="packageType">
+                        <option value="">All Types</option>
+                        <option>Beach Vacation</option>
+                        <option>Mountain Retreat</option>
+                        <option>Cultural Tour</option>
+                        <option>Adventure</option>
+                        <option>Wildlife Safari</option>
+                    </select>
+                    <label for="packageType"><i class="fas fa-umbrella-beach me-2"></i> Package Type</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-floating">
+                    <select class="form-select" id="duration">
+                        <option value="">Any Duration</option>
+                        <option>Weekend (2-3 days)</option>
+                        <option>Short Break (4-6 days)</option>
+                        <option>1 Week</option>
+                        <option>2 Weeks</option>
+                    </select>
+                    <label for="duration"><i class="far fa-clock me-2"></i> Duration</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-floating">
+                    <select class="form-select" id="budget">
+                        <option value="">Any Budget</option>
+                        <option>Economy (₹10,000-₹25,000)</option>
+                        <option>Standard (₹25,000-₹50,000)</option>
+                        <option>Premium (₹50,000-₹1,00,000)</option>
+                        <option>Luxury (₹1,00,000+)</option>
+                    </select>
+                    <label for="budget"><i class="fas fa-rupee-sign me-2"></i> Budget</label>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Advanced Search Features -->
+        <div class="search-advanced mt-3">
+            <div class="search-advanced-title" onclick="toggleAdvancedSearch()">
+                <i class="fas fa-chevron-right"></i>
+                <span>Advanced Search Options</span>
+            </div>
+            <div class="search-advanced-content">
+                <div class="row g-3 mt-2">
+                    <div class="col-md-4">
+                        <div class="form-floating">
+                            <select class="form-select" id="travelStyle">
+                                <option value="">Any Travel Style</option>
+                                <option>Family Friendly</option>
+                                <option>Romantic</option>
+                                <option>Solo Travel</option>
+                                <option>Group Tour</option>
+                            </select>
+                            <label for="travelStyle"><i class="fas fa-users me-2"></i> Travel Style</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-floating">
+                            <select class="form-select" id="accommodation">
+                                <option value="">Any Accommodation</option>
+                                <option>5 Star Hotels</option>
+                                <option>Boutique Hotels</option>
+                                <option>Resorts</option>
+                                <option>Homestays</option>
+                            </select>
+                            <label for="accommodation"><i class="fas fa-hotel me-2"></i> Accommodation</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-floating">
+                            <select class="form-select" id="activities">
+                                <option value="">Any Activities</option>
+                                <option>Adventure Sports</option>
+                                <option>Wildlife Viewing</option>
+                                <option>Cultural Shows</option>
+                                <option>Wellness & Spa</option>
+                            </select>
+                            <label for="activities"><i class="fas fa-hiking me-2"></i> Activities</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="search-feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <span class="search-feature-text">Flexible cancellation policies on most packages</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="search-feature">
+                    <i class="fas fa-tag"></i>
+                    <span class="search-feature-text">Best price guarantee on all bookings</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="search-feature">
+                    <i class="fas fa-headset"></i>
+                    <span class="search-feature-text">24/7 customer support during your trip</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="d-grid mt-3">
+            <button class="btn btn-explore btn-lg">
+                <i class="fas fa-paper-plane me-2"></i> Search Packages
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="content-wrapper">
+            <h2 class="section-title">Featured Holiday Packages</h2>
+            <p class="intro-text">
+                India's diverse landscapes offer something for every traveler. Whether you seek adventure in the mountains, 
+                relaxation on pristine beaches, or cultural immersion in historic cities, our carefully curated packages 
+                ensure memorable experiences with the perfect blend of comfort and exploration.
+            </p>
+            
+            <div class="row">
+                <!-- Package 1 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="package-card">
+                        <div class="package-img-container position-relative">
+                            <img src="https://images.unsplash.com/photo-1582972236019-ea9eab4b0c10?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="package-img" alt="Goa Beach Vacation">
+                            <span class="package-badge">Popular</span>
+                        </div>
+                        <div class="package-body">
+                            <h5 class="package-title">Goa Beach Retreat</h5>
+                            <p class="package-destination"><i class="fas fa-map-marker-alt me-2"></i> Goa, India</p>
+                            <p class="package-duration"><i class="far fa-calendar-alt me-2"></i> 7 Days / 6 Nights</p>
+                            <p class="package-price">₹24,999 <span>per person</span></p>
+                            <button class="btn btn-explore">View Details</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Package 2 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="package-card">
+                        <div class="package-img-container position-relative">
+                            <img src="https://images.unsplash.com/photo-1564507592333-c60657eea523?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="package-img" alt="Varanasi Spiritual Journey">
+                            <span class="package-badge">Cultural</span>
+                        </div>
+                        <div class="package-body">
+                            <h5 class="package-title">Varanasi Spiritual Journey</h5>
+                            <p class="package-destination"><i class="fas fa-map-marker-alt me-2"></i> Varanasi, India</p>
+                            <p class="package-duration"><i class="far fa-calendar-alt me-2"></i> 5 Days / 4 Nights</p>
+                            <p class="package-price">₹18,500 <span>per person</span></p>
+                            <button class="btn btn-explore">View Details</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Package 3 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="package-card">
+                        <div class="package-img-container">
+                            <img src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="package-img" alt="Himalayan Adventure">
+                        </div>
+                        <div class="package-body">
+                            <h5 class="package-title">Himalayan Adventure</h5>
+                            <p class="package-destination"><i class="fas fa-map-marker-alt me-2"></i> Himachal Pradesh</p>
+                            <p class="package-duration"><i class="far fa-calendar-alt me-2"></i> 10 Days / 9 Nights</p>
+                            <p class="package-price">₹32,000 <span>per person</span></p>
+                            <button class="btn btn-explore">View Details</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Package 4 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="package-card">
+                        <div class="package-img-container position-relative">
+                            <img src="https://images.unsplash.com/photo-1503917988258-f87a78e3c995?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="package-img" alt="Kerala Backwaters">
+                            <span class="package-badge">Best Seller</span>
+                        </div>
+                        <div class="package-body">
+                            <h5 class="package-title">Kerala Backwaters</h5>
+                            <p class="package-destination"><i class="fas fa-map-marker-alt me-2"></i> Kerala, India</p>
+                            <p class="package-duration"><i class="far fa-calendar-alt me-2"></i> 8 Days / 7 Nights</p>
+                            <p class="package-price">₹28,750 <span>per person</span></p>
+                            <button class="btn btn-explore">View Details</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Package 5 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="package-card">
+                        <div class="package-img-container">
+                            <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="package-img" alt="Rajasthan Royal Tour">
+                        </div>
+                        <div class="package-body">
+                            <h5 class="package-title">Rajasthan Royal Tour</h5>
+                            <p class="package-destination"><i class="fas fa-map-marker-alt me-2"></i> Rajasthan, India</p>
+                            <p class="package-duration"><i class="far fa-calendar-alt me-2"></i> 12 Days / 11 Nights</p>
+                            <p class="package-price">₹35,500 <span>per person</span></p>
+                            <button class="btn btn-explore">View Details</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Package 6 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="package-card">
+                        <div class="package-img-container position-relative">
+                            <img src="https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="package-img" alt="Andaman Island Getaway">
+                            <span class="package-badge">Limited Offer</span>
+                        </div>
+                        <div class="package-body">
+                            <h5 class="package-title">Andaman Island Getaway</h5>
+                            <p class="package-destination"><i class="fas fa-map-marker-alt me-2"></i> Andaman Islands</p>
+                            <p class="package-duration"><i class="far fa-calendar-alt me-2"></i> 6 Days / 5 Nights</p>
+                            <p class="package-price">₹26,800 <span>per person</span></p>
+                            <button class="btn btn-explore">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <button class="btn btn-outline-primary px-4 py-2">
+                    <i class="fas fa-spinner me-2"></i> Load More Packages
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase mb-4">Company Information</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-info-circle me-2"></i> About</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-envelope me-2"></i> Contact Us</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-shield-alt me-2"></i> Privacy Policy</a></li>
+                        <li><a href="#" class="text-white"><i class="fas fa-file-contract me-2"></i> Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase mb-4">Quick Links</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-undo me-2"></i> Refund Policy</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-question-circle me-2"></i> FAQs</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-headset me-2"></i> Customer Support</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="text-uppercase mb-4">Connect With Us</h5>
+                    <ul class="list-unstyled footer-links mb-4">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-facebook-f me-2"></i> Facebook</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-twitter me-2"></i> Twitter</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-instagram me-2"></i> Instagram</a></li>
+                        <li><a href="#" class="text-white"><i class="fab fa-linkedin-in me-2"></i> LinkedIn</a></li>
+                    </ul>
+                    <div class="mb-4">
+                        <h6 class="mb-3">Download Our App</h6>
+                        <div class="d-flex gap-2">
+                            <a href="#" class="btn btn-sm btn-outline-light">
+                                <i class="fab fa-apple me-2"></i> App Store
+                            </a>
+                            <a href="#" class="btn btn-sm btn-outline-light">
+                                <i class="fab fa-google-play me-2"></i> Play Store
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4 bg-light opacity-10">
+
+            <!-- Payment Methods -->
+            <div class="row align-items-center py-3">
+                <div class="col-md-8 mb-3 mb-md-0">
+                    <h6 class="mb-3">Accepted Payment Methods:</h6>
+                    <div class="payment-methods d-flex flex-wrap gap-3 align-items-center">
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fab fa-cc-visa fa-2x me-2" style="color: #1a1f71;"></i>
+                            <i class="fab fa-cc-mastercard fa-2x me-3" style="color: #eb001b;"></i>
+                            <span class="text-white-50">Cards</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fas fa-rupee-sign fa-2x me-2" style="color: #6cbe45;"></i>
+                            <span class="text-white-50">UPI</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fab fa-google-pay fa-2x me-2" style="color: #4285f4;"></i>
+                            <i class="fas fa-wallet fa-2x me-3" style="color: #ff9500;"></i>
+                            <span class="text-white-50">Wallets</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <span class="badge bg-light text-dark me-2">Pay Later:</span>
+                            <span class="badge bg-primary me-2">Simple Pay</span>
+                            <span class="badge bg-info text-dark">Lazy Pay</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <div class="d-flex flex-column">
+                        <p class="mb-2"><i class="fas fa-phone-alt me-2"></i> 24/7 Support: +1 (555) 987-6543</p>
+                        <p class="mb-0"><i class="fas fa-envelope me-2"></i> support@visa2book.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Toggle advanced search
+        function toggleAdvancedSearch() {
+            const advancedSearch = document.querySelector('.search-advanced');
+            advancedSearch.classList.toggle('active');
+        }
+        
+        // Ensure all package cards have the same height
+        function equalizeCardHeights() {
+            const cards = document.querySelectorAll('.package-card');
+            let maxHeight = 0;
+            
+            // Reset all heights to auto first
+            cards.forEach(card => {
+                card.style.height = 'auto';
+            });
+            
+            // Find the tallest card
+            cards.forEach(card => {
+                if (card.offsetHeight > maxHeight) {
+                    maxHeight = card.offsetHeight;
+                }
+            });
+            
+            // Set all cards to the tallest height
+            cards.forEach(card => {
+                card.style.height = maxHeight + 'px';
+            });
+        }
+        
+        // Run on load and resize
+        window.addEventListener('load', equalizeCardHeights);
+        window.addEventListener('resize', equalizeCardHeights);
+    </script>
+</body>
+</html>

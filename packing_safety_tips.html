@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Packing Safety Tips - Visa2Book</title>
+    <link rel="shortcut icon" href="V2B.png" type="image/x-icon">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3a86ff;
+            --secondary-color: #2667d9;
+            --accent-color: #ffbe0b;
+            --dark-color: #1a1a2e;
+            --light-color: #f8f9fa;
+            --gradient-blue: linear-gradient(135deg, #3a86ff 0%, #2667d9 100%);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: #f0f5ff;
+        }
+
+        /* Glass Morphism Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.85) !important;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .navbar-brand img {
+            height: 50px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand:hover img {
+            transform: scale(1.05);
+        }
+
+        .nav-link {
+            color: var(--dark-color) !important;
+            font-weight: 600;
+            padding: 0.75rem 1.25rem !important;
+            margin: 0 0.5rem;
+            border-radius: 50px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--accent-color);
+            transition: width 0.4s ease;
+            border-radius: 3px;
+        }
+
+        .nav-link:hover::before, .nav-link.active::before {
+            width: 100%;
+        }
+
+        .nav-link i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover i, .nav-link.active i {
+            transform: translateY(-3px);
+            color: var(--primary-color);
+        }
+
+        /* Hero Section with Parallax Effect */
+        .hero-section {
+            background: linear-gradient(rgba(26, 26, 46, 0.7), rgba(26, 26, 46, 0.7)), 
+                        url('https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            height: 80vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to bottom, rgba(26, 26, 46, 0.7), transparent);
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero-cta {
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Tip Cards */
+        .tip-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            height: 100%;
+            margin-bottom: 2rem;
+            border-top: 5px solid var(--primary-color);
+        }
+
+        .tip-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .tip-number {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-blue);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin: -25px auto 1.5rem;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 5px 15px rgba(58, 134, 255, 0.3);
+        }
+
+        .tip-body {
+            padding: 2rem;
+            position: relative;
+        }
+
+        .tip-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .tip-card:hover .tip-icon {
+            transform: rotate(15deg) scale(1.1);
+            color: var(--secondary-color);
+        }
+
+        /* Checklist Section */
+        .checklist-section {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
+            margin-bottom: 4rem;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(58, 134, 255, 0.1);
+        }
+
+        .checklist-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .checklist-icon {
+            width: 30px;
+            height: 30px;
+            background: rgba(58, 134, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1.5rem;
+            color: var(--primary-color);
+            flex-shrink: 0;
+        }
+
+        /* Pro Tips Section */
+        .pro-tip-card {
+            background: rgba(255, 190, 11, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-left: 5px solid var(--accent-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pro-tip-card::before {
+            content: 'PRO TIP';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent-color);
+            color: var(--dark-color);
+            padding: 0.25rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        /* Luggage Type Section */
+        .luggage-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            height: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            text-align: center;
+            border-top: 5px solid var(--primary-color);
+        }
+
+        .luggage-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .luggage-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(58, 134, 255, 0.1);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            transition: all 0.4s ease;
+        }
+
+        .luggage-card:hover .luggage-icon {
+            background: var(--gradient-blue);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* Security Section */
+        .security-section {
+            position: relative;
+            padding: 5rem 0;
+            background: url('https://images.unsplash.com/photo-1569335468888-e9b936101f1e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover fixed;
+            background-attachment: fixed;
+            color: white;
+            text-align: center;
+            margin: 5rem 0;
+        }
+
+        .security-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 26, 46, 0.85);
+        }
+
+        .security-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--dark-color);
+            position: relative;
+            display: inline-block;
+            margin-bottom: 3rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        .section-title.light {
+            color: white;
+        }
+
+        .section-title.light::after {
+            background: white;
+        }
+
+        /* FAQ Section - Modern Accordion */
+        .faq-accordion {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .faq-question {
+            background: white;
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .faq-item.active .faq-question::after {
+            content: '-';
+        }
+
+        .faq-question h5 {
+            margin-bottom: 0;
+            transition: color 0.3s ease;
+        }
+
+        .faq-item.active .faq-question {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .faq-item.active .faq-question h5 {
+            color: white;
+        }
+
+        .faq-answer {
+            background: #f9fafc;
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 1.5rem;
+            max-height: 500px;
+        }
+
+        /* Footer - Wave Design */
+
+        /* ========== Footer Styles ========== */
+        .main-footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 0 0;
+            margin-top: 5rem;
+        }
+
+        .main-footer .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .main-footer .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .main-footer .footer-links i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .main-footer .btn-outline-light {
+            border-radius: 30px;
+            padding: 0.25rem 0.75rem;
+        }
+
+        .main-footer .payment-methods i {
+            opacity: 0.9;
+            transition: all 0.3s ease;
+        }
+
+        .main-footer .payment-methods i:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .main-footer .payment-group {
+            margin-right: 1.5rem;
+            padding-right: 1.5rem;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .main-footer .payment-group:last-child {
+            border-right: none;
+        }
+
+        .main-footer hr {
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+
+        footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 6rem 0 2rem;
+            margin-top: 6rem;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path fill="%23f0f5ff" d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25"/><path fill="%23f0f5ff" d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5"/><path fill="%23f0f5ff" d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"/></svg>');
+            background-size: cover;
+        }
+
+        .footer-logo {
+            height: 60px;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-link {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: block;
+            margin-bottom: 1rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .footer-link::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .footer-link:hover::before {
+            opacity: 1;
+            left: 5px;
+        }
+
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            transition: all 0.4s ease;
+            color: white;
+        }
+
+        .social-icon:hover {
+            background: var(--accent-color);
+            transform: translateY(-5px) rotate(10deg);
+            color: var(--dark-color);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.25rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0.5rem 1rem;
+            }
+            
+            .hero-section {
+                height: 70vh;
+                min-height: 500px;
+                background-attachment: scroll;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .security-section {
+                background-attachment: scroll;
+            }
+            
+            .checklist-section {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-section {
+                height: 60vh;
+                min-height: 400px;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .nav-link {
+                padding: 0.5rem 1rem !important;
+                margin: 0.25rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="V2B.png" alt="Visa2Book" style="height: 120px; width: 140px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="visa_travel_insurance.html">
+                            <i class="fas fa-passport"></i>
+                            <span>Visa & Travel Insurance</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="currency_exchange.html">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>Currency Exchange</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="packing_safety_tips.html">
+                            <i class="fas fa-suitcase"></i>
+                            <span>Packing Safety Tips</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">Packing Safety Tips</h1>
+            <p class="hero-subtitle">Smart packing strategies to protect your belongings and breeze through security checks</p>
+            <div class="hero-cta">
+                <button class="btn btn-primary btn-lg px-5 py-3 rounded-pill">
+                    <i class="fas fa-download me-2"></i> Download Packing Checklist
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Essential Packing Tips -->
+    <div class="container my-5 py-5">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-title">Essential Packing Tips</h2>
+                <p class="lead">Follow these expert recommendations to pack efficiently and securely</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Tip 1 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="tip-card">
+                    <div class="tip-number">1</div>
+                    <div class="tip-body">
+                        <div class="tip-icon">
+                            <i class="fas fa-passport"></i>
+                        </div>
+                        <h4 class="text-center">Document Safety</h4>
+                        <p>Keep photocopies of important documents separate from originals. Use RFID-blocking wallets for passports and credit cards to prevent digital theft.</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-primary me-2"></i> Make digital copies</li>
+                            <li><i class="fas fa-check text-primary me-2"></i> Use waterproof pouches</li>
+                            <li><i class="fas fa-check text-primary me-2"></i> Store in carry-on only</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tip 2 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="tip-card">
+                    <div class="tip-number">2</div>
+                    <div class="tip-body">
+                        <div class="tip-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h4 class="text-center">Luggage Security</h4>
+                        <p>Use TSA-approved locks and consider luggage with built-in tracking. Never pack valuables in checked baggage - keep them in your carry-on.</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-primary me-2"></i> Use combination locks</li>
+                            <li><i class="fas fa-check text-primary me-2"></i> Remove old baggage tags</li>
+                            <li><i class="fas fa-check text-primary me-2"></i> Consider luggage straps</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tip 3 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="tip-card">
+                    <div class="tip-number">3</div>
+                    <div class="tip-body">
+                        <div class="tip-icon">
+                            <i class="fas fa-prescription-bottle"></i>
+                        </div>
+                        <h4 class="text-center">Medication Packing</h4>
+                        <p>Keep medications in original containers with prescriptions. Pack a 3-day supply in your carry-on in case of lost luggage.</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-primary me-2"></i> Bring doctor's notes</li>
+                            <li><i class="fas fa-check text-primary me-2"></i> Check destination regulations</li>
+                            <li><i class="fas fa-check text-primary me-2"></i> Use pill organizers carefully</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tip 4 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="tip-card">
+                    <div class="tip-number">4</div>
+                    <div class="tip-body">
+                        <div class="tip-icon">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        <h4 class="text-center">Electronics Protection</h4>
+                        <p>Use padded cases for electronics and pack cords neatly. Consider a portable charger and universal adapter for international travel.</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-primary me-2"></i> Backup data before travel</li>
+                            <li><i class="fas fa-check text-primary me-2"></i> Enable device tracking</li>
+                            <li><i class="fas fa-check text-primary me-2"></i> Use surge protectors</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tip 5 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="tip-card">
+                    <div class="tip-number">5</div>
+                    <div class="tip-body">
+                        <div class="tip-icon">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                        <h4 class="text-center">Clothing Strategy</h4>
+                        <p>Roll clothes to save space and prevent wrinkles. Use packing cubes to organize outfits and keep dirty laundry separate.</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-primary me-2"></i> Pack versatile pieces</li>
+                            <li><i class="fas fa-check text-primary me-2"></i> Use compression bags</li>
+                            <li><i class="fas fa-check text-primary me-2"></i> Include a laundry bag</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tip 6 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="tip-card">
+                    <div class="tip-number">6</div>
+                    <div class="tip-body">
+                        <div class="tip-icon">
+                            <i class="fas fa-plane"></i>
+                        </div>
+                        <h4 class="text-center">TSA Compliance</h4>
+                        <p>Follow the 3-1-1 rule for liquids and know what items are prohibited. Pack liquids in a clear, quart-sized bag for easy inspection.</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-primary me-2"></i> 3.4oz (100ml) containers</li>
+                            <li><i class="fas fa-check text-primary me-2"></i> 1 quart-sized bag</li>
+                            <li><i class="fas fa-check text-primary me-2"></i> 1 bag per passenger</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Packing Checklist -->
+    <div class="container my-5 py-5">
+        <div class="checklist-section">
+            <div class="row mb-5">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="section-title">Ultimate Packing Checklist</h2>
+                    <p class="lead">Never forget an essential item with our comprehensive checklist</p>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h4 class="mb-4"><i class="fas fa-suitcase-rolling text-primary me-2"></i> Essentials</h4>
+                    <div class="checklist-item">
+                        <div class="checklist-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div>
+                            <h6>Travel Documents</h6>
+                            <p class="text-muted mb-0">Passport, visa, tickets, itinerary, hotel confirmations</p>
+                        </div>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checklist-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div>
+                            <h6>Money & Cards</h6>
+                            <p class="text-muted mb-0">Credit cards, local currency, emergency cash</p>
+                        </div>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checklist-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div>
+                            <h6>Health Items</h6>
+                            <p class="text-muted mb-0">Prescriptions, first aid kit, hand sanitizer, masks</p>
+                        </div>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checklist-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div>
+                            <h6>Electronics</h6>
+                            <p class="text-muted mb-0">Phone, charger, adapter, power bank, headphones</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <h4 class="mb-4"><i class="fas fa-tshirt text-primary me-2"></i> Clothing & Toiletries</h4>
+                    <div class="checklist-item">
+                        <div class="checklist-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div>
+                            <h6>Clothing</h6>
+                            <p class="text-muted mb-0">Weather-appropriate outfits, sleepwear, swimwear</p>
+                        </div>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checklist-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div>
+                            <h6>Footwear</h6>
+                            <p class="text-muted mb-0">Comfortable shoes, flip-flops, socks</p>
+                        </div>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checklist-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div>
+                            <h6>Toiletries</h6>
+                            <p class="text-muted mb-0">Travel-sized products, toothbrush, razor, sunscreen</p>
+                        </div>
+                    </div>
+                    <div class="checklist-item">
+                        <div class="checklist-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div>
+                            <h6>Extras</h6>
+                            <p class="text-muted mb-0">Sunglasses, hat, reusable water bottle, snacks</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pro-tip-card mt-5">
+                <h4><i class="fas fa-lightbulb text-warning me-2"></i> Pro Tip: The Rolling Method</h4>
+                <p class="mb-0">Roll your clothes instead of folding to maximize space and minimize wrinkles. Place rolled items vertically in your suitcase like files in a drawer. This technique can fit 20-30% more clothing while keeping items organized and accessible.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Luggage Types -->
+    <div class="container my-5 py-5">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-title">Choosing the Right Luggage</h2>
+                <p class="lead">Select luggage that fits your travel style and destination</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="luggage-card">
+                    <div class="luggage-icon">
+                        <i class="fas fa-suitcase-rolling"></i>
+                    </div>
+                    <h4>Carry-On</h4>
+                    <p class="text-muted">Ideal for short trips and avoiding checked baggage fees. Must comply with airline size restrictions (typically 22" x 14" x 9").</p>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-check text-primary me-2"></i> Quick airport navigation</li>
+                        <li><i class="fas fa-check text-primary me-2"></i> Never gets lost</li>
+                        <li><i class="fas fa-check text-primary me-2"></i> Limited capacity</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="luggage-card">
+                    <div class="luggage-icon">
+                        <i class="fas fa-suitcase"></i>
+                    </div>
+                    <h4>Checked Luggage</h4>
+                    <p class="text-muted">Best for longer trips when you need more items. Choose durable hardside or lightweight softside options.</p>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-check text-primary me-2"></i> More packing space</li>
+                        <li><i class="fas fa-check text-primary me-2"></i> Can hold liquids</li>
+                        <li><i class="fas fa-check text-primary me-2"></i> Risk of loss/damage</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="luggage-card">
+                    <div class="luggage-icon">
+                        <i class="fas fa-backpack"></i>
+                    </div>
+                    <h4>Travel Backpack</h4>
+                    <p class="text-muted">Perfect for adventure travel and destinations with uneven terrain. Look for ergonomic designs with hip belts.</p>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-check text-primary me-2"></i> Hands-free mobility</li>
+                        <li><i class="fas fa-check text-primary me-2"></i> Great for hostels</li>
+                        <li><i class="fas fa-check text-primary me-2"></i> Limited organization</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Security Tips Section -->
+    <div class="security-section">
+        <div class="container">
+            <div class="security-content">
+                <h2 class="section-title light">Airport Security Tips</h2>
+                <p class="lead mb-5">Navigate security checkpoints smoothly with these expert recommendations</p>
+                
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="text-center p-4">
+                            <div class="display-4 text-primary mb-3">3-1-1</div>
+                            <h5>Liquids Rule</h5>
+                            <p>Containers must be 3.4oz or less, all fitting in one quart-sized clear bag, with one bag per passenger.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 mb-4">
+                        <div class="text-center p-4">
+                            <div class="display-4 text-primary mb-3"><i class="fas fa-laptop"></i></div>
+                            <h5>Electronics Ready</h5>
+                            <p>Remove laptops and large electronics from bags. Tablets can usually stay in.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 mb-4">
+                        <div class="text-center p-4">
+                            <div class="display-4 text-primary mb-3"><i class="fas fa-shoe-prints"></i></div>
+                            <h5>Footwear</h5>
+                            <p>Wear easy-to-remove shoes. Some airports require removing shoes for screening.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 mb-4">
+                        <div class="text-center p-4">
+                            <div class="display-4 text-primary mb-3"><i class="fas fa-coins"></i></div>
+                            <h5>Metals</h5>
+                            <p>Empty pockets of coins, keys, and phones. Remove belts with large buckles.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 mb-4">
+                        <div class="text-center p-4">
+                            <div class="display-4 text-primary mb-3"><i class="fas fa-tshirt"></i></div>
+                            <h5>Outerwear</h5>
+                            <p>Jackets and bulky sweaters must be removed and placed in bins.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 mb-4">
+                        <div class="text-center p-4">
+                            <div class="display-4 text-primary mb-3"><i class="fas fa-clock"></i></div>
+                            <h5>Timing</h5>
+                            <p>Arrive at least 2 hours before domestic and 3 hours before international flights.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="pro-tip-card mt-4">
+                    <h4><i class="fas fa-lightbulb text-warning me-2"></i> Pro Tip: TSA PreCheck/Global Entry</h4>
+                    <p class="mb-0">Consider enrolling in TSA PreCheck (for domestic) or Global Entry (for international) to enjoy expedited security screening. Benefits include keeping shoes and light jackets on, leaving laptops in bags, and shorter lines. The small fee is often worth the time savings for frequent travelers.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="container my-5 py-5">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-title">Packing Safety FAQs</h2>
+                <p class="lead">Answers to common questions about packing and travel security</p>
+            </div>
+        </div>
+        
+        <div class="faq-accordion">
+            <!-- FAQ Item 1 -->
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h5>What items are prohibited in carry-on luggage?</h5>
+                </div>
+                <div class="faq-answer">
+                    <p>Prohibited items include liquids over 3.4oz (unless medically necessary), sharp objects (knives, scissors over 4 inches), firearms, tools, sporting goods (bats, golf clubs), flammable items (lighters, fireworks), and most self-defense items (pepper spray, stun guns). Always check the TSA website for updates before traveling.</p>
+                </div>
+            </div>
+            
+            <!-- FAQ Item 2 -->
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h5>How can I prevent my luggage from being lost?</h5>
+                </div>
+                <div class="faq-answer">
+                    <p>To minimize risk: remove old baggage tags, use a distinctive luggage tag with your contact info, take photos of your bag contents, keep valuables in carry-on, consider AirTags or tracking devices, and arrive early to ensure your bag makes the flight. For connections, allow ample time between flights.</p>
+                </div>
+            </div>
+            
+            <!-- FAQ Item 3 -->
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h5>What's the best way to pack fragile items?</h5>
+                </div>
+                <div class="faq-answer">
+                    <p>Wrap fragile items in clothing or bubble wrap, place them in the center of your suitcase surrounded by soft items, and use hard-sided luggage when possible. Mark your bag as "fragile" (though this isn't always honored). For very valuable items, carry them on instead of checking.</p>
+                </div>
+            </div>
+            
+            <!-- FAQ Item 4 -->
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h5>Are packing cubes worth using?</h5>
+                </div>
+                <div class="faq-answer">
+                    <p>Packing cubes are highly recommended by frequent travelers. They help organize your belongings, compress clothing to save space, keep clean/dirty items separate, and make unpacking easier. They're especially useful for longer trips or when sharing luggage space with others.</p>
+                </div>
+            </div>
+            
+            <!-- FAQ Item 5 -->
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h5>How should I pack medications for international travel?</h5>
+                </div>
+                <div class="faq-answer">
+                    <p>Keep medications in original labeled containers, bring copies of prescriptions, research destination country's medication restrictions, pack a 3-day supply in carry-on, and bring a doctor's note for controlled substances or injectables. Check if your medications are legal in all transit countries too.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    Footer
+
+
+
+<footer class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase mb-4">Company Information</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-info-circle me-2"></i> About</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-envelope me-2"></i> Contact Us</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-shield-alt me-2"></i> Privacy Policy</a></li>
+                        <li><a href="#" class="text-white"><i class="fas fa-file-contract me-2"></i> Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase mb-4">Quick Links</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-undo me-2"></i> Refund Policy</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-question-circle me-2"></i> FAQs</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-headset me-2"></i> Customer Support</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="text-uppercase mb-4">Connect With Us</h5>
+                    <ul class="list-unstyled footer-links mb-4">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-facebook-f me-2"></i> Facebook</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-twitter me-2"></i> Twitter</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-instagram me-2"></i> Instagram</a></li>
+                        <li><a href="#" class="text-white"><i class="fab fa-linkedin-in me-2"></i> LinkedIn</a></li>
+                    </ul>
+                    <div class="mb-4">
+                        <h6 class="mb-3">Download Our App</h6>
+                        <div class="d-flex gap-2">
+                            <a href="#" class="btn btn-sm btn-outline-light">
+                                <i class="fab fa-apple me-2"></i> App Store
+                            </a>
+                            <a href="#" class="btn btn-sm btn-outline-light">
+                                <i class="fab fa-google-play me-2"></i> Play Store
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4 bg-light opacity-10">
+
+            <!-- Payment Methods -->
+            <div class="row align-items-center py-3">
+                <div class="col-md-8 mb-3 mb-md-0">
+                    <h6 class="mb-3">Accepted Payment Methods:</h6>
+                    <div class="payment-methods d-flex flex-wrap gap-3 align-items-center">
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fab fa-cc-visa fa-2x me-2" style="color: #1a1f71;"></i>
+                            <i class="fab fa-cc-mastercard fa-2x me-3" style="color: #eb001b;"></i>
+                            <span class="text-white-50">Cards</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fas fa-rupee-sign fa-2x me-2" style="color: #6cbe45;"></i>
+                            <span class="text-white-50">UPI</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fab fa-google-pay fa-2x me-2" style="color: #4285f4;"></i>
+                            <i class="fas fa-wallet fa-2x me-3" style="color: #ff9500;"></i>
+                            <span class="text-white-50">Wallets</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <span class="badge bg-light text-dark me-2">Pay Later:</span>
+                            <span class="badge bg-primary me-2">Simple Pay</span>
+                            <span class="badge bg-info text-dark">Lazy Pay</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <div class="d-flex flex-column">
+                        <p class="mb-2"><i class="fas fa-phone-alt me-2"></i> 24/7 Support: +1 (555) 987-6543</p>
+                        <p class="mb-0"><i class="fas fa-envelope me-2"></i> support@visa2book.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // FAQ Accordion Functionality
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            question.addEventListener('click', () => {
+                // Close all other items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                
+                // Toggle current item
+                item.classList.toggle('active');
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Navbar background change on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95) !important';
+                navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.85) !important';
+                navbar.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.1)';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | Visa2Book</title>
+    <link rel="shortcut icon" href="V2B.png" type="image/png">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3a86ff;
+            --primary-dark: #2667d9;
+            --secondary: #8338ec;
+            --accent: #ff006e;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: url('https://images.unsplash.com/photo-1506929562872-bb421503ef21?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1925&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.85);
+            z-index: 0;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Logo */
+        .logo-container {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .logo-container img {
+            height: 155px;
+            width: 175px;
+            object-fit: contain;
+        }
+
+        /* Signup Container */
+        .signup-container {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+
+        .signup-header {
+            background: var(--gradient);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .signup-body {
+            padding: 2rem;
+        }
+
+        /* Form Styles */
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            padding: 0.8rem 1rem;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(58, 134, 255, 0.25);
+        }
+
+        /* Password Validation */
+        .password-strength {
+            height: 4px;
+            background: #e2e8f0;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .password-strength-bar {
+            height: 100%;
+            width: 0%;
+            background: #dc3545;
+            transition: all 0.3s ease;
+        }
+
+        .password-requirements {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+
+        .requirement {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.3rem;
+        }
+
+        .requirement i {
+            margin-right: 0.5rem;
+            font-size: 0.7rem;
+        }
+
+        .requirement.valid {
+            color: #28a745;
+        }
+
+        .requirement.valid i {
+            color: #28a745;
+        }
+
+        /* OTP Verification */
+        .otp-verification {
+            display: none;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px dashed #e2e8f0;
+        }
+
+        .otp-input-group {
+            display: flex;
+            justify-content: space-between;
+            margin: 1rem 0;
+        }
+
+        .otp-input {
+            width: 15%;
+            height: 50px;
+            text-align: center;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Terms & Conditions */
+        .terms-check {
+            margin: 1.5rem 0;
+        }
+
+        .terms-check label {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .terms-check a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        /* Buttons */
+        .btn-signup {
+            width: 100%;
+            border-radius: 50px;
+            padding: 0.8rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-signup {
+            background: var(--gradient);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary-signup:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(58, 134, 255, 0.3);
+        }
+
+        .btn-verify {
+            display: none;
+        }
+
+        /* Login Link */
+        .login-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #64748b;
+        }
+
+        .login-link a {
+            color: var(--primary);
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        /* Profile Completion Section */
+        .profile-completion {
+            display: none;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .profile-completion h4 {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .profile-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-section h5 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .route-item, .time-preference, .payment-method {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            padding: 0.5rem;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .add-item {
+            display: flex;
+            align-items: center;
+            color: var(--primary);
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+
+        .add-item i {
+            margin-right: 0.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 576px) {
+            .logo-container img {
+                height: 120px;
+                width: 140px;
+            }
+            
+            .signup-container {
+                margin: 0 1rem 2rem;
+                border-radius: 15px;
+            }
+            
+            .signup-header {
+                padding: 1.5rem;
+            }
+            
+            .signup-body {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- Logo Only -->
+        <div class="logo-container">
+            <img src="V2B.png" alt="Visa2Book">
+        </div>
+
+        <!-- Signup Container -->
+        <div class="container">
+            <div class="signup-container">
+                <div class="signup-header">
+                    <h2>Create Your Account</h2>
+                    <p class="mb-0">Join us to book your next adventure</p>
+                </div>
+                
+                <div class="signup-body">
+                    <form id="signupForm">
+                        <!-- Full Name -->
+                        <div class="mb-3">
+                            <label for="fullName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="fullName" placeholder="Enter your full name" required>
+                        </div>
+                        
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                        </div>
+                        
+                        <!-- Mobile Number -->
+                        <div class="mb-3">
+                            <label for="mobile" class="form-label">Mobile Number</label>
+                            <div class="input-group">
+                                <span class="input-group-text">+91</span>
+                                <input type="tel" class="form-control" id="mobile" placeholder="Enter 10-digit mobile number" required>
+                            </div>
+                        </div>
+                        
+                        <!-- Password -->
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" placeholder="Create a password" required>
+                            <div class="password-strength">
+                                <div class="password-strength-bar" id="passwordStrength"></div>
+                            </div>
+                            <div class="password-requirements">
+                                <div class="requirement" id="reqLength">
+                                    <i class="fas fa-circle"></i> At least 8 characters
+                                </div>
+                                <div class="requirement" id="reqUpper">
+                                    <i class="fas fa-circle"></i> At least 1 uppercase letter
+                                </div>
+                                <div class="requirement" id="reqLower">
+                                    <i class="fas fa-circle"></i> At least 1 lowercase letter
+                                </div>
+                                <div class="requirement" id="reqNumber">
+                                    <i class="fas fa-circle"></i> At least 1 number
+                                </div>
+                                <div class="requirement" id="reqSpecial">
+                                    <i class="fas fa-circle"></i> At least 1 special character
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Confirm Password -->
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirmPassword" placeholder="Re-enter your password" required>
+                            <div class="invalid-feedback" id="passwordMatchError">Passwords do not match</div>
+                        </div>
+                        
+                        <!-- Terms & Conditions -->
+                        <div class="terms-check form-check">
+                            <input class="form-check-input" type="checkbox" id="termsCheck" required>
+                            <label class="form-check-label" for="termsCheck">
+                                I agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms & Conditions</a> and <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy</a>
+                            </label>
+                        </div>
+                        
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary-signup btn-signup" id="submitBtn">
+                            <i class="fas fa-user-plus me-2"></i> Create Account
+                        </button>
+                        
+                        <!-- OTP Verification Section -->
+                        <div class="otp-verification" id="otpVerification">
+                            <h5 class="text-center mb-3">Verify Your Account</h5>
+                            <p class="text-center text-muted">We've sent a 6-digit code to <span id="verificationMethod"></span></p>
+                            
+                            <div class="otp-input-group">
+                                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]">
+                            </div>
+                            
+                            <div class="text-center mt-3">
+                                <button type="button" class="btn btn-link" id="resendOtp">Resend OTP</button>
+                                <span class="mx-2">|</span>
+                                <button type="button" class="btn btn-link" id="changeMethod">Change Verification Method</button>
+                            </div>
+                            
+                            <button type="button" class="btn btn-primary-signup btn-signup btn-verify mt-3" id="verifyBtn">
+                                <i class="fas fa-check-circle me-2"></i> Verify & Complete Registration
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <!-- Profile Completion Section -->
+                    <div class="profile-completion" id="profileCompletion">
+                        <h4>Complete Your Profile</h4>
+                        <p class="text-center mb-4">Help us personalize your experience by providing these details (optional)</p>
+                        
+                        <div class="profile-section">
+                            <h5><i class="fas fa-route me-2"></i> Frequent Travel Routes</h5>
+                            <div id="routesContainer">
+                                <!-- Route items will be added here -->
+                            </div>
+                            <div class="add-item" onclick="addRoute()">
+                                <i class="fas fa-plus-circle"></i> Add Route
+                            </div>
+                        </div>
+                        
+                        <div class="profile-section">
+                            <h5><i class="fas fa-clock me-2"></i> Preferred Travel Times</h5>
+                            <div id="timesContainer">
+                                <div class="time-preference">
+                                    <select class="form-select me-2" style="flex: 1;">
+                                        <option value="morning">Morning (6AM-12PM)</option>
+                                        <option value="afternoon">Afternoon (12PM-5PM)</option>
+                                        <option value="evening">Evening (5PM-9PM)</option>
+                                        <option value="night">Night (9PM-6AM)</option>
+                                    </select>
+                                    <select class="form-select" style="flex: 1;">
+                                        <option value="weekdays">Weekdays</option>
+                                        <option value="weekends">Weekends</option>
+                                        <option value="anytime">Any Day</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="add-item" onclick="addTimePreference()">
+                                <i class="fas fa-plus-circle"></i> Add Time Preference
+                            </div>
+                        </div>
+                        
+                        <div class="profile-section">
+                            <h5><i class="fas fa-credit-card me-2"></i> Payment Preferences</h5>
+                            <div id="paymentsContainer">
+                                <div class="payment-method">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="creditCard" checked>
+                                        <label class="form-check-label" for="creditCard">Credit/Debit Card</label>
+                                    </div>
+                                </div>
+                                <div class="payment-method">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="upi" checked>
+                                        <label class="form-check-label" for="upi">UPI Payment</label>
+                                    </div>
+                                </div>
+                                <div class="payment-method">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="netBanking">
+                                        <label class="form-check-label" for="netBanking">Net Banking</label>
+                                    </div>
+                                </div>
+                                <div class="payment-method">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="wallet">
+                                        <label class="form-check-label" for="wallet">Wallet</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="button" class="btn btn-primary-signup btn-signup" id="saveProfileBtn">
+                            <i class="fas fa-save me-2"></i> Save Preferences
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary btn-signup mt-2" id="skipProfileBtn">
+                            Skip for Now
+                        </button>
+                    </div>
+                    
+                    <!-- Login Link -->
+                    <div class="login-link">
+                        Already have an account? <a href="login.html">Log in</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Terms & Conditions Modal -->
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Terms & Conditions</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>1. Acceptance of Terms</h6>
+                    <p>By accessing or using the Visa2Book platform, you agree to be bound by these Terms and Conditions...</p>
+                    
+                    <h6>2. Account Registration</h6>
+                    <p>You must provide accurate and complete information when creating an account...</p>
+                    
+                    <h6>3. Booking Policies</h6>
+                    <p>All bookings are subject to availability and the terms specified by the service provider...</p>
+                    
+                    <h6>4. Cancellations and Refunds</h6>
+                    <p>Cancellation policies vary by service provider and booking type...</p>
+                    
+                    <h6>5. User Responsibilities</h6>
+                    <p>You are responsible for maintaining the confidentiality of your account credentials...</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Privacy Policy Modal -->
+    <div class="modal fade" id="privacyModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Privacy Policy</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>1. Information We Collect</h6>
+                    <p>We collect personal information including name, contact details, payment information...</p>
+                    
+                    <h6>2. How We Use Your Information</h6>
+                    <p>Your information is used to process bookings, provide customer support, and improve our services...</p>
+                    
+                    <h6>3. Data Security</h6>
+                    <p>We implement appropriate security measures to protect your personal information...</p>
+                    
+                    <h6>4. Third-Party Sharing</h6>
+                    <p>We may share necessary information with service providers to fulfill your bookings...</p>
+                    
+                    <h6>5. Your Rights</h6>
+                    <p>You have the right to access, correct, or delete your personal information...</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Password Strength Checker
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            const strengthBar = document.getElementById('passwordStrength');
+            let strength = 0;
+            
+            // Check length
+            const hasLength = password.length >= 8;
+            document.getElementById('reqLength').classList.toggle('valid', hasLength);
+            if (hasLength) strength += 20;
+            
+            // Check uppercase
+            const hasUpper = /[A-Z]/.test(password);
+            document.getElementById('reqUpper').classList.toggle('valid', hasUpper);
+            if (hasUpper) strength += 20;
+            
+            // Check lowercase
+            const hasLower = /[a-z]/.test(password);
+            document.getElementById('reqLower').classList.toggle('valid', hasLower);
+            if (hasLower) strength += 20;
+            
+            // Check number
+            const hasNumber = /[0-9]/.test(password);
+            document.getElementById('reqNumber').classList.toggle('valid', hasNumber);
+            if (hasNumber) strength += 20;
+            
+            // Check special char
+            const hasSpecial = /[^A-Za-z0-9]/.test(password);
+            document.getElementById('reqSpecial').classList.toggle('valid', hasSpecial);
+            if (hasSpecial) strength += 20;
+            
+            // Update strength bar
+            strengthBar.style.width = strength + '%';
+            
+            // Update color based on strength
+            if (strength < 40) {
+                strengthBar.style.backgroundColor = '#dc3545';
+            } else if (strength < 80) {
+                strengthBar.style.backgroundColor = '#ffc107';
+            } else {
+                strengthBar.style.backgroundColor = '#28a745';
+            }
+        });
+        
+        // Confirm Password Match
+        document.getElementById('confirmPassword').addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = this.value;
+            const errorElement = document.getElementById('passwordMatchError');
+            
+            if (password !== confirmPassword && confirmPassword.length > 0) {
+                this.classList.add('is-invalid');
+                errorElement.style.display = 'block';
+            } else {
+                this.classList.remove('is-invalid');
+                errorElement.style.display = 'none';
+            }
+        });
+        
+        // OTP Input Auto-Tabbing
+        document.querySelectorAll('.otp-input').forEach((input, index, inputs) => {
+            input.addEventListener('input', (e) => {
+                if (e.target.value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+            });
+            
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && e.target.value.length === 0 && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+        });
+        
+        // Form Submission
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate form
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const termsChecked = document.getElementById('termsCheck').checked;
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match');
+                return;
+            }
+            
+            if (!termsChecked) {
+                alert('You must agree to the Terms & Conditions');
+                return;
+            }
+            
+            // Show OTP verification
+            const email = document.getElementById('email').value;
+            const mobile = document.getElementById('mobile').value;
+            document.getElementById('verificationMethod').textContent = 
+                `+91 XXXXXXX${mobile.slice(-2)} and ${email}`;
+            
+            document.getElementById('otpVerification').style.display = 'block';
+            document.getElementById('submitBtn').style.display = 'none';
+            document.querySelector('.otp-input').focus();
+            
+            // Scroll to OTP section
+            document.getElementById('otpVerification').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // Verify OTP
+        document.getElementById('verifyBtn').addEventListener('click', function() {
+            // In a real app, this would verify OTP with your backend
+            document.getElementById('otpVerification').style.display = 'none';
+            document.getElementById('profileCompletion').style.display = 'block';
+            document.getElementById('profileCompletion').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // Resend OTP
+        document.getElementById('resendOtp').addEventListener('click', function() {
+            alert('New OTP has been sent to your registered email and mobile');
+        });
+        
+        // Change Verification Method
+        document.getElementById('changeMethod').addEventListener('click', function() {
+            document.getElementById('otpVerification').style.display = 'none';
+            document.getElementById('submitBtn').style.display = 'block';
+        });
+        
+        // Add Route
+        function addRoute() {
+            const routesContainer = document.getElementById('routesContainer');
+            const routeId = 'route-' + Date.now();
+            
+            const routeItem = document.createElement('div');
+            routeItem.className = 'route-item';
+            routeItem.innerHTML = `
+                <input type="text" class="form-control me-2" placeholder="From (City)" style="flex: 1;">
+                <input type="text" class="form-control me-2" placeholder="To (City)" style="flex: 1;">
+                <button class="btn btn-sm btn-outline-danger" onclick="removeItem('${routeId}')">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            routeItem.id = routeId;
+            routesContainer.appendChild(routeItem);
+        }
+        
+        // Add Time Preference
+        function addTimePreference() {
+            const timesContainer = document.getElementById('timesContainer');
+            const timeId = 'time-' + Date.now();
+            
+            const timeItem = document.createElement('div');
+            timeItem.className = 'time-preference';
+            timeItem.id = timeId;
+            timeItem.innerHTML = `
+                <select class="form-select me-2" style="flex: 1;">
+                    <option value="morning">Morning (6AM-12PM)</option>
+                    <option value="afternoon">Afternoon (12PM-5PM)</option>
+                    <option value="evening">Evening (5PM-9PM)</option>
+                    <option value="night">Night (9PM-6AM)</option>
+                </select>
+                <select class="form-select" style="flex: 1;">
+                    <option value="weekdays">Weekdays</option>
+                    <option value="weekends">Weekends</option>
+                    <option value="anytime">Any Day</option>
+                </select>
+                <button class="btn btn-sm btn-outline-danger" onclick="removeItem('${timeId}')">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            timesContainer.appendChild(timeItem);
+        }
+        
+        // Remove Item
+        function removeItem(id) {
+            document.getElementById(id).remove();
+        }
+        
+        // Save Profile
+        document.getElementById('saveProfileBtn').addEventListener('click', function() {
+            // Collect all profile data
+            const routes = [];
+            document.querySelectorAll('.route-item').forEach(item => {
+                const inputs = item.querySelectorAll('input');
+                if (inputs[0].value && inputs[1].value) {
+                    routes.push({
+                        from: inputs[0].value,
+                        to: inputs[1].value
+                    });
+                }
+            });
+            
+            const timePreferences = [];
+            document.querySelectorAll('.time-preference').forEach(item => {
+                const selects = item.querySelectorAll('select');
+                timePreferences.push({
+                    timeOfDay: selects[0].value,
+                    dayType: selects[1].value
+                });
+            });
+            
+            const paymentMethods = {
+                creditCard: document.getElementById('creditCard').checked,
+                upi: document.getElementById('upi').checked,
+                netBanking: document.getElementById('netBanking').checked,
+                wallet: document.getElementById('wallet').checked
+            };
+            
+            // In a real app, this would send to your backend
+            console.log('Profile data:', {
+                routes,
+                timePreferences,
+                paymentMethods
+            });
+            
+            alert('Profile preferences saved successfully! Redirecting to dashboard...');
+            // window.location.href = 'dashboard.html';
+        });
+        
+        // Skip Profile
+        document.getElementById('skipProfileBtn').addEventListener('click', function() {
+            alert('You can update your profile later in settings. Redirecting to dashboard...');
+            // window.location.href = 'dashboard.html';
+        });
+    </script>
+</body>
+</html>

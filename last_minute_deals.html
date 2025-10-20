@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Last Minute Deals - Visa2Book</title>
+    <link rel="shortcut icon" href="V2B.png" type="image/x-icon">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #f97316;
+            --secondary-color: #ea580c;
+            --accent-color: #eab308;
+            --dark-color: #1e293b;
+            --light-color: #f8fafc;
+            --gradient-orange: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+        }
+
+        /* ========== Search Section Styles ========== */
+        .search-container {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-top: -80px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid rgba(249, 115, 22, 0.2);
+        }
+
+        .search-container .urgency-level {
+            height: 8px;
+            border-radius: 4px;
+            background: linear-gradient(to right, #10b981, #f59e0b, #ef4444);
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .search-container .urgency-level::after {
+            content: 'Low \a0\a0\a0\a0\a0\a0\a0\a0\a0\a0\a0\a0\a0\a0\a0\a0\a0\a0\a0\a0 High';
+            position: absolute;
+            top: 12px;
+            left: 0;
+            width: 100%;
+            font-size: 0.75rem;
+            color: #64748b;
+            white-space: pre;
+        }
+
+        .search-container .urgency-indicator {
+            position: absolute;
+            top: -5px;
+            width: 18px;
+            height: 18px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 0 3px white, 0 2px 8px rgba(0, 0, 0, 0.2);
+            left: 85%;
+        }
+
+        .search-container .form-floating {
+            position: relative;
+        }
+
+        .search-container .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            z-index: 5;
+        }
+
+        .search-container .form-control,
+        .search-container .form-select {
+            padding-left: 40px;
+            height: 56px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .search-container .form-control:focus,
+        .search-container .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(249, 115, 22, 0.25);
+        }
+
+        .search-container .form-floating label {
+            padding-left: 40px;
+            color: #64748b;
+        }
+
+        .search-container .exchange-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 auto;
+            position: relative;
+            top: 12px;
+            box-shadow: 0 4px 10px rgba(249, 115, 22, 0.3);
+        }
+
+        .search-container .exchange-btn:hover {
+            background: var(--secondary-color);
+            transform: rotate(180deg) scale(1.05);
+        }
+
+        .search-container .traveler-counter {
+            display: flex;
+            align-items: center;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 0.5rem;
+            background-color: white;
+            height: 56px;
+        }
+
+        .search-container .traveler-counter button {
+            background: none;
+            border: none;
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .search-container .traveler-counter button:hover {
+            background-color: rgba(249, 115, 22, 0.1);
+        }
+
+        .search-container .traveler-counter input {
+            width: 30px;
+            text-align: center;
+            border: none;
+            background: transparent;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .search-container .traveler-counter span {
+            margin-left: 10px;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .search-container .btn-book {
+            background: var(--gradient-orange);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+            height: 56px;
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-container .btn-book:hover {
+            background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(249, 115, 22, 0.3);
+        }
+
+        /* Responsive adjustments for search section */
+        @media (max-width: 992px) {
+            .search-container {
+                padding: 1.75rem;
+            }
+            
+            .search-container .exchange-btn {
+                margin: 10px auto;
+                top: 0;
+                transform: rotate(90deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .search-container {
+                margin-top: -50px;
+                padding: 1.5rem;
+            }
+            
+            .search-container .form-control,
+            .search-container .form-select,
+            .search-container .traveler-counter {
+                height: 50px;
+            }
+            
+            .search-container .btn-book {
+                height: 50px;
+            }
+        }
+
+        /* ========== Footer Styles ========== */
+        .main-footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 0 0;
+            margin-top: 5rem;
+        }
+
+        .main-footer .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .main-footer .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .main-footer .footer-links i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .main-footer .btn-outline-light {
+            border-radius: 30px;
+            padding: 0.25rem 0.75rem;
+        }
+
+        .main-footer .payment-methods i {
+            opacity: 0.9;
+            transition: all 0.3s ease;
+        }
+
+        .main-footer .payment-methods i:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .main-footer .payment-group {
+            margin-right: 1.5rem;
+            padding-right: 1.5rem;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .main-footer .payment-group:last-child {
+            border-right: none;
+        }
+
+        .main-footer hr {
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* ========== General Styles ========== */
+        body {
+            background-color: #fff7ed;
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: url('https://images.unsplash.com/photo-1506929562872-bb421503ef21?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            z-index: -1;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 1rem;
+        }
+
+        .navbar-brand img {
+            height: 155px;
+            width: 175px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand:hover img {
+            transform: scale(1.05);
+        }
+
+        .nav-link {
+            color: var(--dark-color) !important;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem !important;
+            margin: 0 0.25rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-width: 100px;
+            position: relative;
+        }
+
+        .nav-link i {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+            background: rgba(249, 115, 22, 0.1);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link span {
+            font-size: 0.85rem;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-color) !important;
+        }
+
+        .nav-link:hover i, .nav-link.active i {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(249, 115, 22, 0.8), rgba(234, 88, 12, 0.8));
+            height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+
+        .countdown-badge {
+            background: white;
+            color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .countdown-badge i {
+            margin-right: 0.5rem;
+        }
+
+        .deal-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            height: 100%;
+            margin-bottom: 1.5rem;
+            border: none;
+            position: relative;
+        }
+
+        .deal-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .deal-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .deal-card:hover .deal-img {
+            transform: scale(1.05);
+        }
+
+        .deal-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent-color);
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 2px 10px rgba(234, 179, 8, 0.3);
+        }
+
+        .discount-badge {
+            background: var(--gradient-orange);
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .btn-book {
+            background: var(--gradient-orange);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.2);
+        }
+
+        .btn-book:hover {
+            background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(249, 115, 22, 0.3);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--dark-color);
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            height: 100%;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(249, 115, 22, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(249, 115, 22, 0.1);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(249, 115, 22, 0.1);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: var(--primary-color);
+            font-size: 1.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            background: var(--primary-color);
+            color: white;
+            transform: rotate(10deg);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .navbar-brand img {
+                height: 120px;
+                width: 140px;
+            }
+            
+            .nav-link {
+                padding: 0.5rem 1rem !important;
+                flex-direction: row;
+                justify-content: flex-start;
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .nav-link i {
+                margin-right: 0.5rem;
+                margin-bottom: 0;
+            }
+            
+            .search-container {
+                padding: 1.5rem;
+                margin-top: -50px;
+            }
+
+            .main-footer .payment-group {
+                margin-right: 0.5rem;
+                padding-right: 0.5rem;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="V2B.png" alt="Visa2Book" style="height: 120px; width: 140px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="discounted_fares.html">
+                            <i class="fas fa-percentage"></i>
+                            <span>Discounted Fares</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="last_minute_deals.html">
+                            <i class="fas fa-clock"></i>
+                            <span>Last Minute Deals</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="seasonal_discounts.html">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Seasonal Discounts</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">Last Minute Travel Deals</h1>
+            <p class="hero-subtitle">Grab these amazing offers before they're gone! Limited availability at unbeatable prices</p>
+            <div class="countdown-badge">
+                <i class="fas fa-stopwatch"></i>
+                <span id="countdown">24:00:00</span> remaining
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Section -->
+    <div class="container">
+        <div class="search-container">
+            <div class="urgency-level">
+                <div class="urgency-indicator"></div>
+            </div>
+            
+            <form>
+                <div class="row g-3 align-items-end">
+                    <!-- Origin -->
+                    <div class="col-md-5">
+                        <div class="form-floating">
+                            <i class="fas fa-map-marker-alt input-icon"></i>
+                            <input type="text" class="form-control" id="origin" placeholder="Origin" value="Delhi">
+                            <label for="origin">From</label>
+                        </div>
+                    </div>
+                    
+                    <!-- Exchange Button -->
+                    <div class="col-md-2 text-center d-flex justify-content-center">
+                        <button type="button" class="exchange-btn" id="exchangeLocations">
+                            <i class="fas fa-exchange-alt"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Destination -->
+                    <div class="col-md-5">
+                        <div class="form-floating">
+                            <i class="fas fa-map-marker-alt input-icon"></i>
+                            <input type="text" class="form-control" id="destination" placeholder="Destination" value="Goa">
+                            <label for="destination">To</label>
+                        </div>
+                    </div>
+                    
+                    <!-- Departure Date -->
+                    <div class="col-md-4">
+                        <div class="form-floating">
+                            <i class="far fa-calendar input-icon"></i>
+                            <input type="date" class="form-control" id="departure" placeholder="Departure">
+                            <label for="departure">Departure Date</label>
+                        </div>
+                    </div>
+                    
+                    <!-- Travelers Counter -->
+                    <div class="col-md-4">
+                        <div class="traveler-counter">
+                            <button type="button" id="decrementTravelers" class="text-primary">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <input type="text" id="travelerCount" value="2" readonly>
+                            <button type="button" id="incrementTravelers" class="text-primary">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                            <span>Travelers</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Search Button -->
+                    <div class="col-md-4">
+                        <button type="submit" class="btn-book">
+                            <i class="fas fa-bolt me-2"></i> Find Hot Deals
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Deal Listings -->
+    <div class="container my-5 py-5">
+        <h2 class="section-title">Flash Sales Ending Soon</h2>
+        <p class="text-muted mb-4">These deals won't last long - book now before they disappear!</p>
+        
+        <div class="row">
+            <!-- Deal 1 -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="deal-card">
+                    <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="deal-img" alt="Delhi to Goa Flight">
+                    <span class="deal-badge">5 seats left</span>
+                    <div class="p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-plane me-3" style="color: var(--primary-color); font-size: 1.5rem;"></i>
+                            <div>
+                                <h5 class="mb-0">Delhi to Goa</h5>
+                                <p class="text-muted mb-0">Departing tomorrow • 2h 15m</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="discount-badge">60% OFF</span>
+                            <div class="text-end">
+                                <span class="original-price">₹9,499</span>
+                                <span class="price">₹3,799</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <p class="mb-2"><i class="fas fa-clock me-2" style="color: var(--primary-color);"></i> Departure: 06:45 AM</p>
+                            <p class="mb-2"><i class="fas fa-suitcase me-2" style="color: var(--primary-color);"></i> 15kg Check-in + 7kg Cabin</p>
+                            <p class="mb-0"><i class="fas fa-stopwatch me-2" style="color: var(--primary-color);"></i> Deal ends in 3:22:15</p>
+                        </div>
+                        <button class="btn-book">Grab This Deal</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Deal 2 -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="deal-card">
+                    <img src="https://images.unsplash.com/photo-1506929562872-bb421503ef21?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="deal-img" alt="Weekend Getaway Package">
+                    <span class="deal-badge">2 rooms left</span>
+                    <div class="p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-hotel me-3" style="color: var(--primary-color); font-size: 1.5rem;"></i>
+                            <div>
+                                <h5 class="mb-0">Luxury Weekend Getaway</h5>
+                                <p class="text-muted mb-0">Goa • 2 nights • 5-star resort</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="discount-badge">55% OFF</span>
+                            <div class="text-end">
+                                <span class="original-price">₹24,999</span>
+                                <span class="price">₹11,249</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <p class="mb-2"><i class="fas fa-calendar-alt me-2" style="color: var(--primary-color);"></i> This weekend only</p>
+                            <p class="mb-2"><i class="fas fa-utensils me-2" style="color: var(--primary-color);"></i> Breakfast included</p>
+                            <p class="mb-0"><i class="fas fa-stopwatch me-2" style="color: var(--primary-color);"></i> Deal ends in 5:41:22</p>
+                        </div>
+                        <button class="btn-book">Grab This Deal</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Deal 3 -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="deal-card">
+                    <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="deal-img" alt="Train Journey">
+                    <span class="deal-badge">Last 3 seats</span>
+                    <div class="p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-train me-3" style="color: var(--primary-color); font-size: 1.5rem;"></i>
+                            <div>
+                                <h5 class="mb-0">Mumbai to Delhi</h5>
+                                <p class="text-muted mb-0">Tonight's departure • 15h 30m</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="discount-badge">45% OFF</span>
+                            <div class="text-end">
+                                <span class="original-price">₹3,799</span>
+                                <span class="price">₹2,089</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <p class="mb-2"><i class="fas fa-bed me-2" style="color: var(--primary-color);"></i> AC 2-Tier Sleeper</p>
+                            <p class="mb-2"><i class="fas fa-utensils me-2" style="color: var(--primary-color);"></i> Meals included</p>
+                            <p class="mb-0"><i class="fas fa-stopwatch me-2" style="color: var(--primary-color);"></i> Deal ends in 1:18:45</p>
+                        </div>
+                        <button class="btn-book">Grab This Deal</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <button class="btn btn-outline-primary px-4 py-2">View More Last Minute Deals <i class="fas fa-arrow-right ms-2"></i></button>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="container my-5 py-5">
+        <h2 class="section-title text-center mb-5">Why Book Last Minute?</h2>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h4>Massive Savings</h4>
+                    <p class="text-muted">Hotels and airlines slash prices to fill remaining inventory, passing savings to you.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h4>Instant Getaways</h4>
+                    <p class="text-muted">Spontaneous trips create the most memorable experiences with minimal planning.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h4>Unexpected Upgrades</h4>
+                    <p class="text-muted">Often get room upgrades or better seats when properties have availability.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Newsletter Section -->
+    <div class="container my-5 py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="p-5 text-center rounded" style="background: var(--gradient-orange); color: white;">
+                    <h3 class="mb-3">Get Last Minute Deal Alerts</h3>
+                    <p class="mb-4">Be the first to know when new last-minute deals are released</p>
+                    <form class="row g-2 justify-content-center">
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <input type="email" class="form-control" placeholder="Your email address">
+                                <button class="btn btn-light" type="submit">Subscribe</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase mb-4">Company Information</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-info-circle me-2"></i> About</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-envelope me-2"></i> Contact Us</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-shield-alt me-2"></i> Privacy Policy</a></li>
+                        <li><a href="#" class="text-white"><i class="fas fa-file-contract me-2"></i> Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase mb-4">Quick Links</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-undo me-2"></i> Refund Policy</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-question-circle me-2"></i> FAQs</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-headset me-2"></i> Customer Support</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="text-uppercase mb-4">Connect With Us</h5>
+                    <ul class="list-unstyled footer-links mb-4">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-facebook-f me-2"></i> Facebook</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-twitter me-2"></i> Twitter</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-instagram me-2"></i> Instagram</a></li>
+                        <li><a href="#" class="text-white"><i class="fab fa-linkedin-in me-2"></i> LinkedIn</a></li>
+                    </ul>
+                    <div class="mb-4">
+                        <h6 class="mb-3">Download Our App</h6>
+                        <div class="d-flex gap-2">
+                            <a href="#" class="btn btn-sm btn-outline-light">
+                                <i class="fab fa-apple me-2"></i> App Store
+                            </a>
+                            <a href="#" class="btn btn-sm btn-outline-light">
+                                <i class="fab fa-google-play me-2"></i> Play Store
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4 bg-light opacity-10">
+
+            <!-- Payment Methods -->
+            <div class="row align-items-center py-3">
+                <div class="col-md-8 mb-3 mb-md-0">
+                    <h6 class="mb-3">Accepted Payment Methods:</h6>
+                    <div class="payment-methods d-flex flex-wrap gap-3 align-items-center">
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fab fa-cc-visa fa-2x me-2" style="color: #1a1f71;"></i>
+                            <i class="fab fa-cc-mastercard fa-2x me-3" style="color: #eb001b;"></i>
+                            <span class="text-white-50">Cards</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fas fa-rupee-sign fa-2x me-2" style="color: #6cbe45;"></i>
+                            <span class="text-white-50">UPI</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fab fa-google-pay fa-2x me-2" style="color: #4285f4;"></i>
+                            <i class="fas fa-wallet fa-2x me-3" style="color: #ff9500;"></i>
+                            <span class="text-white-50">Wallets</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <span class="badge bg-light text-dark me-2">Pay Later:</span>
+                            <span class="badge bg-primary me-2">Simple Pay</span>
+                            <span class="badge bg-info text-dark">Lazy Pay</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <div class="d-flex flex-column">
+                        <p class="mb-2"><i class="fas fa-phone-alt me-2"></i> 24/7 Support: +1 (555) 987-6543</p>
+                        <p class="mb-0"><i class="fas fa-envelope me-2"></i> support@visa2book.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Countdown timer
+        function updateCountdown() {
+            const now = new Date();
+            const midnight = new Date();
+            midnight.setHours(24, 0, 0, 0);
+            
+            const diff = midnight - now;
+            
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('countdown').textContent = 
+                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+        
+        // Exchange locations functionality
+        document.getElementById('exchangeLocations').addEventListener('click', function() {
+            const origin = document.getElementById('origin');
+            const destination = document.getElementById('destination');
+            const temp = origin.value;
+            origin.value = destination.value;
+            destination.value = temp;
+        });
+
+        // Traveler counter functionality
+        document.getElementById('incrementTravelers').addEventListener('click', function() {
+            const countElement = document.getElementById('travelerCount');
+            let count = parseInt(countElement.value);
+            if (count < 9) {
+                countElement.value = count + 1;
+            }
+        });
+
+        document.getElementById('decrementTravelers').addEventListener('click', function() {
+            const countElement = document.getElementById('travelerCount');
+            let count = parseInt(countElement.value);
+            if (count > 1) {
+                countElement.value = count - 1;
+            }
+        });
+
+        // Booking confirmation
+        document.querySelectorAll('.btn-book').forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (this.type !== 'submit') {
+                    e.preventDefault();
+                    const destination = this.closest('.deal-card').querySelector('h5').textContent;
+                    alert(`You've selected: ${destination}\nRedirecting to booking page...`);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seasonal Discounts - Visa2Book</title>
+    <link rel="shortcut icon" href="V2B.png" type="image/x-icon">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #10b981;
+            --secondary-color: #059669;
+            --accent-color: #f59e0b;
+            --dark-color: #1e293b;
+            --light-color: #f8fafc;
+            --gradient-green: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        body {
+            background-color: #f0fdf4;
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: url('https://images.unsplash.com/photo-1556388158-158ea5ccacbd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.85);
+            z-index: -1;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 1rem;
+        }
+
+        .navbar-brand img {
+            height: 155px;
+            width: 175px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand:hover img {
+            transform: scale(1.05);
+        }
+
+        .nav-link {
+            color: var(--dark-color) !important;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem !important;
+            margin: 0 0.25rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-width: 100px;
+            position: relative;
+        }
+
+        .nav-link i {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+            background: rgba(16, 185, 129, 0.1);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link span {
+            font-size: 0.85rem;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-color) !important;
+        }
+
+        .nav-link:hover i, .nav-link.active i {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(16, 185, 129, 0.8), rgba(16, 185, 129, 0.8));
+            height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+            border-radius: 0 0 30px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+
+        .season-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            height: 100%;
+            margin-bottom: 1.5rem;
+            border: none;
+            position: relative;
+        }
+
+        .season-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .season-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .season-card:hover .season-img {
+            transform: scale(1.05);
+        }
+
+        .season-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent-color);
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 2px 10px rgba(245, 158, 11, 0.3);
+        }
+
+        .discount-badge {
+            background: var(--gradient-green);
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .btn-book {
+            background: var(--gradient-green);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+        }
+
+        .btn-book:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--dark-color);
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .season-tabs {
+            display: flex;
+            justify-content: center;
+            background: #f0fdf4;
+            border-radius: 12px;
+            padding: 0.5rem;
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .season-tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: #64748b;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            text-align: center;
+            margin: 0 0.25rem;
+        }
+
+        .season-tab.active {
+            color: white;
+            background: var(--gradient-green);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .season-tab:hover:not(.active) {
+            color: var(--primary-color);
+        }
+
+
+/* ========== Footer Styles ========== */
+.main-footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 0 0;
+            margin-top: 5rem;
+        }
+
+        .main-footer .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .main-footer .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .main-footer .footer-links i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .main-footer .btn-outline-light {
+            border-radius: 30px;
+            padding: 0.25rem 0.75rem;
+        }
+
+        .main-footer .payment-methods i {
+            opacity: 0.9;
+            transition: all 0.3s ease;
+        }
+
+        .main-footer .payment-methods i:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .main-footer .payment-group {
+            margin-right: 1.5rem;
+            padding-right: 1.5rem;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .main-footer .payment-group:last-child {
+            border-right: none;
+        }
+
+        .main-footer hr {
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        
+        footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-top: 5rem;
+            clip-path: polygon(0 5%, 100% 0, 100% 100%, 0 100%);
+        }
+
+        .footer-logo {
+            height: 155px;
+            width: 175px;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-link {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: block;
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-link:hover {
+            color: white;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .navbar-brand img {
+                height: 120px;
+                width: 140px;
+            }
+            
+            .nav-link {
+                padding: 0.5rem 1rem !important;
+                flex-direction: row;
+                justify-content: flex-start;
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .nav-link i {
+                margin-right: 0.5rem;
+                margin-bottom: 0;
+            }
+            
+            .season-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .season-tab {
+                flex: 0 0 45%;
+                padding: 0.5rem;
+                font-size: 0.9rem;
+                margin: 0.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="V2B.png" alt="Visa2Book" style="height: 120px; width: 140px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="discounted_fares.html">
+                            <i class="fas fa-percentage"></i>
+                            <span>Discounted Fares</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="last_minute_deals.html">
+                            <i class="fas fa-clock"></i>
+                            <span>Last Minute Deals</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="seasonal_discounts.html">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Seasonal Discounts</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">Seasonal Travel Deals</h1>
+            <p class="hero-subtitle">Discover special offers tailored for each season - plan ahead and save big on your travels</p>
+        </div>
+    </div>
+
+    <!-- Seasonal Offers Section -->
+    <div class="container my-5 py-5">
+        <div class="season-tabs">
+            <div class="season-tab active" data-season="summer">Summer Getaways</div>
+            <div class="season-tab" data-season="winter">Winter Escapes</div>
+            <div class="season-tab" data-season="spring">Spring Breaks</div>
+            <div class="season-tab" data-season="autumn">Autumn Adventures</div>
+        </div>
+        
+        <h2 class="section-title text-center">Summer Travel Deals</h2>
+        <p class="text-center text-muted mb-5">Beat the heat with these refreshing summer destinations at discounted rates</p>
+        
+        <div class="row">
+            <!-- Summer Deal 1 -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="season-card">
+                    <img src="https://images.unsplash.com/photo-1506929562872-bb421503ef21?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="season-img" alt="Goa Beach Vacation">
+                    <span class="season-badge">Family Package</span>
+                    <div class="p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-umbrella-beach me-3" style="color: var(--primary-color); font-size: 1.5rem;"></i>
+                            <div>
+                                <h5 class="mb-0">Goa Beach Package</h5>
+                                <p class="text-muted mb-0">5 Days • 4 Nights • Flight + Hotel</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="discount-badge">40% OFF</span>
+                            <div class="text-end">
+                                <span class="original-price">₹24,999</span>
+                                <span class="price">₹14,999</span>
+                                <small class="d-block text-muted">per person</small>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <p class="mb-2"><i class="fas fa-calendar-alt me-2" style="color: var(--primary-color);"></i> May - July 2023</p>
+                            <p class="mb-2"><i class="fas fa-hotel me-2" style="color: var(--primary-color);"></i> 4★ Beachfront Resort</p>
+                            <p class="mb-0"><i class="fas fa-utensils me-2" style="color: var(--primary-color);"></i> Breakfast Included</p>
+                        </div>
+                        <button class="btn-book">Book Now</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Summer Deal 2 -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="season-card">
+                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="season-img" alt="Manali Hill Station">
+                    <span class="season-badge">Honeymoon Special</span>
+                    <div class="p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-mountain me-3" style="color: var(--primary-color); font-size: 1.5rem;"></i>
+                            <div>
+                                <h5 class="mb-0">Manali Cool Retreat</h5>
+                                <p class="text-muted mb-0">6 Days • 5 Nights • Flight + Hotel</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="discount-badge">35% OFF</span>
+                            <div class="text-end">
+                                <span class="original-price">₹32,499</span>
+                                <span class="price">₹20,999</span>
+                                <small class="d-block text-muted">per couple</small>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <p class="mb-2"><i class="fas fa-calendar-alt me-2" style="color: var(--primary-color);"></i> June - August 2023</p>
+                            <p class="mb-2"><i class="fas fa-hotel me-2" style="color: var(--primary-color);"></i> Luxury Cottage with View</p>
+                            <p class="mb-0"><i class="fas fa-gift me-2" style="color: var(--primary-color);"></i> Complimentary Spa Session</p>
+                        </div>
+                        <button class="btn-book">Book Now</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Summer Deal 3 -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="season-card">
+                    <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="season-img" alt="Andaman Islands">
+                    <div class="p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-water me-3" style="color: var(--primary-color); font-size: 1.5rem;"></i>
+                            <div>
+                                <h5 class="mb-0">Andaman Island Hopping</h5>
+                                <p class="text-muted mb-0">7 Days • 6 Nights • Flight + Cruise</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="discount-badge">45% OFF</span>
+                            <div class="text-end">
+                                <span class="original-price">₹45,999</span>
+                                <span class="price">₹24,999</span>
+                                <small class="d-block text-muted">per person</small>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <p class="mb-2"><i class="fas fa-calendar-alt me-2" style="color: var(--primary-color);"></i> April - September 2023</p>
+                            <p class="mb-2"><i class="fas fa-ship me-2" style="color: var(--primary-color);"></i> Island Cruise Included</p>
+                            <p class="mb-0"><i class="fas fa-snorkel me-2" style="color: var(--primary-color);"></i> Free Scuba Diving Session</p>
+                        </div>
+                        <button class="btn-book">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <button class="btn btn-outline-primary px-4 py-2">View All Summer Deals <i class="fas fa-arrow-right ms-2"></i></button>
+        </div>
+    </div>
+
+    <!-- Upcoming Seasons Section -->
+    <div class="container my-5 py-5">
+        <h2 class="section-title text-center">Plan Ahead for Upcoming Seasons</h2>
+        <p class="text-center text-muted mb-5">Book early and save more with these advance booking offers</p>
+        
+        <div class="row g-4">
+            <!-- Winter Preview -->
+            <div class="col-md-6 col-lg-3">
+                <div class="season-card">
+                    <img src="https://images.unsplash.com/photo-1518604666860-9ed391f76460?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="season-img" alt="Gulmarg Winter">
+                    <div class="p-4">
+                        <h5 class="mb-3">Winter Wonderland</h5>
+                        <p class="text-muted mb-3">Experience snow-covered mountains and cozy retreats</p>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="discount-badge">Early Bird 30% OFF</span>
+                            <small class="text-muted">Nov - Feb</small>
+                        </div>
+                        <button class="btn btn-outline-primary w-100">Explore Winter Deals</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Spring Preview -->
+            <div class="col-md-6 col-lg-3">
+                <div class="season-card">
+                    <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="season-img" alt="Kashmir Spring">
+                    <div class="p-4">
+                        <h5 class="mb-3">Spring Blossoms</h5>
+                        <p class="text-muted mb-3">Witness nature's colorful awakening</p>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="discount-badge">Early Bird 25% OFF</span>
+                            <small class="text-muted">Feb - Apr</small>
+                        </div>
+                        <button class="btn btn-outline-primary w-100">Explore Spring Deals</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Autumn Preview -->
+            <div class="col-md-6 col-lg-3">
+                <div class="season-card">
+                    <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="season-img" alt="Autumn Valley">
+                    <div class="p-4">
+                        <h5 class="mb-3">Golden Autumn</h5>
+                        <p class="text-muted mb-3">Experience the magical fall colors</p>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="discount-badge">Early Bird 20% OFF</span>
+                            <small class="text-muted">Sep - Nov</small>
+                        </div>
+                        <button class="btn btn-outline-primary w-100">Explore Autumn Deals</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Monsoon Preview -->
+            <div class="col-md-6 col-lg-3">
+                <div class="season-card">
+                    <img src="https://images.unsplash.com/photo-1492011221367-f47e3ccd77a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="season-img" alt="Monsoon Kerala">
+                    <div class="p-4">
+                        <h5 class="mb-3">Monsoon Magic</h5>
+                        <p class="text-muted mb-3">Lush greenery and waterfall adventures</p>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="discount-badge">Early Bird 35% OFF</span>
+                            <small class="text-muted">Jun - Sep</small>
+                        </div>
+                        <button class="btn btn-outline-primary w-100">Explore Monsoon Deals</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Why Book Seasonal Deals Section -->
+    <div class="container my-5 py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <h2 class="section-title">Why Book Seasonal Deals?</h2>
+                <p class="mb-4">Seasonal travel offers unique experiences and significant savings when you plan ahead. Here's why you should consider seasonal travel packages:</p>
+                
+                <div class="d-flex mb-3">
+                    <div class="me-4">
+                        <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                            <i class="fas fa-rupee-sign"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h5 class="mb-1">Best Price Guarantee</h5>
+                        <p class="text-muted mb-0">Our seasonal deals offer the lowest prices for specific times of the year, with discounts up to 60%.</p>
+                    </div>
+                </div>
+                
+                <div class="d-flex mb-3">
+                    <div class="me-4">
+                        <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h5 class="mb-1">Early Booking Benefits</h5>
+                        <p class="text-muted mb-0">Secure your travel plans in advance and avoid last-minute price surges.</p>
+                    </div>
+                </div>
+                
+                <div class="d-flex">
+                    <div class="me-4">
+                        <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h5 class="mb-1">Season-Specific Experiences</h5>
+                        <p class="text-muted mb-0">Enjoy activities and sights that are only available during specific seasons.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6">
+                <div class="p-5 rounded" style="background: var(--gradient-green);">
+                    <h3 class="text-white mb-4">Get Seasonal Deal Alerts</h3>
+                    <p class="text-white-50 mb-4">Subscribe to receive exclusive seasonal offers before they're released to the public.</p>
+                    
+                    <form>
+                        <div class="mb-3">
+                            <input type="text" class="form-control py-3" placeholder="Your Name">
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" class="form-control py-3" placeholder="Email Address">
+                        </div>
+                        <div class="mb-3">
+                            <select class="form-select py-3">
+                                <option selected>Seasons I'm Interested In</option>
+                                <option>Summer Vacations</option>
+                                <option>Winter Getaways</option>
+                                <option>Spring Breaks</option>
+                                <option>Autumn Adventures</option>
+                                <option>Monsoon Retreats</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-light w-100 py-2 fw-bold">Subscribe Now</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase mb-4">Company Information</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-info-circle me-2"></i> About</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-envelope me-2"></i> Contact Us</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-shield-alt me-2"></i> Privacy Policy</a></li>
+                        <li><a href="#" class="text-white"><i class="fas fa-file-contract me-2"></i> Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase mb-4">Quick Links</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-undo me-2"></i> Refund Policy</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-question-circle me-2"></i> FAQs</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-headset me-2"></i> Customer Support</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="text-uppercase mb-4">Connect With Us</h5>
+                    <ul class="list-unstyled footer-links mb-4">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-facebook-f me-2"></i> Facebook</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-twitter me-2"></i> Twitter</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-instagram me-2"></i> Instagram</a></li>
+                        <li><a href="#" class="text-white"><i class="fab fa-linkedin-in me-2"></i> LinkedIn</a></li>
+                    </ul>
+                    <div class="mb-4">
+                        <h6 class="mb-3">Download Our App</h6>
+                        <div class="d-flex gap-2">
+                            <a href="#" class="btn btn-sm btn-outline-light">
+                                <i class="fab fa-apple me-2"></i> App Store
+                            </a>
+                            <a href="#" class="btn btn-sm btn-outline-light">
+                                <i class="fab fa-google-play me-2"></i> Play Store
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4 bg-light opacity-10">
+
+            <!-- Payment Methods -->
+            <div class="row align-items-center py-3">
+                <div class="col-md-8 mb-3 mb-md-0">
+                    <h6 class="mb-3">Accepted Payment Methods:</h6>
+                    <div class="payment-methods d-flex flex-wrap gap-3 align-items-center">
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fab fa-cc-visa fa-2x me-2" style="color: #1a1f71;"></i>
+                            <i class="fab fa-cc-mastercard fa-2x me-3" style="color: #eb001b;"></i>
+                            <span class="text-white-50">Cards</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fas fa-rupee-sign fa-2x me-2" style="color: #6cbe45;"></i>
+                            <span class="text-white-50">UPI</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fab fa-google-pay fa-2x me-2" style="color: #4285f4;"></i>
+                            <i class="fas fa-wallet fa-2x me-3" style="color: #ff9500;"></i>
+                            <span class="text-white-50">Wallets</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <span class="badge bg-light text-dark me-2">Pay Later:</span>
+                            <span class="badge bg-primary me-2">Simple Pay</span>
+                            <span class="badge bg-info text-dark">Lazy Pay</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <div class="d-flex flex-column">
+                        <p class="mb-2"><i class="fas fa-phone-alt me-2"></i> 24/7 Support: +1 (555) 987-6543</p>
+                        <p class="mb-0"><i class="fas fa-envelope me-2"></i> support@visa2book.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Season tab switching functionality
+        document.querySelectorAll('.season-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                document.querySelectorAll('.season-tab').forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Get the season from data attribute
+                const season = this.getAttribute('data-season');
+                
+                // Update the section title and description
+                const sectionTitle = document.querySelector('.section-title');
+                const sectionDesc = document.querySelector('.text-center.text-muted.mb-5');
+                
+                switch(season) {
+                    case 'summer':
+                        sectionTitle.textContent = 'Summer Travel Deals';
+                        sectionDesc.textContent = 'Beat the heat with these refreshing summer destinations at discounted rates';
+                        break;
+                    case 'winter':
+                        sectionTitle.textContent = 'Winter Travel Deals';
+                        sectionDesc.textContent = 'Embrace the chill with these cozy winter getaways at special prices';
+                        break;
+                    case 'spring':
+                        sectionTitle.textContent = 'Spring Travel Deals';
+                        sectionDesc.textContent = 'Welcome spring with these blooming destinations at amazing rates';
+                        break;
+                    case 'autumn':
+                        sectionTitle.textContent = 'Autumn Travel Deals';
+                        sectionDesc.textContent = 'Experience the golden hues of autumn with these special offers';
+                        break;
+                }
+            });
+        });
+        
+        // Booking button functionality
+        document.querySelectorAll('.btn-book').forEach(button => {
+            button.addEventListener('click', function() {
+                const destination = this.closest('.season-card').querySelector('h5').textContent;
+                alert(`You've selected: ${destination}\nRedirecting to booking page...`);
+            });
+        });
+    </script>
+</body>
+</html>

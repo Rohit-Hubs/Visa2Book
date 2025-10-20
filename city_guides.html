@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Guides - Visa2Book</title>
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #3a86ff;
+            --secondary-color: #8338ec;
+            --dark-color: #212529;
+            --light-color: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--light-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        .main-header {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-container img {
+            height: 155px;
+            width: 175px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Navigation Styles */
+        .main-nav {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-item {
+            margin: 0 10px;
+            position: relative;
+        }
+
+        .nav-link {
+            color: white !important;
+            font-weight: 500;
+            padding: 15px 20px !important;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+            transform: translateY(-2px);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 70%;
+        }
+
+        .nav-link.active {
+            color: var(--primary-color) !important;
+        }
+
+        .nav-link.active::after {
+            width: 70%;
+        }
+
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 0 0.25rem rgba(58, 134, 255, 0.25);
+            border-color: var(--primary-color);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: var(--primary-color);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: #2a75e6;
+            transform: scale(1.05);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 40px 0;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            position: relative;
+            display: inline-block;
+        }
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            max-width: 800px;
+            opacity: 0.9;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* City Cards */
+        .city-card {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            height: 100%;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .city-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .city-img-container {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .city-img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .city-card:hover .city-img {
+            transform: scale(1.05);
+        }
+
+        .card-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .card-text {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .guide-btn {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 30px;
+            padding: 8px 20px;
+            font-weight: 500;
+            align-self: flex-start;
+            transition: all 0.3s ease;
+        }
+
+        .guide-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(58, 134, 255, 0.4);
+        }
+
+        /* Footer */
+        .main-footer {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 40px 0 20px;
+            margin-top: auto;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+            transform: translateX(5px);
+        }
+
+        .footer-links i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .payment-methods i {
+            margin-right: 5px;
+        }
+
+        .payment-group {
+            margin-right: 15px;
+            margin-bottom: 10px;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
+            .nav-item {
+                margin: 0 5px;
+            }
+            
+            .nav-link {
+                padding: 10px 15px !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .page-subtitle {
+                font-size: 1rem;
+            }
+            
+            .search-container {
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-3 logo-container">
+                    <a class="navbar-brand" href="index.html">
+                        <img src="V2B.png" alt="Visa2Book" style="height: 120px; width: 140px;">
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <div class="search-container">
+                        <input type="search" class="form-control search-input" placeholder="Search destinations, trips, or hotels...">
+                        <button class="btn search-btn" type="submit"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+                <div class="col-md-3 text-end">
+                    <a href="#" class="btn btn-outline-light position-relative">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">3</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark main-nav">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="fas fa-home me-1"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="popular_routes.html"><i class="fas fa-route me-1"></i> Popular Routes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="domestic_travel.html"><i class="fas fa-map-marked-alt me-1"></i> Domestic Travel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="international_travel.html"><i class="fas fa-globe me-1"></i> International Travel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="city_guides.html"><i class="fas fa-city me-1"></i> City Guides</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h1 class="page-title">Discover World Cities</h1>
+                <p class="page-subtitle">
+                    Explore our comprehensive city guides to plan your perfect urban adventure. From iconic landmarks to hidden gems, 
+                    we provide all the information you need to experience each destination like a local. Whether you're looking for 
+                    cultural highlights, culinary delights, or practical travel tips, our guides have you covered.
+                </p>
+            </div>
+
+            <div class="row g-4">
+                <!-- City Cards -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="city-card">
+                        <div class="city-img-container">
+                            <img src="london.jpg" class="city-img" alt="London">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">London</h5>
+                            <p class="card-text">From the historic Tower of London to the modern London Eye, this city blends tradition with contemporary culture.</p>
+                            <a href="#" class="btn guide-btn">Explore Guide</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3">
+                    <div class="city-card">
+                        <div class="city-img-container">
+                            <img src="destination7.jpg" class="city-img" alt="Rome">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Rome</h5>
+                            <p class="card-text">The Eternal City where ancient ruins meet vibrant street life and world-class cuisine.</p>
+                            <a href="#" class="btn guide-btn">Explore Guide</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3">
+                    <div class="city-card">
+                        <div class="city-img-container">
+                            <img src="destination4.jpg" class="city-img" alt="Sydney">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Sydney</h5>
+                            <p class="card-text">Australia's sparkling harbor city with iconic beaches, the Opera House, and coastal walks.</p>
+                            <a href="#" class="btn guide-btn">Explore Guide</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3">
+                    <div class="city-card">
+                        <div class="city-img-container">
+                            <img src="destination2.jpg" class="city-img" alt="Tokyo">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Tokyo</h5>
+                            <p class="card-text">A futuristic metropolis where neon-lit streets contrast with serene temples and gardens.</p>
+                            <a href="#" class="btn guide-btn">Explore Guide</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3">
+                    <div class="city-card">
+                        <div class="city-img-container">
+                            <img src="destination3.jpg" class="city-img" alt="New York">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">New York</h5>
+                            <p class="card-text">The city that never sleeps, with Broadway shows, world-class museums, and diverse neighborhoods.</p>
+                            <a href="#" class="btn guide-btn">Explore Guide</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3">
+                    <div class="city-card">
+                        <div class="city-img-container">
+                            <img src="destination5.jpg" class="city-img" alt="Dubai">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Dubai</h5>
+                            <p class="card-text">Ultra-modern architecture, luxury shopping, and desert adventures in this Middle Eastern gem.</p>
+                            <a href="#" class="btn guide-btn">Explore Guide</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3">
+                    <div class="city-card">
+                        <div class="city-img-container">
+                            <img src="losangeles.jpg" class="city-img" alt="Los Angeles">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Los Angeles</h5>
+                            <p class="card-text">Hollywood glamour, beautiful beaches, and diverse cultural experiences in Southern California.</p>
+                            <a href="#" class="btn guide-btn">Explore Guide</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3">
+                    <div class="city-card">
+                        <div class="city-img-container">
+                            <img src="destination6.jpg" class="city-img" alt="Moscow">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Moscow</h5>
+                            <p class="card-text">Historic Red Square, stunning cathedrals, and vibrant arts scene in Russia's capital.</p>
+                            <a href="#" class="btn guide-btn">Explore Guide</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New City Cards -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="city-card">
+                        <div class="city-img-container">
+                            <img src="https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" class="city-img" alt="Paris">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Paris</h5>
+                            <p class="card-text">The City of Light, famous for the Eiffel Tower, Louvre Museum, and romantic ambiance.</p>
+                            <a href="#" class="btn guide-btn">Explore Guide</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3">
+                    <div class="city-card">
+                        <div class="city-img-container">
+                            <img src="https://images.unsplash.com/photo-1538970272646-f61fabb3bfdf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" class="city-img" alt="Barcelona">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Barcelona</h5>
+                            <p class="card-text">Gaudi's architectural wonders, vibrant markets, and Mediterranean beaches in Spain.</p>
+                            <a href="#" class="btn guide-btn">Explore Guide</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3">
+                    <div class="city-card">
+                        <div class="city-img-container">
+                            <img src="https://images.unsplash.com/photo-1518391846015-55a9cc003b25?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" class="city-img" alt="Hong Kong">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Hong Kong</h5>
+                            <p class="card-text">A dazzling skyline, bustling markets, and a unique blend of Chinese and Western cultures.</p>
+                            <a href="#" class="btn guide-btn">Explore Guide</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3">
+                    <div class="city-card">
+                        <div class="city-img-container">
+                            <img src="singapore.jpg" class="city-img" alt="Singapore">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Singapore</h5>
+                            <p class="card-text">A clean, green city with futuristic gardens, diverse cuisine, and vibrant neighborhoods.</p>
+                            <a href="#" class="btn guide-btn">Explore Guide</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase mb-4">Company Information</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-info-circle me-2"></i> About</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-envelope me-2"></i> Contact Us</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-shield-alt me-2"></i> Privacy Policy</a></li>
+                        <li><a href="#" class="text-white"><i class="fas fa-file-contract me-2"></i> Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase mb-4">Quick Links</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-undo me-2"></i> Refund Policy</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-question-circle me-2"></i> FAQs</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-headset me-2"></i> Customer Support</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="text-uppercase mb-4">Connect With Us</h5>
+                    <ul class="list-unstyled footer-links mb-4">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-facebook-f me-2"></i> Facebook</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-twitter me-2"></i> Twitter</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-instagram me-2"></i> Instagram</a></li>
+                        <li><a href="#" class="text-white"><i class="fab fa-linkedin-in me-2"></i> LinkedIn</a></li>
+                    </ul>
+                    <div class="mb-4">
+                        <h6 class="mb-3">Download Our App</h6>
+                        <div class="d-flex gap-2">
+                            <a href="#" class="btn btn-sm btn-outline-light">
+                                <i class="fab fa-apple me-2"></i> App Store
+                            </a>
+                            <a href="#" class="btn btn-sm btn-outline-light">
+                                <i class="fab fa-google-play me-2"></i> Play Store
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4 bg-light opacity-10">
+
+            <!-- Payment Methods -->
+            <div class="row align-items-center py-3">
+                <div class="col-md-8 mb-3 mb-md-0">
+                    <h6 class="mb-3">Accepted Payment Methods:</h6>
+                    <div class="payment-methods d-flex flex-wrap gap-3 align-items-center">
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fab fa-cc-visa fa-2x me-2" style="color: #1a1f71;"></i>
+                            <i class="fab fa-cc-mastercard fa-2x me-3" style="color: #eb001b;"></i>
+                            <span class="text-white-50">Cards</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fas fa-rupee-sign fa-2x me-2" style="color: #6cbe45;"></i>
+                            <span class="text-white-50">UPI</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fab fa-google-pay fa-2x me-2" style="color: #4285f4;"></i>
+                            <i class="fas fa-wallet fa-2x me-3" style="color: #ff9500;"></i>
+                            <span class="text-white-50">Wallets</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <span class="badge bg-light text-dark me-2">Pay Later:</span>
+                            <span class="badge bg-primary me-2">Simple Pay</span>
+                            <span class="badge bg-info text-dark">Lazy Pay</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <div class="d-flex flex-column">
+                        <p class="mb-2"><i class="fas fa-phone-alt me-2"></i> 24/7 Support: +1 (555) 987-6543</p>
+                        <p class="mb-0"><i class="fas fa-envelope me-2"></i> support@visa2book.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

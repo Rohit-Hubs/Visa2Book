@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Refund Policy | Visa2Book</title>
+    <link rel="shortcut icon" href="V2B.png" type="image/png">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3a86ff;
+            --primary-dark: #2667d9;
+            --secondary: #8338ec;
+            --accent: #ff006e;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc;
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: white;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            padding: 1rem 2rem;
+        }
+
+        .navbar-brand img {
+            height: 40px;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            padding: 0.6rem 1.5rem;
+            margin: 0 0.5rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link.active {
+            background: rgba(58, 134, 255, 0.1);
+            color: var(--primary);
+        }
+
+        .navbar {
+    background: linear-gradient(135deg, #1a2a6c 0%, #3a7bd5 100%) !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    padding: 1rem 2rem;
+}
+
+.nav-link {
+    color: white !important;
+    font-weight: 500;
+}
+
+.nav-link.active {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+}
+
+        /* Hero Section */
+        .refund-hero {
+            background: linear-gradient(rgba(26, 26, 46, 0.9), rgba(26, 26, 46, 0.9)), 
+                        url('https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 5rem 0;
+            color: white;
+            text-align: center;
+        }
+
+        /* Policy Content */
+        .policy-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            margin-top: -50px;
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .policy-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .policy-section h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .policy-section h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--gradient);
+        }
+
+        .policy-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .policy-table th {
+            background: #f8f9fa;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .policy-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .policy-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .highlight-box {
+            background: rgba(58, 134, 255, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin: 2rem 0;
+        }
+
+        .timeline:before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--primary);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 1.5rem;
+        }
+
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--primary);
+            transform: translateX(-50%);
+        }
+
+        .timeline-content {
+            padding-left: 1.5rem;
+        }
+
+        /* Buttons */
+        .btn-primary-refund {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 0.8rem 1.8rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-refund:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(58, 134, 255, 0.3);
+        }
+
+
+        /* ========== Footer Styles ========== */
+        .main-footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 0 0;
+            margin-top: 5rem;
+        }
+
+        .main-footer .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .main-footer .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .main-footer .footer-links i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .main-footer .btn-outline-light {
+            border-radius: 30px;
+            padding: 0.25rem 0.75rem;
+        }
+
+        .main-footer .payment-methods i {
+            opacity: 0.9;
+            transition: all 0.3s ease;
+        }
+
+        .main-footer .payment-methods i:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .main-footer .payment-group {
+            margin-right: 1.5rem;
+            padding-right: 1.5rem;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .main-footer .payment-group:last-child {
+            border-right: none;
+        }
+
+        .main-footer hr {
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .main-footer {
+    background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+    color: white;
+    padding: 3rem 0 0;
+    margin-top: 5rem;
+}
+
+.main-footer .footer-links a:hover {
+    color: #3a86ff !important;
+    transform: translateX(5px);
+}
+
+.social-icons a:hover {
+    background: var(--primary) !important;
+    color: white !important;
+}
+        /* Responsive */
+        @media (max-width: 768px) {
+            .policy-container {
+                padding: 1.5rem;
+            }
+            
+            .policy-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="V2B.png" alt="Visa2Book" style="height: 120px; width: 140px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+
+                            
+                            <i class="fas fa-home"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="my_trips.html">
+                            <i class="fas fa-suitcase-rolling"></i>
+                            <span>My Trips</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="modify_cancel_booking.html">
+                            <i class="fas fa-edit"></i>
+                            <span>Modify/Cancel</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="check_pnr_status.html">
+                            <i class="fas fa-search"></i>
+                            <span>PNR Status</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="refund_cancellation_policy.html">
+                            <i class="fas fa-file-contract"></i>
+                            <span>Refund Policy</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="refund-hero">
+        <div class="container">
+            <h1 class="display-5 fw-bold mb-3">Refund Policy</h1>
+            <p class="lead mb-0">Understand how refunds work for your bookings</p>
+        </div>
+    </div>
+
+    <!-- Policy Content -->
+    <div class="container mb-5">
+        <div class="policy-container">
+            <div class="policy-section">
+                <h2>Our Refund Policy</h2>
+                <p>At Visa2Book, we strive to make the refund process as transparent and straightforward as possible. This policy outlines the conditions under which refunds are issued for flight, train, and hotel bookings made through our platform.</p>
+                
+                <div class="highlight-box">
+                    <h5><i class="fas fa-info-circle me-2"></i>Important Note</h5>
+                    <p class="mb-0">Refund processing times may vary depending on your bank or payment method. Typically, refunds take 7-14 business days to reflect in your account after processing.</p>
+                </div>
+            </div>
+
+            <div class="policy-section">
+                <h3>Flight Booking Refunds</h3>
+                <p>Refund eligibility and amounts for flight bookings depend on the airline's policy and fare rules.</p>
+                
+                <table class="policy-table">
+                    <thead>
+                        <tr>
+                            <th>Cancellation Time</th>
+                            <th>Refund Type</th>
+                            <th>Processing Fee</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>More than 48 hours before departure</td>
+                            <td>Full refund (as per fare rules)</td>
+                            <td>₹500 or 5% of ticket value (whichever is higher)</td>
+                        </tr>
+                        <tr>
+                            <td>24-48 hours before departure</td>
+                            <td>Partial refund (airline dependent)</td>
+                            <td>₹750 or 10% of ticket value</td>
+                        </tr>
+                        <tr>
+                            <td>Less than 24 hours before departure</td>
+                            <td>No refund (except cancellations by airline)</td>
+                            <td>N/A</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h5>Refund Process for Flights</h5>
+                            <ol>
+                                <li>Submit cancellation request through our platform or mobile app</li>
+                                <li>We process your request with the airline (1-2 business days)</li>
+                                <li>Airline approves/denies refund based on fare rules (1-3 business days)</li>
+                                <li>If approved, we process refund to your original payment method (3-5 business days)</li>
+                                <li>Amount reflects in your account (depends on your bank)</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="policy-section">
+                <h3>Train Booking Refunds</h3>
+                <p>Indian Railways has specific refund rules based on when the ticket is cancelled:</p>
+                
+                <table class="policy-table">
+                    <thead>
+                        <tr>
+                            <th>Cancellation Time</th>
+                            <th>Refund Amount</th>
+                            <th>Deductions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>More than 48 hours before departure</td>
+                            <td>90% of ticket value</td>
+                            <td>Flat ₹60 + 10% of fare</td>
+                        </tr>
+                        <tr>
+                            <td>12-48 hours before departure</td>
+                            <td>75% of ticket value</td>
+                            <td>Flat ₹60 + 25% of fare</td>
+                        </tr>
+                        <tr>
+                            <td>Less than 12 hours before departure</td>
+                            <td>50% of ticket value</td>
+                            <td>Flat ₹60 + 50% of fare</td>
+                        </tr>
+                        <tr>
+                            <td>After chart preparation</td>
+                            <td>No refund (TDR filing possible)</td>
+                            <td>N/A</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="highlight-box">
+                    <h5><i class="fas fa-clock me-2"></i>Important Note for Tatkal Tickets</h5>
+                    <p class="mb-0">Tatkal tickets are non-refundable except in case of train cancellation or if the journey is not undertaken.</p>
+                </div>
+            </div>
+
+            <div class="policy-section">
+                <h3>Hotel Booking Refunds</h3>
+                <p>Hotel refund policies vary by property. Here are our general guidelines:</p>
+                
+                <ul>
+                    <li><strong>Free Cancellation:</strong> Full refund if cancelled within property's specified period (usually 24-72 hours before check-in)</li>
+                    <li><strong>Non-refundable Rates:</strong> No refund for cancellations (may allow date changes with fee)</li>
+                    <li><strong>Early Check-out:</strong> No refund for unused nights unless specified in property policy</li>
+                    <li><strong>No-show:</strong> Full booking amount may be charged</li>
+                </ul>
+            </div>
+
+            <div class="policy-section">
+                <h3>How to Request a Refund</h3>
+                <p>Follow these steps to request a refund:</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h5>Online Refund Request</h5>
+                            <ol>
+                                <li>Log in to your Visa2Book account</li>
+                                <li>Go to "My Trips" section</li>
+                                <li>Select the booking you wish to cancel</li>
+                                <li>Click "Request Refund" and follow instructions</li>
+                                <li>You'll receive a confirmation email with refund details</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h5>Customer Support</h5>
+                            <p>If you're unable to process the refund online, contact our customer support team:</p>
+                            <ul>
+                                <li>Email: refunds@visa2book.com</li>
+                                <li>Phone: +91 98765 43210 (24/7)</li>
+                                <li>Live Chat: Available on our website and mobile app</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="policy-section">
+                <h3>Exceptions & Special Cases</h3>
+                <p>In certain situations, special refund rules may apply:</p>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-3 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5><i class="fas fa-plane-slash text-danger me-2"></i> Flight Cancellations</h5>
+                                <p class="mb-0">If your flight is cancelled by the airline, you're entitled to a full refund or alternative flight as per DGCA guidelines.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card mb-3 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5><i class="fas fa-train text-warning me-2"></i> Train Cancellations</h5>
+                                <p class="mb-0">For trains cancelled by Indian Railways, full refund is processed automatically for e-tickets.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card mb-3 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5><i class="fas fa-umbrella-beach text-info me-2"></i> Force Majeure</h5>
+                                <p class="mb-0">For natural disasters or government restrictions, special refund policies may apply.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card mb-3 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5><i class="fas fa-passport text-success me-2"></i> Visa Rejection</h5>
+                                <p class="mb-0">With proper documentation, we may waive cancellation fees for visa rejections.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-5">
+                <button class="btn btn-primary-refund me-3">
+                    <i class="fas fa-headset me-2"></i> Contact Support
+                </button>
+                <button class="btn btn-outline-primary">
+                    <i class="fas fa-file-download me-2"></i> Download Policy PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+<footer class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase mb-4">Company Information</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-info-circle me-2"></i> About</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-envelope me-2"></i> Contact Us</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-shield-alt me-2"></i> Privacy Policy</a></li>
+                        <li><a href="#" class="text-white"><i class="fas fa-file-contract me-2"></i> Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase mb-4">Quick Links</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-undo me-2"></i> Refund Policy</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-question-circle me-2"></i> FAQs</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-headset me-2"></i> Customer Support</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="text-uppercase mb-4">Connect With Us</h5>
+                    <ul class="list-unstyled footer-links mb-4">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-facebook-f me-2"></i> Facebook</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-twitter me-2"></i> Twitter</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-instagram me-2"></i> Instagram</a></li>
+                        <li><a href="#" class="text-white"><i class="fab fa-linkedin-in me-2"></i> LinkedIn</a></li>
+                    </ul>
+                    <div class="mb-4">
+                        <h6 class="mb-3">Download Our App</h6>
+                        <div class="d-flex gap-2">
+                            <a href="#" class="btn btn-sm btn-outline-light">
+                                <i class="fab fa-apple me-2"></i> App Store
+                            </a>
+                            <a href="#" class="btn btn-sm btn-outline-light">
+                                <i class="fab fa-google-play me-2"></i> Play Store
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4 bg-light opacity-10">
+
+            <!-- Payment Methods -->
+            <div class="row align-items-center py-3">
+                <div class="col-md-8 mb-3 mb-md-0">
+                    <h6 class="mb-3">Accepted Payment Methods:</h6>
+                    <div class="payment-methods d-flex flex-wrap gap-3 align-items-center">
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fab fa-cc-visa fa-2x me-2" style="color: #1a1f71;"></i>
+                            <i class="fab fa-cc-mastercard fa-2x me-3" style="color: #eb001b;"></i>
+                            <span class="text-white-50">Cards</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fas fa-rupee-sign fa-2x me-2" style="color: #6cbe45;"></i>
+                            <span class="text-white-50">UPI</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fab fa-google-pay fa-2x me-2" style="color: #4285f4;"></i>
+                            <i class="fas fa-wallet fa-2x me-3" style="color: #ff9500;"></i>
+                            <span class="text-white-50">Wallets</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <span class="badge bg-light text-dark me-2">Pay Later:</span>
+                            <span class="badge bg-primary me-2">Simple Pay</span>
+                            <span class="badge bg-info text-dark">Lazy Pay</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <div class="d-flex flex-column">
+                        <p class="mb-2"><i class="fas fa-phone-alt me-2"></i> 24/7 Support: +1 (555) 987-6543</p>
+                        <p class="mb-0"><i class="fas fa-envelope me-2"></i> support@visa2book.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

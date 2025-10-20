@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popular Routes - Visa2Book</title>
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #4e54c8;
+            --secondary-color: #8f94fb;
+            --accent-color: #f9d423;
+            --dark-color: #1a1a2e;
+            --light-color: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(rgba(20, 30, 48, 0.9), rgba(36, 59, 85, 0.9)), 
+                        url('https://images.unsplash.com/photo-1488085061387-422e29b40080?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--light-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        .main-header {
+            background: rgba(26, 26, 46, 0.9);
+            padding: 15px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container img {
+            height: 155px;
+            width: 175px;
+            transition: transform 0.3s ease;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .logo-container img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Navigation Styles */
+        .main-nav {
+            background: rgba(26, 26, 46, 0.85);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-item {
+            margin: 0 8px;
+            position: relative;
+        }
+
+        .nav-link {
+            color: white !important;
+            font-weight: 500;
+            padding: 12px 18px !important;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--accent-color) !important;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 60%;
+        }
+
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 50px 12px 20px;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-input:focus {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 0 0.25rem rgba(78, 84, 200, 0.25);
+            border-color: var(--primary-color);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: var(--primary-color);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: #3e44a5;
+            transform: scale(1.05);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 50px 0;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+            background: linear-gradient(to right, var(--accent-color), #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .page-subtitle {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .section-divider {
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            margin: 0 auto 30px;
+            border-radius: 2px;
+        }
+
+        /* Route Cards */
+        .route-card {
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            height: 100%;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .route-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        }
+
+        .route-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .route-img-container {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .route-img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .route-card:hover .route-img {
+            transform: scale(1.05);
+        }
+
+        .card-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: white;
+            font-size: 1.4rem;
+        }
+
+        .card-text {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .route-btn {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 30px;
+            padding: 8px 25px;
+            font-weight: 500;
+            align-self: flex-start;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-top: auto;
+        }
+
+        .route-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .route-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(78, 84, 200, 0.5);
+        }
+
+        .route-btn:hover::after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(25, 25);
+                opacity: 0;
+            }
+        }
+
+        /* Footer */
+        .main-footer {
+            background: rgba(26, 26, 46, 0.95);
+            padding: 50px 0 20px;
+            margin-top: auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-logo {
+            height: 120px;
+            width: auto;
+            margin-bottom: 20px;
+            filter: brightness(0) invert(1);
+        }
+
+        .footer-heading {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .footer-heading::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent-color);
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .footer-link::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            opacity: 0;
+            transition: all 0.3s ease;
+            color: var(--accent-color);
+        }
+
+        .footer-link:hover {
+            color: var(--accent-color);
+            padding-left: 20px;
+        }
+
+        .footer-link:hover::before {
+            opacity: 1;
+            left: 5px;
+        }
+
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+            color: white;
+            text-decoration: none;
+        }
+
+        .social-icon:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+            color: white;
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            margin-top: 40px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 1200px) {
+            .page-title {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
+            .nav-item {
+                margin: 0 5px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.2rem;
+            }
+            
+            .page-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .search-container {
+                margin-top: 15px;
+                margin-bottom: 15px;
+            }
+            
+            .logo-container {
+                text-align: center;
+                margin-bottom: 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .nav-link {
+                padding: 8px 12px !important;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-12 logo-container">
+                    <a class="navbar-brand" href="index.html">
+                        <img src="V2B.png" alt="Visa2Book" style="height: 120px; width: 140px;">
+                    </a>
+                </div>
+                <div class="col-lg-6 col-md-8">
+                    <div class="search-container">
+                        <input type="search" class="form-control search-input" placeholder="Search popular routes, destinations...">
+                        <button class="btn search-btn" type="submit"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 text-lg-end text-center">
+                    <a href="#" class="btn btn-outline-light position-relative">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">3</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark main-nav">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="fas fa-home me-1"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="popular_routes.html"><i class="fas fa-route me-1"></i> Popular Routes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="domestic_travel.html"><i class="fas fa-map-marked-alt me-1"></i> Domestic Travel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="international_travel.html"><i class="fas fa-globe me-1"></i> International Travel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="city_guides.html"><i class="fas fa-city me-1"></i> City Guides</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">Journey Through Iconic Routes</h1>
+                <div class="section-divider"></div>
+                <p class="page-subtitle">
+                    Discover the world's most traveled paths that connect cultures, landscapes, and experiences. 
+                    Our carefully curated popular routes offer seamless travel with breathtaking scenery, cultural 
+                    immersion, and unforgettable memories. Whether by air, rail, or road, find your perfect journey below.
+                </p>
+            </div>
+
+            <div class="row g-4">
+                <!-- Route Cards -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="route-card">
+                        <div class="route-img-container">
+                            <img src="route1.jpg" class="route-img" alt="Mumbai to Goa">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Mumbai to Goa</h5>
+                            <p class="card-text">
+                                Cruise along the Konkan coast with stunning ocean views, passing through lush Western Ghats. 
+                                Experience the transition from bustling city life to laid-back beach vibes.
+                            </p>
+                            <a href="#" class="btn route-btn">Explore Route</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="route-card">
+                        <div class="route-img-container">
+                            <img src="route2.jpg" class="route-img" alt="Delhi to Agra">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Delhi to Agra</h5>
+                            <p class="card-text">
+                                The Golden Triangle route takes you through India's rich history, culminating at the 
+                                magnificent Taj Mahal. Witness the changing landscapes from urban to rural India.
+                            </p>
+                            <a href="#" class="btn route-btn">Explore Route</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="route-card">
+                        <div class="route-img-container">
+                            <img src="route3.jpg" class="route-img" alt="Kolkata to Darjeeling">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Kolkata to Darjeeling</h5>
+                            <p class="card-text">
+                                Journey from the humid plains to the cool Himalayan foothills aboard the famous Toy Train, 
+                                a UNESCO World Heritage experience offering panoramic tea garden views.
+                            </p>
+                            <a href="#" class="btn route-btn">Explore Route</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="route-card">
+                        <div class="route-img-container">
+                            <img src="route4.jpg" class="route-img" alt="Chennai to Pondicherry">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Chennai to Pondicherry</h5>
+                            <p class="card-text">
+                                A scenic coastal drive along the Bay of Bengal, passing through traditional fishing villages 
+                                and French colonial architecture in this former French territory.
+                            </p>
+                            <a href="#" class="btn route-btn">Explore Route</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="route-card">
+                        <div class="route-img-container">
+                            <img src="route5.jpg" class="route-img" alt="Bangalore to Mysore">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Bangalore to Mysore</h5>
+                            <p class="card-text">
+                                Travel through Karnataka's heartland, dotted with ancient temples and palaces. The route 
+                                transforms from tech parks to royal heritage in just a few hours.
+                            </p>
+                            <a href="#" class="btn route-btn">Explore Route</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="route-card">
+                        <div class="route-img-container">
+                            <img src="route6.jpg" class="route-img" alt="Hyderabad to Hampi">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Hyderabad to Hampi</h5>
+                            <p class="card-text">
+                                A journey through time from the Nizams' grandeur to Vijayanagara Empire ruins. Witness the 
+                                dramatic change in landscape from plateau to boulder-strewn terrain.
+                            </p>
+                            <a href="#" class="btn route-btn">Explore Route</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Route Cards -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="route-card">
+                        <div class="route-img-container">
+                            <img src="https://images.unsplash.com/photo-1582972236019-ea9eaf2f09a9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" class="route-img" alt="Jaipur to Udaipur">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Jaipur to Udaipur</h5>
+                            <p class="card-text">
+                                The royal Rajasthan route takes you from the Pink City through arid landscapes to the 
+                                romantic Lake City, passing ancient forts and vibrant culture along the way.
+                            </p>
+                            <a href="#" class="btn route-btn">Explore Route</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="route-card">
+                        <div class="route-img-container">
+                            <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" class="route-img" alt="Delhi to Shimla">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Delhi to Shimla</h5>
+                            <p class="card-text">
+                                Escape the plains to the Queen of Hills through winding mountain roads. The Kalka-Shimla 
+                                toy train offers one of the world's most scenic rail journeys.
+                            </p>
+                            <a href="#" class="btn route-btn">Explore Route</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="route-card">
+                        <div class="route-img-container">
+                            <img src="https://images.unsplash.com/photo-1585506942812-e72b29cef752?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" class="route-img" alt="Mumbai to Mahabaleshwar">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Mumbai to Mahabaleshwar</h5>
+                            <p class="card-text">
+                                A refreshing escape from the city to the strawberry capital of India. The route climbs 
+                                through ghats offering panoramic views of the Western Ghats.
+                            </p>
+                            <a href="#" class="btn route-btn">Explore Route</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="route-card">
+                        <div class="route-img-container">
+                            <img src="route7.jpg" class="route-img" alt="Ahmedabad to Udaipur">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Ahmedabad to Udaipur</h5>
+                            <p class="card-text">
+                                Cross from Gujarat into Rajasthan, witnessing the landscape change from industrial zones 
+                                to arid plains and finally to the picturesque lakes of Udaipur.
+                            </p>
+                            <a href="#" class="btn route-btn">Explore Route</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="route-card">
+                        <div class="route-img-container">
+                            <img src="route8.jpg" class="route-img" alt="Jaipur to Jodhpur">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Jaipur to Jodhpur</h5>
+                            <p class="card-text">
+                                The desert route through Rajasthan takes you past ancient forts and blue-painted houses, 
+                                with the landscape gradually becoming more arid as you approach Jodhpur.
+                            </p>
+                            <a href="#" class="btn route-btn">Explore Route</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="route-card">
+                        <div class="route-img-container">
+                            <img src="route9.jpg" class="route-img" alt="Kerala Backwaters">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Kerala Backwaters</h5>
+                            <p class="card-text">
+                                Glide through palm-fringed canals on traditional houseboats, experiencing the unique 
+                                ecosystem and rural life of Kerala's waterways in ultimate tranquility.
+                            </p>
+                            <a href="#" class="btn route-btn">Explore Route</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+<footer class="bg-dark text-white pt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <h5 class="text-uppercase mb-4">Company Information</h5>
+                <ul class="list-unstyled footer-links">
+                    <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-info-circle me-2"></i> About</a></li>
+                    <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-envelope me-2"></i> Contact Us</a></li>
+                    <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-shield-alt me-2"></i> Privacy Policy</a></li>
+                    <li><a href="#" class="text-white"><i class="fas fa-file-contract me-2"></i> Terms & Conditions</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <h5 class="text-uppercase mb-4">Quick Links</h5>
+                <ul class="list-unstyled footer-links">
+                    <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-undo me-2"></i> Refund Policy</a></li>
+                    <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-question-circle me-2"></i> FAQs</a></li>
+                    <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-headset me-2"></i> Customer Support</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4">
+                <h5 class="text-uppercase mb-4">Connect With Us</h5>
+                <ul class="list-unstyled footer-links mb-4">
+                    <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-facebook-f me-2"></i> Facebook</a></li>
+                    <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-twitter me-2"></i> Twitter</a></li>
+                    <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-instagram me-2"></i> Instagram</a></li>
+                    <li><a href="#" class="text-white"><i class="fab fa-linkedin-in me-2"></i> LinkedIn</a></li>
+                </ul>
+                <div class="mb-4">
+                    <h6 class="mb-3">Download Our App</h6>
+                    <div class="d-flex gap-2">
+                        <a href="#" class="btn btn-sm btn-outline-light">
+                            <i class="fab fa-apple me-2"></i> App Store
+                        </a>
+                        <a href="#" class="btn btn-sm btn-outline-light">
+                            <i class="fab fa-google-play me-2"></i> Play Store
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="my-4 bg-light opacity-10">
+
+        <!-- Payment Methods -->
+        <div class="row align-items-center py-3">
+            <div class="col-md-8 mb-3 mb-md-0">
+                <h6 class="mb-3">Accepted Payment Methods:</h6>
+                <div class="payment-methods d-flex flex-wrap gap-3 align-items-center">
+                    <div class="payment-group d-flex align-items-center">
+                        <i class="fab fa-cc-visa fa-2x me-2" style="color: #1a1f71;"></i>
+                        <i class="fab fa-cc-mastercard fa-2x me-3" style="color: #eb001b;"></i>
+                        <span class="text-white-50">Cards</span>
+                    </div>
+                    
+                    <div class="payment-group d-flex align-items-center">
+                        <i class="fas fa-rupee-sign fa-2x me-2" style="color: #6cbe45;"></i>
+                        <span class="text-white-50">UPI</span>
+                    </div>
+                    
+                    <div class="payment-group d-flex align-items-center">
+                        <i class="fab fa-google-pay fa-2x me-2" style="color: #4285f4;"></i>
+                        <i class="fas fa-wallet fa-2x me-3" style="color: #ff9500;"></i>
+                        <span class="text-white-50">Wallets</span>
+                    </div>
+                    
+                    <div class="payment-group d-flex align-items-center">
+                        <span class="badge bg-light text-dark me-2">Pay Later:</span>
+                        <span class="badge bg-primary me-2">Simple Pay</span>
+                        <span class="badge bg-info text-dark">Lazy Pay</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 text-md-end">
+                <div class="d-flex flex-column">
+                    <p class="mb-2"><i class="fas fa-phone-alt me-2"></i> 24/7 Support: +1 (555) 987-6543</p>
+                    <p class="mb-0"><i class="fas fa-envelope me-2"></i> support@popularroutes.com</p>
+                </div>
+            </div>
+        </div>
+
+        <hr class="my-2 bg-light opacity-10">
+
+        <!-- Copyright -->
+        <div class="row py-3">
+            <div class="col-md-6 mb-3 mb-md-0">
+                <p class="mb-0">&copy; 2023 Popular Routes. All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    /* Footer Styles */
+    footer {
+        background: rgba(26, 26, 46, 0.95);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        position: relative;
+        z-index: 1;
+    }
+
+    .footer-links a {
+        color: rgba(255, 255, 255, 0.8) !important;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+    }
+
+    .footer-links a:hover {
+        color: var(--accent-color) !important;
+        padding-left: 5px;
+    }
+
+    .footer-links i {
+        width: 20px;
+        text-align: center;
+    }
+
+    .payment-methods {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .payment-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-right: 15px;
+    }
+
+    .payment-group i {
+        transition: transform 0.3s;
+    }
+
+    .payment-group i:hover {
+        transform: scale(1.1);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .footer-links a {
+            justify-content: center;
+        }
+        
+        .payment-methods {
+            justify-content: center;
+        }
+        
+        .text-md-start, 
+        .text-md-end {
+            text-align: center !important;
+        }
+        
+        .d-flex.justify-content-md-end {
+            justify-content: center !important;
+        }
+    }
+</style>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

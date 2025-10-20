@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visa2Book - Your Visa Booking Platform</title>
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+        /* General Styles */
+        body {
+            background-image: url('ind.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 150vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Header Section */
+        header {
+            background-color: rgba(100, 99, 99, 0.5);
+            padding: 20px 0;
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .logo-search-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Search Bar */
+        .search-form {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            min-width: 400px;
+        }
+
+        .search-form .form-control {
+            height: 50px;
+            font-size: 1.1rem;
+            padding: 10px 20px;
+            border-radius: 30px;
+            width: 100%;
+        }
+
+        .search-form .btn {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            height: 40px;
+            width: 40px;
+            padding: 0;
+            border-radius: 50%;
+            background-color: #1cda49;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .auth-buttons .btn {
+    background-color: #007bff; /* Set the background color of the button */
+    color: white; /* Set the text color */
+    border: none; /* Remove the border */
+    padding: 0.5rem 1rem; /* Adjust padding */
+    border-radius: 25px; /* Optional: rounded corners */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.auth-buttons .btn:hover {
+    background-color: #0056b3; /* Change background on hover */
+    color: black; /* Ensure text color remains white on hover */
+}
+
+/* Optional: If you want to customize the Login and Sign Up buttons separately */
+.auth-buttons .btn-light {
+    background-color:#1cda49 ; /* Green background for the 'Sign Up' button */
+}
+
+.auth-buttons .btn-light:hover {
+    background-color: #1cda49; /* Darker green for hover on 'Sign Up' */
+}
+
+/* Optional: Change color of Login button */
+.auth-buttons .btn-light:first-child {
+    background-color:  #1cda49; /* Yellow background for the 'Login' button */
+}
+
+.auth-buttons .btn-light:first-child:hover {
+    background-color:#1cda49; /* Darker yellow for hover on 'Login' */
+}
+
+        /* Navigation */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1020;
+            background-color: rgba(0, 0, 0, 0.9) !important;
+            padding: 8px 0;
+        }
+
+        .navbar-nav {
+            
+            
+            white-space: nowrap;
+        }
+
+        .navbar-nav .nav-item {
+            margin: 0 8px;
+            display: inline-block;
+            float: none;
+        }
+
+        .nav-link {
+            padding: 8px 12px !important;
+            font-size: 1rem;
+            font-weight: 300;
+            transition: all 0.3s ease;
+            color:white !important; 
+        }
+
+        .nav-link:hover {
+            color: #1cda49 !important;
+            transform: translateY(-2px);
+        }
+
+        .dropdown-menu {
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .dropdown-item {
+            color: white!important;
+            transition: all 0.3s ease;
+            padding: 6px 12px;
+            font-size: 0.9rem;
+        }
+
+        .dropdown-item:hover {
+            background-color: #1cda49 !important;
+            color: white !important;
+        }
+
+        /* Main Content */
+        .content-wrapper {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            margin: 40px auto;
+            width: 85%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .featured-destinations {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .featured-destinations h2 {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .featured-destinations p {
+            color: #555;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .destination-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .destination-card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: white;
+        }
+
+        .destination-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .card-text {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .btn-explore {
+            background-color: #1cda49;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-explore:hover {
+            background-color: #15b53d;
+            transform: translateY(-2px);
+        }
+
+        /* Footer Section */
+        footer {
+            background-color: rgba(0, 0, 0, 0.9);
+            color: #fff;
+            padding: 30px 0;
+            margin-top: auto;
+        }
+
+        footer h5 {
+            color: #1cda49;
+            margin-bottom: 15px;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #1cda49 !important;
+        }
+
+        .list-unstyled li {
+            margin-bottom: 10px;
+        }
+
+        .list-unstyled li a {
+            display: flex;
+            align-items: center;
+        }
+
+        .list-unstyled li a i {
+            margin-right: 10px;
+        }
+
+        /* Login/Signup Buttons */
+        .auth-buttons {
+            margin-left: auto;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .logo-search-container {
+                flex-direction: column;
+                align-items: center;
+                height: 180px;
+            }
+            
+            .search-form {
+                position: relative;
+                left: auto;
+                transform: none;
+                width: 100%;
+                margin: 15px 0;
+                min-width: auto;
+            }
+            
+            .navbar-nav {
+                padding-top: 15px;
+            }
+            
+            .auth-buttons {
+                margin-left: 0;
+                margin-top: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                width: 95%;
+                padding: 20px;
+            }
+            
+            .destination-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-form {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section with Logo and Search -->
+    <header class="py-3">
+        <div class="container">
+            <div class="logo-search-container">
+                <!-- Logo -->
+                <a class="navbar-brand" href="index.html">
+                    <img src="V2B.png" alt="Visa2Book" style="height: 120px; width: 140px;">
+                </a>
+                
+                <!-- Centered Search Bar -->
+                <form class="search-form" action="search.html" method="GET">
+                    <input class="form-control" type="search" name="query" placeholder="Search destinations, trips, or hotels..." aria-label="Search">
+                    <button class="btn" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+                
+                <!-- Login/Signup Buttons moved to the right corner -->
+                <div class="auth-buttons d-flex">
+                    <a href="login.html" class="btn btn-light me-2"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    <a href="signup.html" class="btn btn-light"><i class="fas fa-user-plus"></i> Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Menu (Sticky Navbar) -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="bookTicketsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-ticket-alt"></i> Book Tickets
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="bookTicketsDropdown">
+                            <li><a class="dropdown-item" href="flights.html"><i class="fas fa-plane"></i> Flights</a></li>
+                            <li><a class="dropdown-item" href="trains.html"><i class="fas fa-train"></i> Trains</a></li>
+                            <li><a class="dropdown-item" href="buses.html"><i class="fas fa-bus"></i> Buses</a></li>
+                            <li><a class="dropdown-item" href="ferries.html"><i class="fas fa-ship"></i> Ferries & Cruises</a></li>
+                            <li><a class="dropdown-item" href="cars.html"><i class="fas fa-car"></i> Car Rentals</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="destinationsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-map-marker-alt"></i> Destinations
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="destinationsDropdown">
+                            <li><a class="dropdown-item" href="popular_routes.html"><i class="fas fa-route"></i> Popular Routes</a></li>
+                            <li><a class="dropdown-item" href="domestic_travel.html"><i class="fas fa-flag-usa"></i> Domestic Travel</a></li>
+                            <li><a class="dropdown-item" href="international_travel.html"><i class="fas fa-globe"></i> International Travel</a></li>
+                            <li><a class="dropdown-item" href="city_guides.html"><i class="fas fa-map-marked-alt"></i> City Guides</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="tripPlannerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-route me-1"></i> Trip Planner
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="tripPlannerDropdown">
+                            <li><a class="dropdown-item" href="itinerary_planner.html"><i class="fas fa-calendar-alt me-2"></i> Itinerary Planner</a></li>
+                            <li><a class="dropdown-item" href="multi_city_booking.html"><i class="fas fa-map-marked-alt me-2"></i> Multi-city Booking</a></li>
+                            <li><a class="dropdown-item" href="group_travel.html"><i class="fas fa-users me-2"></i> Group Travel</a></li>
+                            <li><a class="dropdown-item" href="holiday_packages.html"><i class="fas fa-gift me-2"></i> Holiday Packages</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="hotelsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-hotel"></i>Hotels & Stays
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="hotelsDropdown">
+                            <li><a class="dropdown-item" href="hotels.html"><i class="fas fa-hotel"></i> Hotels</a></li>
+                            <li><a class="dropdown-item" href="resorts.html"><i class="fas fa-umbrella-beach"></i> Resorts</a></li>
+                            <li><a class="dropdown-item" href="homestays.html"><i class="fas fa-home"></i> Homestays</a></li>
+                            <li><a class="dropdown-item" href="hostels.html"><i class="fas fa-bed"></i> Hostels</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dealsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-percentage"></i> Deals & Offers
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dealsDropdown">
+                            <li><a class="dropdown-item" href="discounted_fares.html"><i class="fas fa-percent"></i> Discounted Fares</a></li>
+<li><a class="dropdown-item" href="last_minute_deals.html"><i class="fas fa-bolt"></i> Last-Minute Deals</a></li>
+<li><a class="dropdown-item" href="seasonal_discounts.html"><i class="fas fa-calendar-alt"></i> Seasonal Discounts</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="travelEssentialsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-suitcase"></i> Travel Essentials
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="travelEssentialsDropdown">
+                            <li><a class="dropdown-item" href="visa_travel_insurance.html"><i class="fas fa-passport"></i> Visa & Travel Insurance</a></li>
+<li><a class="dropdown-item" href="currency_exchange.html"><i class="fas fa-exchange-alt"></i> Currency Exchange</a></li>
+<li><a class="dropdown-item" href="packing_safety_tips.html"><i class="fas fa-suitcase"></i> Packing & Safety Tips</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="manageBookingsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-clipboard-list"></i> Manage Bookings
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="manageBookingsDropdown">
+                            <li><a class="dropdown-item" href="my_trips.html"><i class="fas fa-map-marked-alt"></i> My Trips</a></li>
+<li><a class="dropdown-item" href="modify_cancel_booking.html"><i class="fas fa-edit"></i> / <i class="fas fa-times"></i> Modify / Cancel Booking</a></li>
+<li><a class="dropdown-item" href="check_pnr_status.html"><i class="fas fa-ticket-alt"></i> Check PNR Status</a></li>
+<li><a class="dropdown-item" href="refund_cancellation_policy.html"><i class="fas fa-file-contract"></i> Refund & Cancellation Policy</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="cart.html">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container content-wrapper">
+        <section class="featured-destinations">
+            <h2>Discover Your Next Adventure</h2>
+            <p>Explore our handpicked selection of the world's most breathtaking destinations</p>
+            
+            <div class="destination-cards">
+                <!-- Destination Card 1 -->
+                <div class="card destination-card">
+                    <img src="destination1.jpg" class="card-img-top" alt="Destination 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Paris, France</h5>
+                        <p class="card-text">Experience the romance of the City of Lights with iconic landmarks like the Eiffel Tower and Louvre Museum.</p>
+                        <a href="#" class="btn btn-explore">Explore Paris</a>
+                    </div>
+                </div>
+                
+                <!-- Destination Card 2 -->
+                <div class="card destination-card">
+                    <img src="destination2.jpg" class="card-img-top" alt="Destination 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Tokyo, Japan</h5>
+                        <p class="card-text">Discover the perfect blend of traditional culture and cutting-edge technology in this vibrant metropolis.</p>
+                        <a href="#" class="btn btn-explore">Explore Tokyo</a>
+                    </div>
+                </div>
+                
+                <!-- Destination Card 3 Rio de Janeiro -->
+                <div class="card destination-card">
+                    <img src="destination9.jpg" class="card-img-top" alt="Destination 9">
+                    <div class="card-body">
+                        <h5 class="card-title">Rio de Janeiro, Brazil</h5>
+                        <p class="card-text">Experience the vibrant culture, stunning beaches, and the iconic Christ the Redeemer statue.</p>
+                        <a href="#" class="btn btn-explore">Explore Rio</a>
+                    </div>
+                </div>
+                
+                <!-- Destination Card 4 -->
+                <div class="card destination-card">
+                    <img src="destination7.jpg" class="card-img-top" alt="Destination 7">
+                    <div class="card-body">
+                        <h5 class="card-title">Rome, Italy</h5>
+                        <p class="card-text">Walk through history in the Eternal City with its ancient ruins and delicious cuisine.</p>
+                        <a href="#" class="btn btn-explore">Explore Rome</a>
+                    </div>
+                </div>
+                
+                <!-- Destination Card 5 - Sydney -->
+                <div class="card destination-card">
+                    <img src="destination4.jpg" class="card-img-top" alt="Destination 4">
+                    <div class="card-body">
+                        <h5 class="card-title">Sydney, Australia</h5>
+                        <p class="card-text">Discover the iconic Sydney Opera House, beautiful beaches, and vibrant city life.</p>
+                        <a href="#" class="btn btn-explore">Explore Sydney</a>
+                    </div>
+                </div>
+
+                <!-- Destination Card 6 -->
+                <div class="card destination-card">
+                    <img src="destination3.jpg" class="card-img-top" alt="Destination 3">
+                    <div class="card-body">
+                        <h5 class="card-title">New York, USA</h5>
+                        <p class="card-text">The city that never sleeps offers endless excitement from Broadway to Central Park.</p>
+                        <a href="#" class="btn btn-explore">Explore New York</a>
+                    </div>
+                </div>
+                
+                <!-- Destination Card 7 - Dubai -->
+                <div class="card destination-card">
+                    <img src="destination5.jpg" class="card-img-top" alt="Destination 5">
+                    <div class="card-body">
+                        <h5 class="card-title">Dubai, UAE</h5>
+                        <p class="card-text">Experience the luxury, skyscrapers, and desert adventures in this futuristic city.</p>
+                        <a href="#" class="btn btn-explore">Explore Dubai</a>
+                    </div>
+                </div>
+
+                <!-- Destination Card 8 - Moscow -->
+                <div class="card destination-card">
+                    <img src="destination6.jpg" class="card-img-top" alt="Destination 6">
+                    <div class="card-body">
+                        <h5 class="card-title">Moscow, Russia</h5>
+                        <p class="card-text">Explore the rich history, stunning architecture, and vibrant culture of Russia's capital.</p>
+                        <a href="#" class="btn btn-explore">Explore Moscow</a>
+                    </div>
+                </div>
+
+                <!-- Destination Card 9 - Bangkok -->
+                <div class="card destination-card">
+                    <img src="destination8.jpg" class="card-img-top" alt="Destination 8">
+                    <div class="card-body">
+                        <h5 class="card-title">Bangkok, Thailand</h5>
+                        <p class="card-text">Discover the bustling streets, vibrant markets, and stunning temples.</p>
+                        <a href="#" class="btn btn-explore">Explore Bangkok</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Company Information</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#"><i class="fas fa-info-circle"></i> About Us</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> Contact Us</a></li>
+                        <li><a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+                        <li><a href="#"><i class="fas fa-file-contract"></i> Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#"><i class="fas fa-undo"></i> Refund Policy</a></li>
+                        <li><a href="#"><i class="fas fa-question-circle"></i> FAQs</a></li>
+                        <li><a href="#"><i class="fas fa-headset"></i> Customer Support</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Follow Us</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                        <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <p>Accepted Payment Methods: Visa, Mastercard, UPI, Wallets</p>
+                <p>Customer Support: +91 1234567890 | support@visa2book.com</p>
+                <p class="mt-2">&copy; 2023 Visa2Book. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

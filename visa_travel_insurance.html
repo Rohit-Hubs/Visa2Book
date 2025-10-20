@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visa & Travel Insurance - Visa2Book</title>
+    <link rel="shortcut icon" href="V2B.png" type="image/x-icon">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3a86ff;
+            --secondary-color: #2667d9;
+            --accent-color: #ffbe0b;
+            --dark-color: #1a1a2e;
+            --light-color: #f8f9fa;
+            --gradient-blue: linear-gradient(135deg, #3a86ff 0%, #2667d9 100%);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: #f0f5ff;
+        }
+
+        /* Glass Morphism Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.85) !important;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .navbar-brand img {
+            height: 50px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand:hover img {
+            transform: scale(1.05);
+        }
+
+        .nav-link {
+            color: var(--dark-color) !important;
+            font-weight: 600;
+            padding: 0.75rem 1.25rem !important;
+            margin: 0 0.5rem;
+            border-radius: 50px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--accent-color);
+            transition: width 0.4s ease;
+            border-radius: 3px;
+        }
+
+        .nav-link:hover::before, .nav-link.active::before {
+            width: 100%;
+        }
+
+        .nav-link i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover i, .nav-link.active i {
+            transform: translateY(-3px);
+            color: var(--primary-color);
+        }
+
+        /* Hero Section with Parallax Effect */
+        .hero-section {
+            background: linear-gradient(rgba(26, 26, 46, 0.7), rgba(26, 26, 46, 0.7)), 
+                        url('https://images.unsplash.com/photo-1506929562872-bb421503ef21?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1925&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            height: 80vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to bottom, rgba(26, 26, 46, 0.7), transparent);
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero-cta {
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Floating Visa Cards */
+        .visa-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: 100%;
+            margin-bottom: 2rem;
+            border: none;
+            position: relative;
+            z-index: 2;
+        }
+
+        .visa-card:hover {
+            transform: translateY(-15px) rotate(2deg);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .visa-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="%233a86ff" opacity="0.05" d="M0,0 L100,0 L100,100 Q50,80 0,100 L0,100 Z"/></svg>') no-repeat;
+            background-size: cover;
+            z-index: -1;
+        }
+
+        .visa-header {
+            background: var(--gradient-blue);
+            color: white;
+            padding: 2rem;
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+
+        .visa-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: white;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .visa-badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: var(--accent-color);
+            color: var(--dark-color);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            box-shadow: 0 5px 15px rgba(255, 190, 11, 0.3);
+            z-index: 2;
+            transform: rotate(15deg);
+        }
+
+        .visa-body {
+            padding: 2rem;
+            position: relative;
+        }
+
+        .visa-body::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: var(--gradient-blue);
+            opacity: 0.2;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 2rem;
+        }
+
+        .feature-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(58, 134, 255, 0.1);
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-list i {
+            color: var(--primary-color);
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            width: 25px;
+            text-align: center;
+        }
+
+        .price-tag {
+            background: rgba(58, 134, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            border: 1px dashed rgba(58, 134, 255, 0.3);
+        }
+
+        .price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .price::before {
+            content: '₹';
+            font-size: 1rem;
+            position: absolute;
+            left: -15px;
+            top: 5px;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #64748b;
+            font-size: 1rem;
+        }
+
+        .btn-apply {
+            background: var(--gradient-blue);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            transition: all 0.4s ease;
+            width: 100%;
+            box-shadow: 0 5px 20px rgba(58, 134, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-apply::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-apply:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(58, 134, 255, 0.4);
+        }
+
+        .btn-apply:hover::before {
+            left: 100%;
+        }
+
+        /* Globe Visualization */
+        .globe-section {
+            position: relative;
+            padding: 5rem 0;
+            background: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80') center/cover fixed;
+            background-attachment: fixed;
+            color: white;
+            text-align: center;
+            margin: 5rem 0;
+        }
+
+        .globe-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 26, 46, 0.85);
+        }
+
+        .globe-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Process Timeline */
+        .process-timeline {
+            position: relative;
+            padding: 3rem 0;
+        }
+
+        .process-timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: var(--primary-color);
+            opacity: 0.2;
+        }
+
+        .timeline-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            position: relative;
+            border-top: 5px solid var(--primary-color);
+            transition: all 0.4s ease;
+        }
+
+        .timeline-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-blue);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 15px rgba(58, 134, 255, 0.3);
+            border: 4px solid white;
+        }
+
+        /* Insurance Coverage - Card Flip Effect */
+        .coverage-container {
+            perspective: 1000px;
+            margin-bottom: 2rem;
+        }
+
+        .coverage-card {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            border-radius: 15px;
+            min-height: 300px;
+        }
+
+        .coverage-container:hover .coverage-card {
+            transform: rotateY(180deg);
+        }
+
+        .coverage-front, .coverage-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .coverage-front {
+            background: white;
+            border-top: 5px solid var(--primary-color);
+        }
+
+        .coverage-back {
+            background: var(--gradient-blue);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        .coverage-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(58, 134, 255, 0.1);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: var(--primary-color);
+            font-size: 2rem;
+        }
+
+        .coverage-back .coverage-icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        /* FAQ Section - Modern Accordion */
+        .faq-accordion {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .faq-question {
+            background: white;
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .faq-item.active .faq-question::after {
+            content: '-';
+        }
+
+        .faq-question h5 {
+            margin-bottom: 0;
+            transition: color 0.3s ease;
+        }
+
+        .faq-item.active .faq-question {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .faq-item.active .faq-question h5 {
+            color: white;
+        }
+
+        .faq-answer {
+            background: #f9fafc;
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 1.5rem;
+            max-height: 500px;
+        }
+
+        /* Country Selector - Interactive Globe */
+        .country-selector {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
+            margin-bottom: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .country-selector::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path fill="%233a86ff" opacity="0.05" d="M100,0c55.2,0,100,44.8,100,100s-44.8,100-100,100S0,155.2,0,100S44.8,0,100,0z M100,180c44.2,0,80-35.8,80-80S144.2,20,100,20S20,55.8,20,100S55.8,180,100,180z M100,40c33.1,0,60,26.9,60,60s-26.9,60-60,60S40,133.1,40,100S66.9,40,100,40z"/></svg>') no-repeat;
+            background-size: contain;
+            z-index: 0;
+        }
+
+        .country-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(58, 134, 255, 0.1);
+            cursor: pointer;
+        }
+
+        .country-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-color: rgba(58, 134, 255, 0.3);
+        }
+
+        .country-item.active {
+            background: rgba(58, 134, 255, 0.05);
+            border-color: var(--primary-color);
+        }
+
+        .country-flag {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 1.5rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .country-item:hover .country-flag {
+            transform: scale(1.1);
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--dark-color);
+            position: relative;
+            display: inline-block;
+            margin-bottom: 3rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        .section-title.light {
+            color: white;
+        }
+
+        .section-title.light::after {
+            background: white;
+        }
+
+        /* Footer - Wave Design */
+
+
+        /* ========== Footer Styles ========== */
+        .main-footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 0 0;
+            margin-top: 5rem;
+        }
+
+        .main-footer .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .main-footer .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .main-footer .footer-links i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .main-footer .btn-outline-light {
+            border-radius: 30px;
+            padding: 0.25rem 0.75rem;
+        }
+
+        .main-footer .payment-methods i {
+            opacity: 0.9;
+            transition: all 0.3s ease;
+        }
+
+        .main-footer .payment-methods i:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .main-footer .payment-group {
+            margin-right: 1.5rem;
+            padding-right: 1.5rem;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .main-footer .payment-group:last-child {
+            border-right: none;
+        }
+
+        .main-footer hr {
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        
+        footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 6rem 0 2rem;
+            margin-top: 6rem;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path fill="%23f0f5ff" d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25"/><path fill="%23f0f5ff" d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5"/><path fill="%23f0f5ff" d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"/></svg>');
+            background-size: cover;
+        }
+
+        .footer-logo {
+            height: 60px;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-link {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: block;
+            margin-bottom: 1rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .footer-link::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .footer-link:hover::before {
+            opacity: 1;
+            left: 5px;
+        }
+
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            transition: all 0.4s ease;
+            color: white;
+        }
+
+        .social-icon:hover {
+            background: var(--accent-color);
+            transform: translateY(-5px) rotate(10deg);
+            color: var(--dark-color);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.25rem;
+            }
+            
+            .process-timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-card {
+                margin-left: 60px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0.5rem 1rem;
+            }
+            
+            .hero-section {
+                height: 70vh;
+                min-height: 500px;
+                background-attachment: scroll;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .globe-section {
+                background-attachment: scroll;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-section {
+                height: 60vh;
+                min-height: 400px;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .nav-link {
+                padding: 0.5rem 1rem !important;
+                margin: 0.25rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="V2B.png" alt="Visa2Book" style="height: 120px; width: 140px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="visa_travel_insurance.html">
+                            <i class="fas fa-passport"></i>
+                            <span>Visa & Travel Insurance</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="currency_exchange.html">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>Currency Exchange</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="packing_safety_tips.html">
+                            <i class="fas fa-suitcase"></i>
+                            <span>Packing Safety Tips</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">Global Visa & Insurance Solutions</h1>
+            <p class="hero-subtitle">Navigate international travel with confidence through our expert visa processing and comprehensive travel protection plans</p>
+            <div class="hero-cta">
+                <button class="btn btn-primary btn-lg px-5 py-3 rounded-pill">
+                    <i class="fas fa-paper-plane me-2"></i> Start Your Application
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Visa Services Section -->
+    <div class="container my-5 py-5">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-title">Visa Services</h2>
+                <p class="lead">We simplify the complex visa application process with expert guidance tailored to your destination and travel purpose.</p>
+            </div>
+        </div>
+        
+        <div class="country-selector">
+            <h4 class="mb-4 text-center">Where are you traveling to?</h4>
+            <div class="row">
+                <div class="col-6 col-md-4 col-lg-3 mb-3">
+                    <div class="country-item active">
+                        <img src="https://flagcdn.com/w40/us.png" class="country-flag" alt="USA">
+                        <span>United States</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 mb-3">
+                    <div class="country-item">
+                        <img src="https://flagcdn.com/w40/gb.png" class="country-flag" alt="UK">
+                        <span>United Kingdom</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 mb-3">
+                    <div class="country-item">
+                        <img src="https://flagcdn.com/w40/ae.png" class="country-flag" alt="UAE">
+                        <span>United Arab Emirates</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 mb-3">
+                    <div class="country-item">
+                        <img src="https://flagcdn.com/w40/ca.png" class="country-flag" alt="Canada">
+                        <span>Canada</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 mb-3">
+                    <div class="country-item">
+                        <img src="https://flagcdn.com/w40/au.png" class="country-flag" alt="Australia">
+                        <span>Australia</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 mb-3">
+                    <div class="country-item">
+                        <img src="https://flagcdn.com/w40/sg.png" class="country-flag" alt="Singapore">
+                        <span>Singapore</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 mb-3">
+                    <div class="country-item">
+                        <img src="https://flagcdn.com/w40/th.png" class="country-flag" alt="Thailand">
+                        <span>Thailand</span>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-3 mb-3">
+                    <div class="country-item">
+                        <img src="https://flagcdn.com/w40/eu.png" class="country-flag" alt="Europe">
+                        <span>Schengen Area</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <!-- Tourist Visa -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="visa-card">
+                    <div class="visa-header">
+                        <div class="visa-icon">
+                            <i class="fas fa-umbrella-beach"></i>
+                        </div>
+                        <h4>Tourist Visa</h4>
+                        <p class="mb-0">For leisure and exploration</p>
+                    </div>
+                    <div class="visa-body">
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check"></i> Single/Multiple Entry</li>
+                            <li><i class="fas fa-check"></i> Valid 1-10 years</li>
+                            <li><i class="fas fa-check"></i> Fast processing</li>
+                            <li><i class="fas fa-check"></i> Interview prep</li>
+                            <li><i class="fas fa-check"></i> Travel itinerary</li>
+                        </ul>
+                        <div class="price-tag">
+                            <span class="original-price">₹8,999</span>
+                            <div class="price">6,499</div>
+                            <small class="text-muted">+ government fees</small>
+                        </div>
+                        <button class="btn-apply">Apply Now <i class="fas fa-arrow-right ms-2"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Business Visa -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="visa-card">
+                    <div class="visa-badge">Most Popular</div>
+                    <div class="visa-header">
+                        <div class="visa-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <h4>Business Visa</h4>
+                        <p class="mb-0">For professional travel</p>
+                    </div>
+                    <div class="visa-body">
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check"></i> Multiple Entry</li>
+                            <li><i class="fas fa-check"></i> Valid 1-5 years</li>
+                            <li><i class="fas fa-check"></i> Priority processing</li>
+                            <li><i class="fas fa-check"></i> Invitation letters</li>
+                            <li><i class="fas fa-check"></i> Corporate support</li>
+                        </ul>
+                        <div class="price-tag">
+                            <span class="original-price">₹12,999</span>
+                            <div class="price">9,999</div>
+                            <small class="text-muted">+ government fees</small>
+                        </div>
+                        <button class="btn-apply">Apply Now <i class="fas fa-arrow-right ms-2"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Student Visa -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="visa-card">
+                    <div class="visa-header">
+                        <div class="visa-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h4>Student Visa</h4>
+                        <p class="mb-0">For academic pursuits</p>
+                    </div>
+                    <div class="visa-body">
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check"></i> Complete documentation</li>
+                            <li><i class="fas fa-check"></i> SOP assistance</li>
+                            <li><i class="fas fa-check"></i> Financial guidance</li>
+                            <li><i class="fas fa-check"></i> Interview coaching</li>
+                            <li><i class="fas fa-check"></i> Post-approval support</li>
+                        </ul>
+                        <div class="price-tag">
+                            <span class="original-price">₹15,999</span>
+                            <div class="price">12,499</div>
+                            <small class="text-muted">+ government fees</small>
+                        </div>
+                        <button class="btn-apply">Apply Now <i class="fas fa-arrow-right ms-2"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Globe Visualization Section -->
+    <div class="globe-section">
+        <div class="container">
+            <div class="globe-content">
+                <h2 class="section-title light">Global Coverage</h2>
+                <p class="lead mb-5">Our visa services span across 120+ countries with local experts in each destination</p>
+                
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="text-center p-4">
+                            <div class="display-4 text-primary mb-3">98%</div>
+                            <h5>Approval Rate</h5>
+                            <p>For properly documented applications with our guidance</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="text-center p-4">
+                            <div class="display-4 text-primary mb-3">24-48h</div>
+                            <h5>Fastest Processing</h5>
+                            <p>Emergency visa services available for urgent travel</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="text-center p-4">
+                            <div class="display-4 text-primary mb-3">500+</div>
+                            <h5>Visa Types</h5>
+                            <p>Specialized visas for every travel purpose</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Visa Process Timeline -->
+    <div class="container my-5 py-5">
+        <h2 class="section-title text-center">Our Visa Process</h2>
+        <p class="text-center lead mb-5">Simple, transparent steps to get your visa approved</p>
+        
+        <div class="process-timeline">
+            <!-- Step 1 -->
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="timeline-card">
+                        <div class="step-number">1</div>
+                        <h4>Document Preparation</h4>
+                        <p>Our visa experts create a personalized checklist and guide you through gathering all required documents. We verify everything meets embassy standards.</p>
+                        <div class="d-flex flex-wrap gap-2 mt-3">
+                            <span class="badge bg-light text-dark"><i class="fas fa-passport me-1"></i> Passport</span>
+                            <span class="badge bg-light text-dark"><i class="fas fa-image me-1"></i> Photos</span>
+                            <span class="badge bg-light text-dark"><i class="fas fa-file-invoice me-1"></i> Financial Proof</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 2 -->
+            <div class="row justify-content-end">
+                <div class="col-lg-6">
+                    <div class="timeline-card">
+                        <div class="step-number">2</div>
+                        <h4>Application Submission</h4>
+                        <p>We complete all forms accurately, schedule appointments, and submit your application to the appropriate embassy or consulate.</p>
+                        <ul class="list-unstyled mt-3">
+                            <li><i class="fas fa-check-circle text-primary me-2"></i> Error-free form filling</li>
+                            <li><i class="fas fa-check-circle text-primary me-2"></i> Document verification</li>
+                            <li><i class="fas fa-check-circle text-primary me-2"></i> Appointment scheduling</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 3 -->
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="timeline-card">
+                        <div class="step-number">3</div>
+                        <h4>Interview Preparation</h4>
+                        <p>We conduct mock interviews and provide guidance to help you ace your visa interview with confidence.</p>
+                        <div class="alert alert-primary mt-3">
+                            <i class="fas fa-lightbulb me-2"></i> <strong>Pro Tip:</strong> Practice common questions and maintain honest, concise answers during your interview.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 4 -->
+            <div class="row justify-content-end">
+                <div class="col-lg-6">
+                    <div class="timeline-card">
+                        <div class="step-number">4</div>
+                        <h4>Visa Approval & Delivery</h4>
+                        <p>Once approved, we collect your passport with visa and deliver it safely to your preferred address with tracking.</p>
+                        <div class="d-flex align-items-center mt-3">
+                            <i class="fas fa-shield-alt text-primary me-3 fs-1"></i>
+                            <span><strong>Money-Back Guarantee</strong> if your application is rejected due to our error.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Travel Insurance Section -->
+    <div class="container my-5 py-5">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-title">Travel Insurance Plans</h2>
+                <p class="lead">Comprehensive protection for your international journeys</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <!-- Basic Plan -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="coverage-container">
+                    <div class="coverage-card">
+                        <div class="coverage-front">
+                            <div class="coverage-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h4 class="text-center">Basic Protection</h4>
+                            <p class="text-center text-muted">Essential coverage for peace of mind</p>
+                            <div class="price-tag mt-4">
+                                <div class="price">299</div>
+                                <small class="text-muted">per day</small>
+                            </div>
+                        </div>
+                        <div class="coverage-back">
+                            <div class="coverage-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h5 class="text-center">Coverage Includes:</h5>
+                            <ul class="list-unstyled text-start ps-4 mt-3">
+                                <li><i class="fas fa-check me-2"></i> Medical: $50,000</li>
+                                <li><i class="fas fa-check me-2"></i> Trip Cancellation: $2,000</li>
+                                <li><i class="fas fa-check me-2"></i> Baggage: $500</li>
+                                <li><i class="fas fa-check me-2"></i> Flight Delay: $100</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Comprehensive Plan -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="coverage-container">
+                    <div class="coverage-card">
+                        <div class="coverage-front">
+                            <div class="coverage-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <h4 class="text-center">Comprehensive</h4>
+                            <p class="text-center text-muted">Complete protection for your journey</p>
+                            <div class="price-tag mt-4">
+                                <div class="price">499</div>
+                                <small class="text-muted">per day</small>
+                            </div>
+                        </div>
+                        <div class="coverage-back">
+                            <div class="coverage-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <h5 class="text-center">Coverage Includes:</h5>
+                            <ul class="list-unstyled text-start ps-4 mt-3">
+                                <li><i class="fas fa-check me-2"></i> Medical: $100,000</li>
+                                <li><i class="fas fa-check me-2"></i> Trip Cancellation: $5,000</li>
+                                <li><i class="fas fa-check me-2"></i> Baggage: $1,000</li>
+                                <li><i class="fas fa-check me-2"></i> Adventure Sports</li>
+                                <li><i class="fas fa-check me-2"></i> COVID-19 Coverage</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Family Plan -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="coverage-container">
+                    <div class="coverage-card">
+                        <div class="coverage-front">
+                            <div class="coverage-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h4 class="text-center">Family Plan</h4>
+                            <p class="text-center text-muted">Protection for your whole family</p>
+                            <div class="price-tag mt-4">
+                                <div class="price">899</div>
+                                <small class="text-muted">per day</small>
+                            </div>
+                        </div>
+                        <div class="coverage-back">
+                            <div class="coverage-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h5 class="text-center">Coverage Includes:</h5>
+                            <ul class="list-unstyled text-start ps-4 mt-3">
+                                <li><i class="fas fa-check me-2"></i> 2 Adults + 2 Children</li>
+                                <li><i class="fas fa-check me-2"></i> Medical: $200,000</li>
+                                <li><i class="fas fa-check me-2"></i> Trip Cancellation: $10,000</li>
+                                <li><i class="fas fa-check me-2"></i> 24/7 Family Assistance</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Insurance Coverage Details -->
+    <div class="container my-5 py-5">
+        <h2 class="section-title text-center">Insurance Benefits</h2>
+        <p class="text-center lead mb-5">What makes our travel insurance stand out</p>
+        
+        <div class="row g-4">
+            <!-- Medical Emergency -->
+            <div class="col-md-6 col-lg-3">
+                <div class="d-flex align-items-start">
+                    <div class="me-3 text-primary">
+                        <i class="fas fa-ambulance fs-1"></i>
+                    </div>
+                    <div>
+                        <h5>Medical Emergency</h5>
+                        <p class="text-muted">Global network of hospitals with direct billing so you don't pay out-of-pocket.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Trip Cancellation -->
+            <div class="col-md-6 col-lg-3">
+                <div class="d-flex align-items-start">
+                    <div class="me-3 text-primary">
+                        <i class="fas fa-plane-slash fs-1"></i>
+                    </div>
+                    <div>
+                        <h5>Trip Cancellation</h5>
+                        <p class="text-muted">Get reimbursed for non-refundable expenses if you cancel for covered reasons.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Lost Baggage -->
+            <div class="col-md-6 col-lg-3">
+                <div class="d-flex align-items-start">
+                    <div class="me-3 text-primary">
+                        <i class="fas fa-suitcase-rolling fs-1"></i>
+                    </div>
+                    <div>
+                        <h5>Lost Baggage</h5>
+                        <p class="text-muted">Compensation for lost, stolen, or damaged luggage and personal items.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 24/7 Assistance -->
+            <div class="col-md-6 col-lg-3">
+                <div class="d-flex align-items-start">
+                    <div class="me-3 text-primary">
+                        <i class="fas fa-headset fs-1"></i>
+                    </div>
+                    <div>
+                        <h5>24/7 Assistance</h5>
+                        <p class="text-muted">Multilingual support for medical referrals, legal help, and travel emergencies.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Adventure Sports -->
+            <div class="col-md-6 col-lg-3">
+                <div class="d-flex align-items-start">
+                    <div class="me-3 text-primary">
+                        <i class="fas fa-hiking fs-1"></i>
+                    </div>
+                    <div>
+                        <h5>Adventure Sports</h5>
+                        <p class="text-muted">Optional coverage for activities like skiing, scuba diving, and zip-lining.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- COVID-19 Coverage -->
+            <div class="col-md-6 col-lg-3">
+                <div class="d-flex align-items-start">
+                    <div class="me-3 text-primary">
+                        <i class="fas fa-virus fs-1"></i>
+                    </div>
+                    <div>
+                        <h5>COVID-19 Protection</h5>
+                        <p class="text-muted">Medical coverage for coronavirus treatment and quarantine expenses.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Personal Liability -->
+            <div class="col-md-6 col-lg-3">
+                <div class="d-flex align-items-start">
+                    <div class="me-3 text-primary">
+                        <i class="fas fa-gavel fs-1"></i>
+                    </div>
+                    <div>
+                        <h5>Personal Liability</h5>
+                        <p class="text-muted">Protection if you're legally liable for injury or property damage abroad.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Emergency Evacuation -->
+            <div class="col-md-6 col-lg-3">
+                <div class="d-flex align-items-start">
+                    <div class="me-3 text-primary">
+                        <i class="fas fa-helicopter fs-1"></i>
+                    </div>
+                    <div>
+                        <h5>Emergency Evacuation</h5>
+                        <p class="text-muted">Medical evacuation to nearest adequate facility or back home if needed.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="container my-5 py-5">
+        <h2 class="section-title text-center">Common Questions</h2>
+        <p class="text-center lead mb-5">Everything you need to know about visas and insurance</p>
+        
+        <div class="faq-accordion">
+            <!-- Visa FAQs -->
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h5>How long does visa processing usually take?</h5>
+                </div>
+                <div class="faq-answer">
+                    <p>Processing times vary significantly depending on the destination country, visa type, and current workload at the embassy/consulate. Generally:</p>
+                    <ul>
+                        <li><strong>Tourist visas:</strong> 5-15 working days</li>
+                        <li><strong>Business visas:</strong> 1-3 weeks</li>
+                        <li><strong>Student visas:</strong> 4-8 weeks</li>
+                        <li><strong>Work visas:</strong> 6-12 weeks</li>
+                    </ul>
+                    <p>We provide accurate processing time estimates when you start your application and offer expedited services for urgent travel when available.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h5>What documents do I need for a visa application?</h5>
+                </div>
+                <div class="faq-answer">
+                    <p>While requirements vary by country, most visa applications require:</p>
+                    <ul>
+                        <li><strong>Passport</strong> valid for at least 6 months beyond your stay</li>
+                        <li><strong>Completed application forms</strong> (we help fill these out)</li>
+                        <li><strong>Passport-sized photographs</strong> meeting specific requirements</li>
+                        <li><strong>Proof of financial means</strong> (bank statements, sponsorship letters)</li>
+                        <li><strong>Travel itinerary</strong> including flight and accommodation details</li>
+                        <li><strong>Purpose-specific documents:</strong>
+                            <ul>
+                                <li>Tourist: invitation letters if visiting friends/family</li>
+                                <li>Business: company letter, invitation from host company</li>
+                                <li>Student: acceptance letter, proof of tuition payment</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p>Our visa specialists provide a customized checklist for your specific application.</p>
+                </div>
+            </div>
+            
+            <!-- Insurance FAQs -->
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h5>When should I purchase travel insurance?</h5>
+                </div>
+                <div class="faq-answer">
+                    <p>The ideal time to purchase travel insurance is immediately after booking your trip. This ensures you're covered for:</p>
+                    <ul>
+                        <li><strong>Trip cancellation</strong> protection from the moment of purchase</li>
+                        <li><strong>Pre-existing condition coverage</strong> (if purchased within 14-21 days of initial trip payment)</li>
+                        <li><strong>Financial default protection</strong> if your travel provider goes bankrupt</li>
+                    </ul>
+                    <p>However, you can purchase most plans up until the day before departure. Medical coverage only begins when your trip starts.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h5>Does travel insurance cover adventure activities?</h5>
+                </div>
+                <div class="faq-answer">
+                    <p>Our standard plans cover many recreational activities, but certain adventure sports require additional coverage:</p>
+                    <p><strong>Automatically covered activities:</strong> Hiking, snorkeling, cycling, kayaking (up to certain altitudes/depths)</p>
+                    <p><strong>Require adventure sports rider:</strong> Scuba diving, skiing/snowboarding, rock climbing, bungee jumping, parasailing</p>
+                    <p><strong>Typically excluded:</strong> Professional sports, mountaineering above 6,000m, cave diving</p>
+                    <p>We can add adventure sports coverage to your policy for an additional premium. Be sure to disclose all planned activities when purchasing.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="container my-5 py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="bg-primary text-white rounded-4 p-5 text-center position-relative overflow-hidden" style="background: var(--gradient-blue);">
+                    <div class="position-absolute top-0 end-0 w-100 h-100 opacity-10" style="background: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" preserveAspectRatio=\"none\"><path fill=\"white\" d=\"M0,0 L100,0 L100,100 Q50,80 0,100 L0,100 Z\"/></svg><no-repeat; background-size: cover;"></div>
+                    <h2 class="mb-4 position-relative">Start Your Journey With Confidence</h2>
+                    <p class="mb-4 lead position-relative">Our visa and insurance experts are ready to assist you</p>
+                    <div class="d-flex flex-wrap justify-content-center gap-3 position-relative">
+                        <button class="btn btn-light btn-lg px-4 py-3 rounded-pill">
+                            <i class="fas fa-phone-alt me-2"></i> +1 (234) 567-8900
+                        </button>
+                        <button class="btn btn-outline-light btn-lg px-4 py-3 rounded-pill">
+                            <i class="fas fa-envelope me-2"></i> Email Our Team
+                        </button>
+                        <button class="btn btn-outline-light btn-lg px-4 py-3 rounded-pill">
+                            <i class="fas fa-comment-dots me-2"></i> Live Chat
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase mb-4">Company Information</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-info-circle me-2"></i> About</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-envelope me-2"></i> Contact Us</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-shield-alt me-2"></i> Privacy Policy</a></li>
+                        <li><a href="#" class="text-white"><i class="fas fa-file-contract me-2"></i> Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase mb-4">Quick Links</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-undo me-2"></i> Refund Policy</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-question-circle me-2"></i> FAQs</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-headset me-2"></i> Customer Support</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="text-uppercase mb-4">Connect With Us</h5>
+                    <ul class="list-unstyled footer-links mb-4">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-facebook-f me-2"></i> Facebook</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-twitter me-2"></i> Twitter</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-instagram me-2"></i> Instagram</a></li>
+                        <li><a href="#" class="text-white"><i class="fab fa-linkedin-in me-2"></i> LinkedIn</a></li>
+                    </ul>
+                    <div class="mb-4">
+                        <h6 class="mb-3">Download Our App</h6>
+                        <div class="d-flex gap-2">
+                            <a href="#" class="btn btn-sm btn-outline-light">
+                                <i class="fab fa-apple me-2"></i> App Store
+                            </a>
+                            <a href="#" class="btn btn-sm btn-outline-light">
+                                <i class="fab fa-google-play me-2"></i> Play Store
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4 bg-light opacity-10">
+
+            <!-- Payment Methods -->
+            <div class="row align-items-center py-3">
+                <div class="col-md-8 mb-3 mb-md-0">
+                    <h6 class="mb-3">Accepted Payment Methods:</h6>
+                    <div class="payment-methods d-flex flex-wrap gap-3 align-items-center">
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fab fa-cc-visa fa-2x me-2" style="color: #1a1f71;"></i>
+                            <i class="fab fa-cc-mastercard fa-2x me-3" style="color: #eb001b;"></i>
+                            <span class="text-white-50">Cards</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fas fa-rupee-sign fa-2x me-2" style="color: #6cbe45;"></i>
+                            <span class="text-white-50">UPI</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fab fa-google-pay fa-2x me-2" style="color: #4285f4;"></i>
+                            <i class="fas fa-wallet fa-2x me-3" style="color: #ff9500;"></i>
+                            <span class="text-white-50">Wallets</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <span class="badge bg-light text-dark me-2">Pay Later:</span>
+                            <span class="badge bg-primary me-2">Simple Pay</span>
+                            <span class="badge bg-info text-dark">Lazy Pay</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <div class="d-flex flex-column">
+                        <p class="mb-2"><i class="fas fa-phone-alt me-2"></i> 24/7 Support: +1 (555) 987-6543</p>
+                        <p class="mb-0"><i class="fas fa-envelope me-2"></i> support@visa2book.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // FAQ Accordion Functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('active');
+                
+                // Close other open items
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (item !== faqItem && item.classList.contains('active')) {
+                        item.classList.remove('active');
+                    }
+                });
+            });
+        });
+
+        // Country Selector Functionality
+        document.querySelectorAll('.country-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // Remove active class from all items
+                document.querySelectorAll('.country-item').forEach(i => {
+                    i.classList.remove('active');
+                });
+                
+                // Add active class to clicked item
+                this.classList.add('active');
+            });
+        });
+
+        // Animate elements when they come into view
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.visa-card, .timeline-card, .coverage-container');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementPosition < windowHeight - 100) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+
+        // Set initial state for animation
+        document.querySelectorAll('.visa-card, .timeline-card, .coverage-container').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+        });
+
+        // Run on load and scroll
+        window.addEventListener('load', animateOnScroll);
+        window.addEventListener('scroll', animateOnScroll);
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

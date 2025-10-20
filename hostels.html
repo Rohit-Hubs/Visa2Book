@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hostels - Visa2Book</title>
+    <link rel="shortcut icon" href="V2B.png" type="image/x-icon">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #8b5cf6;
+            --secondary-color: #7c3aed;
+            --accent-color: #f59e0b;
+            --dark-color: #1e293b;
+            --light-color: #f8fafc;
+        }
+
+        body {
+            background-color: #f5f3ff;
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 1rem;
+        }
+
+        .navbar-brand img {
+            height: 155px;
+            width: 175px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand:hover img {
+            transform: scale(1.05);
+        }
+
+        .nav-link {
+            color: var(--dark-color) !important;
+            font-weight: 500;
+            padding: 0.75rem 1.25rem !important;
+            margin: 0 0.25rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .nav-link i {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .nav-link span {
+            font-size: 0.85rem;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-color) !important;
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .nav-link.active {
+            color: white !important;
+            background: var(--primary-color);
+        }
+
+        .hero-section {
+            
+            background-size: cover;
+            height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+
+        .search-container {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: -80px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .search-card {
+            background: var(--light-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            height: 100%;
+            border: 1px solid #ede9fe;
+        }
+
+        .search-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .search-card img {
+            height: 120px;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .hostel-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            height: 100%;
+            margin-bottom: 1.5rem;
+            border: 1px solid #ede9fe;
+        }
+
+        .hostel-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .hostel-img {
+            height: 220px;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .hostel-card:hover .hostel-img {
+            transform: scale(1.03);
+        }
+
+        .hostel-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .rating-badge {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .amenity-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .price small {
+            font-size: 0.9rem;
+            color: #64748b;
+            font-weight: 400;
+        }
+
+        .btn-book {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-book:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .filter-section {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+            border: 1px solid #ede9fe;
+        }
+
+        .filter-title {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #ede9fe;
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            font-size: 1.25rem;
+        }
+
+        /* Counter Dropdown Styles */
+.dropdown-toggle {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    height: 58px;
+    text-align: left;
+}
+
+.dropdown-menu {
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(139, 92, 246, 0.1);
+}
+
+.counter-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid var(--primary-color);
+    background: white;
+    color: var(--primary-color);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.counter-btn:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+.counter-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: #ccc;
+    color: #ccc;
+}
+
+.counter-btn:disabled:hover {
+    background: white;
+    color: #ccc;
+}
+
+.counter-value {
+    min-width: 30px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.form-check-input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+        .room-type-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            background: #f3f4f6;
+        }
+
+        .main-footer {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: white;
+    padding: 3rem 0 1rem;
+    margin-top: auto;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.footer-links a:hover {
+    color: var(--primary-color);
+    transform: translateX(5px);
+}
+
+.payment-methods i {
+    transition: transform 0.3s ease;
+}
+
+.payment-methods i:hover {
+    transform: scale(1.2);
+}
+
+.btn-outline-light {
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-light:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.25rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .navbar-brand img {
+                height: 120px;
+                width: 140px;
+            }
+            
+            .nav-link {
+                padding: 0.5rem !important;
+                min-width: 70px;
+            }
+            
+            .nav-link i {
+                font-size: 1rem;
+            }
+            
+            .nav-link span {
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="V2B.png" alt="Visa2Book" style="height: 120px; width: 140px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="hotels.html">
+                            <i class="fas fa-hotel"></i>
+                            <span>Hotels</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="resorts.html">
+                            <i class="fas fa-umbrella-beach"></i>
+                            <span>Resorts</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="homestays.html">
+                            <i class="fas fa-house-user"></i>
+                            <span>Homestays</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="hostels.html">
+                            <i class="fas fa-bed"></i>
+                            <span>Hostels</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section" style="background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center; background-size: cover;">
+    <div class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">Budget-Friendly Hostels</h1>
+            <p class="hero-subtitle">Affordable stays for backpackers, solo travelers, and groups with social spaces to meet fellow travelers</p>
+        </div>
+    </div>
+    </div>
+
+    <!-- Search Section -->
+    <div class="container">
+        <div class="search-container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="search-card text-center">
+                        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="City Hostels">
+                        <h5>City Hostels</h5>
+                        <p class="text-muted">Centrally located with easy access to attractions</p>
+                        <a href="#" class="btn btn-primary btn-sm">Explore</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="search-card text-center">
+                        <img src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Beach Hostels">
+                        <h5>Beach Hostels</h5>
+                        <p class="text-muted">Steps away from the sand with ocean views</p>
+                        <a href="#" class="btn btn-primary btn-sm">Explore</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="search-card text-center">
+                        <img src="https://images.unsplash.com/photo-1566669437689-1d0a1a0c127e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Party Hostels">
+                        <h5>Party Hostels</h5>
+                        <p class="text-muted">Vibrant social scenes and nightlife</p>
+                        <a href="#" class="btn btn-primary btn-sm">Explore</a>
+                    </div>
+                </div>
+            </div>
+            
+            <form class="mt-4">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="destination" placeholder="Destination">
+                            <label for="destination"><i class="fas fa-map-marker-alt me-2"></i> Where do you want to stay?</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-floating">
+                            <input type="date" class="form-control" id="checkin" placeholder="Check-in">
+                            <label for="checkin"><i class="far fa-calendar me-2"></i> Check-in</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-floating">
+                            <input type="date" class="form-control" id="checkout" placeholder="Check-out">
+                            <label for="checkout"><i class="far fa-calendar me-2"></i> Check-out</label>
+                        </div>
+                    </div>
+                       <!-- Guests Dropdown -->
+                <div class="col-md-6">
+                    <div class="dropdown guest-dropdown">
+                        <button class="btn btn-light dropdown-toggle w-100 text-start py-3" type="button" id="guestDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-friends me-2"></i>
+                            <span id="guestSummary">Guests</span>
+                        </button>
+                        <ul class="dropdown-menu w-100 p-3" aria-labelledby="guestDropdown">
+                            <li class="dropdown-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span>Adults</span>
+                                    <div class="d-flex align-items-center">
+                                        <button type="button" class="counter-btn minus" data-target="adults">-</button>
+                                        <span class="counter-value mx-2" id="adults">0</span>
+                                        <button type="button" class="counter-btn plus" data-target="adults">+</button>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="dropdown-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span>Children (2-12)</span>
+                                    <div class="d-flex align-items-center">
+                                        <button type="button" class="counter-btn minus" data-target="children">-</button>
+                                        <span class="counter-value mx-2" id="children">0</span>
+                                        <button type="button" class="counter-btn plus" data-target="children">+</button>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                    <div class="col-md-3">
+                        <div class="form-floating">
+                            <select class="form-select" id="rooms">
+                                <option selected>Dorm Bed</option>
+                                <option>Private Room</option>
+                                <option>Female Only Dorm</option>
+                                <option>Mixed Dorm</option>
+                            </select>
+                            <label for="rooms"><i class="fas fa-bed me-2"></i> Room Type</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-floating">
+                            <select class="form-select" id="type">
+                                <option selected>Any Hostel Type</option>
+                                <option>City Hostel</option>
+                                <option>Beach Hostel</option>
+                                <option>Party Hostel</option>
+                                <option>Eco Hostel</option>
+                                <option>Boutique Hostel</option>
+                            </select>
+                            <label for="type"><i class="fas fa-star me-2"></i> Hostel Type</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-primary w-100 h-100">
+                            <i class="fas fa-search me-2"></i> Find Hostels
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hostel Features -->
+    <div class="container my-5">
+        <div class="text-center mb-5">
+            <h2 class="mb-3">Why Stay in Hostels?</h2>
+            <p class="text-muted">Perfect for budget-conscious travelers who want more than just a place to sleep</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="text-center p-3">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <h5>Budget-Friendly</h5>
+                    <p class="text-muted">Save money for more experiences</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center p-3">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h5>Social Atmosphere</h5>
+                    <p class="text-muted">Meet travelers from around the world</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center p-3">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h5>Prime Locations</h5>
+                    <p class="text-muted">Centrally located in popular areas</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center p-3">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h5>Communal Kitchens</h5>
+                    <p class="text-muted">Save money by cooking your own meals</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hostel Listings -->
+    <div class="container my-5">
+        <div class="row">
+            <!-- Filters -->
+            <div class="col-lg-3">
+                <div class="filter-section">
+                    <h5 class="filter-title"><i class="fas fa-sliders-h me-2"></i> Refine Your Search</h5>
+                    
+                    <div class="mb-4">
+                        <h6><i class="fas fa-indian-rupee-sign me-2"></i> Price Range</h6>
+                        <input type="range" class="form-range" id="priceRange" min="200" max="2000" step="100" value="800">
+                        <div class="d-flex justify-content-between">
+                            <span>₹200</span>
+                            <span>₹2,000+</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h6><i class="fas fa-bed me-2"></i> Room Type</h6>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="dorm" checked>
+                            <label class="form-check-label" for="dorm">
+                                Dormitory
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="private" checked>
+                            <label class="form-check-label" for="private">
+                                Private Room
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="female">
+                            <label class="form-check-label" for="female">
+                                Female Only
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h6><i class="fas fa-check-circle me-2"></i> Amenities</h6>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="freeWifi" checked>
+                            <label class="form-check-label" for="freeWifi">
+                                Free WiFi
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="breakfast">
+                            <label class="form-check-label" for="breakfast">
+                                Free Breakfast
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="kitchen">
+                            <label class="form-check-label" for="kitchen">
+                                Shared Kitchen
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="commonArea">
+                            <label class="form-check-label" for="commonArea">
+                                Common Area
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary w-100">Apply Filters</button>
+                </div>
+            </div>
+            
+            <!-- Hostel Listings -->
+            <div class="col-lg-9">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="mb-0">Popular Hostels in India</h4>
+                    <div>
+                        <span class="me-3">Sort by:</span>
+                        <div class="btn-group">
+                            <button class="btn btn-outline-primary btn-sm active">Recommended</button>
+                            <button class="btn btn-outline-primary btn-sm">Price</button>
+                            <button class="btn btn-outline-primary btn-sm">Rating</button>
+                            <button class="btn btn-outline-primary btn-sm">Social Score</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <!-- Hostel 1 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="hostel-card">
+                            <div class="position-relative">
+                                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="hostel-img" alt="Zostel Delhi">
+                                <span class="hostel-badge">Top Rated</span>
+                            </div>
+                            <div class="p-3">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="mb-0">Zostel Delhi</h5>
+                                    <span class="rating-badge">4.8 <i class="fas fa-star ms-1"></i></span>
+                                </div>
+                                <p class="text-muted mb-2"><i class="fas fa-map-marker-alt me-2"></i> Paharganj, New Delhi</p>
+                                
+                                <div class="mb-3">
+                                    <span class="room-type-badge">Mixed Dorm</span>
+                                    <span class="room-type-badge">Female Dorm</span>
+                                    <span class="room-type-badge">Private Rooms</span>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <p class="mb-1"><i class="fas fa-wifi amenity-icon"></i> Free High-Speed WiFi</p>
+                                    <p class="mb-1"><i class="fas fa-utensils amenity-icon"></i> Communal Kitchen</p>
+                                    <p class="mb-0"><i class="fas fa-gamepad amenity-icon"></i> Game Room</p>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="price">₹499</span>
+                                        <small>/ bed night</small>
+                                    </div>
+                                    <button class="btn-book">Book Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Hostel 2 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="hostel-card">
+                            <div class="position-relative">
+                                <img src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="hostel-img" alt="GoStops Goa">
+                                <span class="hostel-badge">Beachfront</span>
+                            </div>
+                            <div class="p-3">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="mb-0">GoStops Goa</h5>
+                                    <span class="rating-badge">4.7 <i class="fas fa-star ms-1"></i></span>
+                                </div>
+                                <p class="text-muted mb-2"><i class="fas fa-map-marker-alt me-2"></i> Anjuna, Goa</p>
+                                
+                                <div class="mb-3">
+                                    <span class="room-type-badge">Beach Hut Dorms</span>
+                                    <span class="room-type-badge">Private Cottages</span>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <p class="mb-1"><i class="fas fa-umbrella-beach amenity-icon"></i> Direct Beach Access</p>
+                                    <p class="mb-1"><i class="fas fa-cocktail amenity-icon"></i> Beach Bar</p>
+                                    <p class="mb-0"><i class="fas fa-guitar amenity-icon"></i> Live Music Nights</p>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="price">₹699</span>
+                                        <small>/ bed night</small>
+                                    </div>
+                                    <button class="btn-book">Book Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Hostel 3 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="hostel-card">
+                            <div class="position-relative">
+                                <img src="https://images.unsplash.com/photo-1566669437689-1d0a1a0c127e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="hostel-img" alt="The Hosteller Rishikesh">
+                                <span class="hostel-badge">Adventure Hub</span>
+                            </div>
+                            <div class="p-3">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="mb-0">The Hosteller Rishikesh</h5>
+                                    <span class="rating-badge">4.9 <i class="fas fa-star ms-1"></i></span>
+                                </div>
+                                <p class="text-muted mb-2"><i class="fas fa-map-marker-alt me-2"></i> Rishikesh, Uttarakhand</p>
+                                
+                                <div class="mb-3">
+                                    <span class="room-type-badge">River View Dorms</span>
+                                    <span class="room-type-badge">Private Rooms</span>
+                                    <span class="room-type-badge">Tents</span>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <p class="mb-1"><i class="fas fa-water amenity-icon"></i> Ganges River View</p>
+                                    <p class="mb-1"><i class="fas fa-hiking amenity-icon"></i> Adventure Activities</p>
+                                    <p class="mb-0"><i class="fas fa-yoga amenity-icon"></i> Daily Yoga Classes</p>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="price">₹599</span>
+                                        <small>/ bed night</small>
+                                    </div>
+                                    <button class="btn-book">Book Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Hostel 4 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="hostel-card">
+                            <div class="position-relative">
+                                <img src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="hostel-img" alt="Backpacker Panda Jaipur">
+                                <span class="hostel-badge">Heritage Stay</span>
+                            </div>
+                            <div class="p-3">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="mb-0">Backpacker Panda Jaipur</h5>
+                                    <span class="rating-badge">4.6 <i class="fas fa-star ms-1"></i></span>
+                                </div>
+                                <p class="text-muted mb-2"><i class="fas fa-map-marker-alt me-2"></i> Jaipur, Rajasthan</p>
+                                
+                                <div class="mb-3">
+                                    <span class="room-type-badge">Mixed Dorm</span>
+                                    <span class="room-type-badge">Female Dorm</span>
+                                    <span class="room-type-badge">Private Rooms</span>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <p class="mb-1"><i class="fas fa-swimming-pool amenity-icon"></i> Rooftop Pool</p>
+                                    <p class="mb-1"><i class="fas fa-archway amenity-icon"></i> Heritage Building</p>
+                                    <p class="mb-0"><i class="fas fa-utensils amenity-icon"></i> Free Breakfast</p>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="price">₹549</span>
+                                        <small>/ bed night</small>
+                                    </div>
+                                    <button class="btn-book">Book Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Hostel 5 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="hostel-card">
+                            <div class="position-relative">
+                                <img src="https://images.unsplash.com/photo-1601918774946-25832a4be0d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="hostel-img" alt="Moustache Delhi">
+                                <span class="hostel-badge">Party Hostel</span>
+                            </div>
+                            <div class="p-3">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="mb-0">Moustache Delhi</h5>
+                                    <span class="rating-badge">4.8 <i class="fas fa-star ms-1"></i></span>
+                                </div>
+                                <p class="text-muted mb-2"><i class="fas fa-map-marker-alt me-2"></i> Hauz Khas, Delhi</p>
+                                
+                                <div class="mb-3">
+                                    <span class="room-type-badge">Mixed Dorm</span>
+                                    <span class="room-type-badge">Private Rooms</span>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <p class="mb-1"><i class="fas fa-glass-cheers amenity-icon"></i> Rooftop Bar</p>
+                                    <p class="mb-1"><i class="fas fa-music amenity-icon"></i> Live DJ Nights</p>
+                                    <p class="mb-0"><i class="fas fa-hotel amenity-icon"></i> Best Nightlife Area</p>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="price">₹649</span>
+                                        <small>/ bed night</small>
+                                    </div>
+                                    <button class="btn-book">Book Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Hostel 6 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="hostel-card">
+                            <div class="position-relative">
+                                <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="hostel-img" alt="Roadhouse Hostels">
+                                <span class="hostel-badge">Boutique Hostel</span>
+                            </div>
+                            <div class="p-3">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="mb-0">Roadhouse Hostels</h5>
+                                    <span class="rating-badge">4.9 <i class="fas fa-star ms-1"></i></span>
+                                </div>
+                                <p class="text-muted mb-2"><i class="fas fa-map-marker-alt me-2"></i> Multiple Locations</p>
+                                
+                                <div class="mb-3">
+                                    <span class="room-type-badge">Designer Dorms</span>
+                                    <span class="room-type-badge">Private Pods</span>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <p class="mb-1"><i class="fas fa-paint-brush amenity-icon"></i> Designer Interiors</p>
+                                    <p class="mb-1"><i class="fas fa-coffee amenity-icon"></i> Specialty Coffee Bar</p>
+                                    <p class="mb-0"><i class="fas fa-couch amenity-icon"></i> Luxury Common Areas</p>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="price">₹799</span>
+                                        <small>/ bed night</small>
+                                    </div>
+                                    <button class="btn-book">Book Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <nav aria-label="Page navigation" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Previous</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="bg-light py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2>What Our Guests Say</h2>
+                <p class="text-muted">Hear from travelers who've stayed in our hostels</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                            </div>
+                            <p class="card-text">"Zostel Delhi was the perfect start to my India trip! The staff helped me plan my itinerary and I met so many amazing fellow travelers in the common area."</p>
+                            <div class="d-flex align-items-center mt-3">
+                                <img src="https://randomuser.me/api/portraits/women/32.jpg" class="rounded-circle me-3" width="50" alt="Guest">
+                                <div>
+                                    <h6 class="mb-0">Sarah Johnson</h6>
+                                    <small class="text-muted">Backpacker from UK</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                            </div>
+                            <p class="card-text">"GoStops Goa's beachfront location can't be beat! Waking up to ocean views and joining their nightly bonfires made my Goa experience unforgettable."</p>
+                            <div class="d-flex align-items-center mt-3">
+                                <img src="https://randomuser.me/api/portraits/men/45.jpg" class="rounded-circle me-3" width="50" alt="Guest">
+                                <div>
+                                    <h6 class="mb-0">David Müller</h6>
+                                    <small class="text-muted">Solo Traveler from Germany</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star-half-alt text-warning"></i>
+                            </div>
+                            <p class="card-text">"The Hosteller Rishikesh organized amazing yoga and rafting experiences. Their adventure packages saved me so much time and money!"</p>
+                            <div class="d-flex align-items-center mt-3">
+                                <img src="https://randomuser.me/api/portraits/women/68.jpg" class="rounded-circle me-3" width="50" alt="Guest">
+                                <div>
+                                    <h6 class="mb-0">Priya Patel</h6>
+                                    <small class="text-muted">Adventure Seeker from Mumbai</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Group Booking Section -->
+    <div class="container my-5 py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <img src="https://images.unsplash.com/photo-1527525443983-6e60c75fff46?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" class="img-fluid rounded" alt="Group Booking">
+            </div>
+            <div class="col-lg-6">
+                <h2>Group Bookings</h2>
+                <p class="lead">Special deals for student groups, backpacking squads, and travel clubs</p>
+                <ul class="list-unstyled">
+                    <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i> Exclusive dormitory bookings for your group</li>
+                    <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i> Customized activities and city tours</li>
+                    <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i> Dedicated common areas for your group</li>
+                    <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i> Discounted rates for 5+ people</li>
+                </ul>
+                <button class="btn btn-primary btn-lg">Inquire About Group Stays</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+<footer class="main-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <h5 class="text-uppercase mb-4">Company Information</h5>
+                <ul class="list-unstyled footer-links">
+                    <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-info-circle me-2"></i> About</a></li>
+                    <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-envelope me-2"></i> Contact Us</a></li>
+                    <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-shield-alt me-2"></i> Privacy Policy</a></li>
+                    <li><a href="#" class="text-white"><i class="fas fa-file-contract me-2"></i> Terms & Conditions</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <h5 class="text-uppercase mb-4">Quick Links</h5>
+                <ul class="list-unstyled footer-links">
+                    <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-undo me-2"></i> Refund Policy</a></li>
+                    <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-question-circle me-2"></i> FAQs</a></li>
+                    <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-headset me-2"></i> Customer Support</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4">
+                <h5 class="text-uppercase mb-4">Connect With Us</h5>
+                <ul class="list-unstyled footer-links mb-4">
+                    <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-facebook-f me-2"></i> Facebook</a></li>
+                    <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-twitter me-2"></i> Twitter</a></li>
+                    <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-instagram me-2"></i> Instagram</a></li>
+                    <li><a href="#" class="text-white"><i class="fab fa-linkedin-in me-2"></i> LinkedIn</a></li>
+                </ul>
+                <div class="mb-4">
+                    <h6 class="mb-3">Download Our App</h6>
+                    <div class="d-flex gap-2">
+                        <a href="#" class="btn btn-sm btn-outline-light">
+                            <i class="fab fa-apple me-2"></i> App Store
+                        </a>
+                        <a href="#" class="btn btn-sm btn-outline-light">
+                            <i class="fab fa-google-play me-2"></i> Play Store
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="my-4 bg-light opacity-10">
+
+        <!-- Payment Methods -->
+        <div class="row align-items-center py-3">
+            <div class="col-md-8 mb-3 mb-md-0">
+                <h6 class="mb-3">Accepted Payment Methods:</h6>
+                <div class="payment-methods d-flex flex-wrap gap-3 align-items-center">
+                    <div class="payment-group d-flex align-items-center">
+                        <i class="fab fa-cc-visa fa-2x me-2" style="color: #1a1f71;"></i>
+                        <i class="fab fa-cc-mastercard fa-2x me-3" style="color: #eb001b;"></i>
+                        <span class="text-white-50">Cards</span>
+                    </div>
+                    
+                    <div class="payment-group d-flex align-items-center">
+                        <i class="fas fa-rupee-sign fa-2x me-2" style="color: #6cbe45;"></i>
+                        <span class="text-white-50">UPI</span>
+                    </div>
+                    
+                    <div class="payment-group d-flex align-items-center">
+                        <i class="fab fa-google-pay fa-2x me-2" style="color: #4285f4;"></i>
+                        <i class="fas fa-wallet fa-2x me-3" style="color: #ff9500;"></i>
+                        <span class="text-white-50">Wallets</span>
+                    </div>
+                    
+                    <div class="payment-group d-flex align-items-center">
+                        <span class="badge bg-light text-dark me-2">Pay Later:</span>
+                        <span class="badge bg-primary me-2">Simple Pay</span>
+                        <span class="badge bg-info text-dark">Lazy Pay</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 text-md-end">
+                <div class="d-flex flex-column">
+                    <p class="mb-2"><i class="fas fa-phone-alt me-2"></i> 24/7 Support: +1 (555) 987-6543</p>
+                    <p class="mb-0"><i class="fas fa-envelope me-2"></i> support@visa2book.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize counters
+            const counters = {
+                adults: 2,
+                children: 0
+            };
+    
+            // Update summary text
+            function updateSummary() {
+                const guestSummary = [];
+                if (counters.adults > 0) guestSummary.push(`${counters.adults} Adult${counters.adults > 1 ? 's' : ''}`);
+                if (counters.children > 0) guestSummary.push(`${counters.children} Child${counters.children > 1 ? 'ren' : ''}`);
+                
+                document.getElementById('guestSummary').textContent = 
+                    guestSummary.length > 0 ? guestSummary.join(', ') : '0 Guests';
+                
+                // Update room type summary
+                const selectedRoomType = document.querySelector('input[name="roomType"]:checked');
+                if (selectedRoomType) {
+                    document.getElementById('roomSummary').textContent = 
+                        document.querySelector(`label[for="${selectedRoomType.id}"]`).textContent.trim();
+                }
+            }
+    
+            // Handle counter buttons
+            document.querySelectorAll('.counter-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const target = this.getAttribute('data-target');
+                    const isPlus = this.classList.contains('plus');
+                    
+                    if (isPlus) {
+                        counters[target]++;
+                    } else if (counters[target] > 0) {
+                        counters[target]--;
+                    }
+                    
+                    document.getElementById(target).textContent = counters[target];
+                    updateSummary();
+                });
+            });
+    
+            // Handle room type changes
+            document.querySelectorAll('input[name="roomType"]').forEach(radio => {
+                radio.addEventListener('change', updateSummary);
+            });
+    
+            // Initialize
+            document.getElementById('adults').textContent = counters.adults;
+            document.getElementById('children').textContent = counters.children;
+            updateSummary();
+        });
+    </script>
+</body>
+</html>

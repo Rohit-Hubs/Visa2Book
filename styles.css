@@ -1,0 +1,593 @@
+/* Custom Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header Styling */
+header {
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+}
+
+.navbar-brand img {
+    max-height: 40px;
+}
+
+.navbar-nav .nav-link {
+    font-weight: 500;
+    color: #343a40;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #007bff;
+}
+
+/* Navbar Background Color */
+.navbar-dark {
+    background-color: #343a40 !important;
+}
+
+.navbar-nav .nav-link {
+    color: white;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #ffc107;
+}
+
+/* Hero Section Styling */
+.hero {
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    padding: 150px 0;
+    position: relative;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    z-index: 1;
+}
+
+.hero > * {
+    position: relative;
+    z-index: 2;
+}
+
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+/* Featured Destinations Styling */
+.featured-destinations {
+    margin-top: 40px;
+}
+
+.featured-destinations h2 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.featured-destinations .card {
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.featured-destinations .card:hover {
+    transform: translateY(-5px);
+}
+
+.featured-destinations .card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.featured-destinations .card-body {
+    padding: 20px;
+}
+
+.featured-destinations .card-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.featured-destinations .card-text {
+    color: #6c757d;
+}
+
+/* Footer Styling */
+footer {
+    background-color: #343a40;
+    color: white;
+    padding: 30px 0;
+    position: relative;
+}
+
+footer a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #ffc107;
+}
+
+footer .list-unstyled li {
+    margin-bottom: 10px;
+}
+
+footer .text-center p {
+    margin-top: 20px;
+}
+
+/* Login Form */
+.login-signup-form {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.login-signup-form h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+    color: #343a40;
+}
+
+.login-signup-form .form-control {
+    margin-bottom: 15px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.login-signup-form .btn {
+    width: 100%;
+    background-color: #007bff;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.login-signup-form .btn:hover {
+    background-color: #0056b3;
+}
+
+/* General Button Styling */
+.btn-primary, .btn-outline-primary {
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover, .btn-outline-primary:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+/* Main Content */
+main {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+main h1 {
+    font-size: 36px;
+    color: #212124;
+}
+
+main p {
+    font-size: 18px;
+    color: #35383b;
+    margin-top: 20px;
+}
+
+/* Flight Search Form Styling */
+main h2 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+form .form-label {
+    font-weight: 500;
+    color: #343a40;
+}
+
+form .form-control {
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+form .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+form .btn-primary {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+}
+
+/* Flight Results Styling */
+.mt-5 h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.mt-5 p {
+    font-size: 16px;
+    color: #6c757d;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+}
+
+.table th,
+.table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table tbody + tbody {
+    border-top: 2px solid #dee2e6;
+}
+
+.table-sm th,
+.table-sm td {
+    padding: 0.3rem;
+}
+
+.table-bordered {
+    border: 1px solid #dee2e6;
+}
+
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid #dee2e6;
+}
+
+.table-bordered thead th,
+.table-bordered thead td {
+    border-bottom-width: 2px;
+}
+
+.table-hover tbody tr:hover {
+    color: #212529;
+    background-color: rgba(0, 0, 0, 0.075);
+}
+
+.table-primary,
+.table-primary > th,
+.table-primary > td {
+    background-color: #cce5ff;
+}
+
+.table-primary th,
+.table-primary td,
+.table-primary thead th,
+.table-primary tbody + tbody {
+    border-color: #b8daff;
+}
+
+.table-dark,
+.table-dark > th,
+.table-dark > td {
+    background-color: #c6c8ca;
+}
+
+.table-dark th,
+.table-dark td,
+.table-dark thead th,
+.table-dark tbody + tbody {
+    border-color: #95999c;
+}
+
+.btn-success {
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-success:hover {
+    color: #fff;
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+/* General Form Styling */
+form .form-control {
+    border-radius: 0.25rem;
+}
+
+form .form-label {
+    font-weight: bold;
+    color: #555;
+}
+
+/* General Table Styling */
+.table thead th {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: bold;
+}
+
+.table tbody td {
+    vertical-align: middle;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+}
+
+/* Footer Styling */
+footer {
+    background-color: #343a40;
+    color: white;
+    padding: 20px;
+}
+
+footer .row {
+    display: flex;
+    justify-content: space-between;
+}
+
+footer .col-md-4 h5 {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+footer .col-md-4 ul {
+    padding-left: 0;
+}
+
+footer .col-md-4 ul li {
+    margin-bottom: 10px;
+}
+
+footer .text-center p {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+footer .list-unstyled li a {
+    font-size: 14px;
+    color: white;
+}
+
+footer .list-unstyled li a:hover {
+    color: #ffc107;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .navbar-nav {
+        text-align: center;
+    }
+    .login-signup-form {
+        max-width: 90%;
+    }
+    main {
+        padding: 30px 20px;
+    }
+}
+
+/* Hotels & Stays specific styles */
+.hotel-card {
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.hotel-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.hotel-card-body {
+    padding: 15px;
+}
+
+.hotel-card-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.hotel-card-text {
+    font-size: 1rem;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+/* Deals & Offers specific styles */
+.deals .card {
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.deals .card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.deals .card-body {
+    padding: 15px;
+}
+
+.deals .card-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.deals .card-text {
+    font-size: 1rem;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+/* Travel Essentials specific styles */
+.travel-essentials ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.travel-essentials ul li {
+    margin-bottom: 10px;
+}
+
+.travel-essentials ul li a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.travel-essentials ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Manage Bookings specific styles */
+.manage-bookings form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.manage-bookings .form-label {
+    font-weight: bold;
+}
+
+.manage-bookings .form-control {
+    margin-bottom: 15px;
+}
+
+.manage-bookings ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.manage-bookings ul li {
+    margin-bottom: 10px;
+}
+
+.manage-bookings ul li a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.manage-bookings ul li a:hover {
+    text-decoration: underline;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+/* Customer Support specific styles */
+.customer-support ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.customer-support ul li {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+/* Flights specific styles */
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+/* Trip Planner specific styles */
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+/* Flights, Trains, Buses, Ferries & Cruises, Car Rentals specific styles */
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}

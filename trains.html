@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trains - Visa2Book</title>
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                        url('https://images.unsplash.com/photo-1519817650390-64a93db51149?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background-color: var(--primary-color) !important;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand img {
+            height: 155px;
+            width: 175px;
+            transition: transform 0.3s;
+        }
+        
+        .navbar-brand img:hover {
+            transform: scale(1.03);
+        }
+
+        .nav-link {
+            color: white !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            margin: 0 0.2rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background-color: rgba(255,255,255,0.15);
+            transform: translateY(-2px);
+        }
+        
+        .nav-link.active {
+            position: relative;
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 15px;
+            right: 15px;
+            height: 3px;
+            background-color: var(--accent-color);
+            border-radius: 3px;
+        }
+        
+        /* Main content styling */
+        .main-content {
+            background-color: rgba(255, 255, 255, 0.92);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 40px auto;
+            width: 90%;
+            max-width: 1200px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        h2, h3, h4, h5 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--dark-color);
+        }
+        
+        h2 {
+            font-weight: 700;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--accent-color);
+            border-radius: 2px;
+        }
+        
+        /* Search form styling */
+        .search-container {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            margin-bottom: 30px;
+        }
+        
+        .form-control, .form-select {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 12px 15px;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.25rem rgba(231, 76, 60, 0.25);
+        }
+        
+        .btn-search {
+            background-color: white;
+            color: var(--primary-color);
+            font-weight: 600;
+            padding: 12px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .btn-search:hover {
+            background-color: var(--accent-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .swap-btn {
+            background-color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 0 auto;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .swap-btn:hover {
+            background-color: var(--accent-color);
+            color: white;
+            transform: rotate(180deg);
+        }
+        
+        /* Train list styling */
+        .train-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        
+        .train-item {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--accent-color);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .train-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .train-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+        
+        .train-name {
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .train-number {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .train-status {
+            background-color: white;
+            color: var(--success);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .train-body {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            padding: 20px;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .train-time {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .train-station {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .train-date {
+            font-size: 0.8rem;
+            color: #888;
+        }
+        
+        .train-duration {
+            text-align: center;
+            position: relative;
+        }
+        
+        .train-duration::before,
+        .train-duration::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background: #ddd;
+        }
+        
+        .train-duration::before {
+            left: 0;
+        }
+        
+        .train-duration::after {
+            right: 0;
+        }
+        
+        .duration-time {
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+        
+        .train-stops {
+            background-color: #f0f0f0;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            display: inline-block;
+            color: #555;
+            margin-top: 5px;
+        }
+        
+        .train-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #f9f9f9;
+            border-top: 1px solid #eee;
+        }
+        
+        .train-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+        
+        .price-label {
+            font-size: 0.8rem;
+            color: #888;
+        }
+        
+        .btn-book {
+            background: linear-gradient(90deg, var(--accent-color), #c0392b);
+            color: white;
+            font-weight: 500;
+            padding: 8px 25px;
+            border-radius: 30px;
+            border: none;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(231, 76, 60, 0.3);
+        }
+        
+        .btn-book:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+        
+        .train-details-btn {
+            background: none;
+            border: none;
+            color: var(--secondary-color);
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s ease;
+        }
+        
+        .train-details-btn:hover {
+            color: var(--primary-color);
+        }
+        
+        .train-details-btn i {
+            transition: transform 0.2s ease;
+        }
+        
+        .train-details-btn.active i {
+            transform: rotate(180deg);
+        }
+        
+        .train-details {
+            display: none;
+            padding: 20px;
+            background-color: #f5f7ff;
+            border-top: 1px solid #e0e5ff;
+        }
+        
+        .train-details.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .detail-section h6 {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #e0e5ff;
+            padding-bottom: 5px;
+        }
+        
+        .detail-section p {
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .food-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .food-option input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        
+        /* Load more button */
+        .btn-load-more {
+            background: white;
+            color: var(--secondary-color);
+            border: 2px solid var(--secondary-color);
+            padding: 10px 30px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 30px;
+        }
+        
+        .btn-load-more:hover {
+            background: var(--secondary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .main-content {
+                padding: 30px;
+                width: 95%;
+            }
+            
+            .train-body {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .train-duration {
+                padding: 15px 0;
+            }
+            
+            .train-duration::before,
+            .train-duration::after {
+                width: 30%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 20px;
+            }
+            
+            .train-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .train-footer {
+                flex-direction: column;
+                gap: 15px;
+                align-items: stretch;
+            }
+            
+            .btn-book {
+                width: 100%;
+            }
+            
+            .navbar-brand img {
+                height: 120px;
+                width: 140px;
+            }
+        }
+        
+        /* Animation for train items */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .train-item {
+            animation: slideIn 0.5s ease forwards;
+            opacity: 0;
+        }
+        
+        .train-item:nth-child(1) { animation-delay: 0.1s; }
+        .train-item:nth-child(2) { animation-delay: 0.2s; }
+        .train-item:nth-child(3) { animation-delay: 0.3s; }
+        .train-item:nth-child(4) { animation-delay: 0.4s; }
+        .train-item:nth-child(5) { animation-delay: 0.5s; }
+        
+        /* Footer styling - matching previous code */
+        footer {
+            background-color: rgba(0, 0, 0, 0.9);
+            color: #fff;
+            padding: 40px 0 20px;
+            margin-top: auto;
+        }
+        
+        footer h5 {
+            color: #1cda49;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-links a:hover {
+            color: #1cda49;
+        }
+        
+        .footer-links i {
+            margin-right: 8px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            margin-top: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="V2B.png" alt="Visa2Book" style="height: 120px; width: 140px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="fas fa-home me-1"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="flights.html"><i class="fas fa-plane me-1"></i> Flights</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="trains.html"><i class="fas fa-train me-1"></i> Trains</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="buses.html"><i class="fas fa-bus me-1"></i> Buses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ferries.html"><i class="fas fa-ship me-1"></i> Ferries & Cruises</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cars.html"><i class="fas fa-car me-1"></i> Car Rentals</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <h2 class="text-center"><i class="fas fa-train"></i> Book Train Tickets</h2>
+        
+        <!-- Train Search Form -->
+        <div class="search-container">
+            <form class="row g-3">
+                <div class="col-md-5">
+                    <label for="from" class="form-label">From</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                        <input type="text" class="form-control form-control-lg" id="from" placeholder="Departure station">
+                    </div>
+                </div>
+                <div class="col-md-1 d-flex align-items-center justify-content-center">
+                    <button type="button" class="swap-btn" onclick="swapStations()">
+                        <i class="fas fa-exchange-alt"></i>
+                    </button>
+                </div>
+                <div class="col-md-5">
+                    <label for="to" class="form-label">To</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                        <input type="text" class="form-control form-control-lg" id="to" placeholder="Arrival station">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="date" class="form-label">Date</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                        <input type="date" class="form-control form-control-lg" id="date">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="class" class="form-label">Class</label>
+                    <select class="form-select form-control-lg" id="class">
+                        <option value="">All Classes</option>
+                        <option value="EA">Anubhuti Class (EA)</option>
+                        <option value="1A">AC First Class (1A)</option>
+                        <option value="EV">Vistadome AC (EV)</option>
+                        <option value="EC">Exec. Chair Car (EC)</option>
+                        <option value="2A">AC 2 Tier (2A)</option>
+                        <option value="FC">First Class (FC)</option>
+                        <option value="3A">AC 3 Tier (3A)</option>
+                        <option value="3E">AC 3 Economy (3E)</option>
+                        <option value="VC">Vistadome Chair Car (VC)</option>
+                        <option value="CC">AC Chair car (CC)</option>
+                        <option value="SL">Sleeper (SL)</option>
+                        <option value="VS">Vistadome Non AC (VS)</option>
+                        <option value="2S">Second Sitting (2S)</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="quota" class="form-label">Quota</label>
+                    <select class="form-select form-control-lg" id="quota">
+                        <option value="GN">General</option>
+                        <option value="LD">Ladies</option>
+                        <option value="LB">Lower Berth/Sr.Citizen</option>
+                        <option value="HP">Person with Disability</option>
+                        <option value="DP">Duty Pass</option>
+                        <option value="PT">Premium Tatkal</option>
+                        <option value="TQ">Tatkal</option>
+                    </select>
+                </div>
+                <div class="col-12 text-center mt-3">
+                    <button type="submit" class="btn btn-search px-5">
+                        <i class="fas fa-search me-2"></i> Search Trains
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3>Available Trains</h3>
+            <div class="dropdown">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Sort by: Departure Time
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+                    <li><a class="dropdown-item" href="#">Departure Time</a></li>
+                    <li><a class="dropdown-item" href="#">Arrival Time</a></li>
+                    <li><a class="dropdown-item" href="#">Price (Low to High)</a></li>
+                    <li><a class="dropdown-item" href="#">Price (High to Low)</a></li>
+                    <li><a class="dropdown-item" href="#">Duration</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Train List -->
+        <div class="train-list">
+            <!-- Train Item 1 -->
+            <div class="train-item">
+                <div class="train-header">
+                    <div>
+                        <div class="train-name">Rajdhani Express</div>
+                        <div class="train-number">12951 • Superfast</div>
+                    </div>
+                    <span class="train-status bg-success">Available</span>
+                </div>
+                <div class="train-body">
+                    <div class="departure-info">
+                        <div class="train-time">08:00</div>
+                        <div class="train-station">Mumbai Central (BCT)</div>
+                        <div class="train-date">Tue, 15 Jun</div>
+                    </div>
+                    <div class="train-duration">
+                        <div class="duration-time">2h 30m</div>
+                        <div class="train-stops">Non-stop</div>
+                    </div>
+                    <div class="arrival-info">
+                        <div class="train-time">10:30</div>
+                        <div class="train-station">Ahmedabad (ADI)</div>
+                        <div class="train-date">Tue, 15 Jun</div>
+                    </div>
+                </div>
+                <div class="train-footer">
+                    <button class="train-details-btn" onclick="toggleDetails(this)">
+                        <span>Train Details</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="text-end">
+                        <div class="train-price">₹1,250</div>
+                        <div class="price-label">per person</div>
+                    </div>
+                    <button class="btn btn-book">Book Now</button>
+                </div>
+                <div class="train-details">
+                    <div class="details-grid">
+                        <div class="detail-section">
+                            <h6>Train Information</h6>
+                            <p><strong>Train Name:</strong> Rajdhani Express</p>
+                            <p><strong>Train Number:</strong> 12951</p>
+                            <p><strong>Type:</strong> Superfast</p>
+                            <p><strong>Classes:</strong> 1A, 2A, 3A, SL</p>
+                        </div>
+                        <div class="detail-section">
+                            <h6>Schedule</h6>
+                            <p><strong>Departure:</strong> 08:00 (BCT)</p>
+                            <p><strong>Arrival:</strong> 10:30 (ADI)</p>
+                            <p><strong>Duration:</strong> 2h 30m</p>
+                            <p><strong>Days:</strong> Daily</p>
+                        </div>
+                        <div class="detail-section">
+                            <h6>Facilities</h6>
+                            <p><strong>Food:</strong> Included (Veg/Non-Veg)</p>
+                            <p><strong>Berth:</strong> AC Sleeper</p>
+                            <p><strong>Luggage:</strong> 40kg + 7kg hand</p>
+                            <p><strong>Entertainment:</strong> No</p>
+                            <div class="food-option">
+                                <input type="checkbox" id="food1" name="food1">
+                                <label for="food1">Pre-order vegetarian meal (+₹150)</label>
+                            </div>
+                            <div class="food-option">
+                                <input type="checkbox" id="food2" name="food2">
+                                <label for="food2">Pre-order non-vegetarian meal (+₹200)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Train Item 2 -->
+            <div class="train-item">
+                <div class="train-header">
+                    <div>
+                        <div class="train-name">Shatabdi Express</div>
+                        <div class="train-number">12009 • Superfast</div>
+                    </div>
+                    <span class="train-status bg-success">Available</span>
+                </div>
+                <div class="train-body">
+                    <div class="departure-info">
+                        <div class="train-time">06:15</div>
+                        <div class="train-station">Mumbai Central (BCT)</div>
+                        <div class="train-date">Tue, 15 Jun</div>
+                    </div>
+                    <div class="train-duration">
+                        <div class="duration-time">3h 15m</div>
+                        <div class="train-stops">2 stops</div>
+                    </div>
+                    <div class="arrival-info">
+                        <div class="train-time">09:30</div>
+                        <div class="train-station">Ahmedabad (ADI)</div>
+                        <div class="train-date">Tue, 15 Jun</div>
+                    </div>
+                </div>
+                <div class="train-footer">
+                    <button class="train-details-btn" onclick="toggleDetails(this)">
+                        <span>Train Details</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="text-end">
+                        <div class="train-price">₹950</div>
+                        <div class="price-label">per person</div>
+                    </div>
+                    <button class="btn btn-book">Book Now</button>
+                </div>
+                <div class="train-details">
+                    <div class="details-grid">
+                        <div class="detail-section">
+                            <h6>Train Information</h6>
+                            <p><strong>Train Name:</strong> Shatabdi Express</p>
+                            <p><strong>Train Number:</strong> 12009</p>
+                            <p><strong>Type:</strong> Superfast</p>
+                            <p><strong>Classes:</strong> CC, EC</p>
+                        </div>
+                        <div class="detail-section">
+                            <h6>Schedule</h6>
+                            <p><strong>Departure:</strong> 06:15 (BCT)</p>
+                            <p><strong>Arrival:</strong> 09:30 (ADI)</p>
+                            <p><strong>Duration:</strong> 3h 15m</p>
+                            <p><strong>Days:</strong> Daily</p>
+                        </div>
+                        <div class="detail-section">
+                            <h6>Facilities</h6>
+                            <p><strong>Food:</strong> Breakfast included</p>
+                            <p><strong>Seat:</strong> AC Chair Car</p>
+                            <p><strong>Luggage:</strong> 35kg + 7kg hand</p>
+                            <p><strong>Entertainment:</strong> No</p>
+                            <div class="food-option">
+                                <input type="checkbox" id="food3" name="food3">
+                                <label for="food3">Extra breakfast (+₹100)</label>
+                            </div>
+                            <div class="food-option">
+                                <input type="checkbox" id="food4" name="food4">
+                                <label for="food4">Snack box (+₹80)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Train Item 3 -->
+            <div class="train-item">
+                <div class="train-header">
+                    <div>
+                        <div class="train-name">Duronto Express</div>
+                        <div class="train-number">12267 • Superfast</div>
+                    </div>
+                    <span class="train-status bg-warning">Limited seats</span>
+                </div>
+                <div class="train-body">
+                    <div class="departure-info">
+                        <div class="train-time">14:45</div>
+                        <div class="train-station">Mumbai Central (BCT)</div>
+                        <div class="train-date">Tue, 15 Jun</div>
+                    </div>
+                    <div class="train-duration">
+                        <div class="duration-time">2h 45m</div>
+                        <div class="train-stops">Non-stop</div>
+                    </div>
+                    <div class="arrival-info">
+                        <div class="train-time">17:30</div>
+                        <div class="train-station">Ahmedabad (ADI)</div>
+                        <div class="train-date">Tue, 15 Jun</div>
+                    </div>
+                </div>
+                <div class="train-footer">
+                    <button class="train-details-btn" onclick="toggleDetails(this)">
+                        <span>Train Details</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="text-end">
+                        <div class="train-price">₹1,100</div>
+                        <div class="price-label">per person</div>
+                    </div>
+                    <button class="btn btn-book">Book Now</button>
+                </div>
+                <div class="train-details">
+                    <div class="details-grid">
+                        <div class="detail-section">
+                            <h6>Train Information</h6>
+                            <p><strong>Train Name:</strong> Duronto Express</p>
+                            <p><strong>Train Number:</strong> 12267</p>
+                            <p><strong>Type:</strong> Superfast</p>
+                            <p><strong>Classes:</strong> 2A, 3A, SL</p>
+                        </div>
+                        <div class="detail-section">
+                            <h6>Schedule</h6>
+                            <p><strong>Departure:</strong> 14:45 (BCT)</p>
+                            <p><strong>Arrival:</strong> 17:30 (ADI)</p>
+                            <p><strong>Duration:</strong> 2h 45m</p>
+                            <p><strong>Days:</strong> Daily</p>
+                        </div>
+                        <div class="detail-section">
+                            <h6>Facilities</h6>
+                            <p><strong>Food:</strong> Dinner included</p>
+                            <p><strong>Berth:</strong> AC Sleeper</p>
+                            <p><strong>Luggage:</strong> 40kg + 7kg hand</p>
+                            <p><strong>Entertainment:</strong> No</p>
+                            <div class="food-option">
+                                <input type="checkbox" id="food5" name="food5">
+                                <label for="food5">Extra dinner (+₹150)</label>
+                            </div>
+                            <div class="food-option">
+                                <input type="checkbox" id="food6" name="food6">
+                                <label for="food6">Tea/Coffee combo (+₹60)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center">
+            <button class="btn btn-load-more" onclick="loadMoreTrains()">
+                <i class="fas fa-plus-circle me-1"></i> Load More Trains
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5>Company Information</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="#"><i class="fas fa-info-circle"></i> About Us</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> Contact Us</a></li>
+                        <li><a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+                        <li><a href="#"><i class="fas fa-file-contract"></i> Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="#"><i class="fas fa-undo"></i> Refund Policy</a></li>
+                        <li><a href="#"><i class="fas fa-question-circle"></i> FAQs</a></li>
+                        <li><a href="#"><i class="fas fa-headset"></i> Customer Support</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Follow Us</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                        <li><a href="#"><i class="fab fa-linkedin-in"></i> LinkedIn</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="row">
+                    <div class="col-md-6 mb-3 mb-md-0">
+                        <p class="mb-2">Accepted Payment Methods: Visa, Mastercard, UPI, Wallets</p>
+                        <p class="mb-2">Customer Support: +91 1234567890 | support@visa2book.com</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <p class="mb-0">&copy; 2023 Visa2Book. All Rights Reserved.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script>
+        function toggleDetails(button) {
+            const trainItem = button.closest('.train-item');
+            const details = trainItem.querySelector('.train-details');
+            details.classList.toggle('show');
+            button.classList.toggle('active');
+            
+            if (details.classList.contains('show')) {
+                button.querySelector('span').textContent = 'Hide Details';
+            } else {
+                button.querySelector('span').textContent = 'Train Details';
+            }
+        }
+
+        function swapStations() {
+            const fromInput = document.getElementById('from');
+            const toInput = document.getElementById('to');
+            const temp = fromInput.value;
+            fromInput.value = toInput.value;
+            toInput.value = temp;
+        }
+
+        function loadMoreTrains() {
+            // In a real application, this would fetch more trains from the server
+            const trainList = document.querySelector('.train-list');
+            const newTrain = document.querySelector('.train-item').cloneNode(true);
+            
+            // Modify some details to make it look different
+            const trainNames = ['Garib Rath', 'Sampark Kranti', 'Jan Shatabdi', 'Vande Bharat'];
+            const trainNumbers = ['12951', '12345', '12077', '22222'];
+            const trainTypes = ['Superfast', 'Express', 'Rajdhani', 'Shatabdi'];
+            
+            const randomIndex = Math.floor(Math.random() * 4);
+            
+            newTrain.querySelector('.train-name').textContent = trainNames[randomIndex] + ' Express';
+            newTrain.querySelector('.train-number').textContent = trainNumbers[randomIndex] + ' • ' + trainTypes[randomIndex];
+            
+            // Random price between 800 and 2000
+            const randomPrice = Math.floor(Math.random() * 1200) + 800;
+            newTrain.querySelector('.train-price').textContent = '₹' + randomPrice;
+            
+            // Random times
+            const randomHour1 = Math.floor(Math.random() * 12) + 1;
+            const randomMinute1 = Math.floor(Math.random() * 60);
+            const randomHour2 = randomHour1 + Math.floor(Math.random() * 3) + 1;
+            const randomMinute2 = Math.floor(Math.random() * 60);
+            
+            newTrain.querySelectorAll('.train-time')[0].textContent = `${randomHour1.toString().padStart(2, '0')}:${randomMinute1.toString().padStart(2, '0')}`;
+            newTrain.querySelectorAll('.train-time')[1].textContent = `${randomHour2.toString().padStart(2, '0')}:${randomMinute2.toString().padStart(2, '0')}`;
+            
+            // Calculate duration
+            const durationHours = randomHour2 - randomHour1;
+            const durationMinutes = randomMinute2 - randomMinute1;
+            const totalMinutes = durationHours * 60 + durationMinutes;
+            const displayHours = Math.floor(totalMinutes / 60);
+            const displayMinutes = totalMinutes % 60;
+            
+            newTrain.querySelector('.duration-time').textContent = `${displayHours}h ${displayMinutes}m`;
+            
+            // Random status
+            const statuses = ['Available', 'Limited seats', 'Waiting list'];
+            const statusClasses = ['bg-success', 'bg-warning', 'bg-danger'];
+            const statusIndex = Math.floor(Math.random() * 3);
+            
+            const statusBadge = newTrain.querySelector('.train-status');
+            statusBadge.textContent = statuses[statusIndex];
+            statusBadge.className = 'train-status ' + statusClasses[statusIndex];
+            
+            // Reset details state
+            newTrain.querySelector('.train-details').classList.remove('show');
+            newTrain.querySelector('.train-details-btn span').textContent = 'Train Details';
+            newTrain.querySelector('.train-details-btn').classList.remove('active');
+            
+            trainList.appendChild(newTrain);
+            
+            // Add animation to the new train
+            newTrain.style.animation = 'none';
+            newTrain.offsetHeight; // Trigger reflow
+            newTrain.style.animation = 'slideIn 0.5s ease forwards';
+        }
+
+        // Initialize date inputs with today's date
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('date').value = today;
+            document.getElementById('date').min = today;
+        });
+    </script>
+</body>
+</html>

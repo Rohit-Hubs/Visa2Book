@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OceanVoyage | Ferries & Cruises</title>
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    
+    <!-- External CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #005f8c;
+            --secondary-color: #00b4d8;
+            --accent-color: #ff9e00;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(rgba(0, 45, 75, 0.85), rgba(0, 45, 75, 0.85)), 
+                        url('https://images.unsplash.com/photo-1506929562872-bb421503ef21?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1925&q=80') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--light-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Navigation */
+        .navbar {
+            background-color: rgba(33, 37, 41, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--light-color) !important;
+        }
+        
+        .navbar-brand span {
+            color: var(--accent-color);
+        }
+        
+        .nav-link {
+            color: var(--light-color) !important;
+            font-weight: 500;
+            margin: 0 10px;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: var(--accent-color) !important;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            bottom: 0;
+            left: 0;
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .nav-link.active {
+            color: var(--accent-color) !important;
+            font-weight: 600;
+        }
+        
+        /* Search Container */
+        .search-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin-top: 50px;
+        }
+        
+        .search-container h2 {
+            color: var(--dark-color);
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+        
+        .form-label {
+            color: black !important;
+            font-weight: 500;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .form-label:hover {
+            color: var(--secondary-color) !important;
+            text-shadow: none;
+        }
+        
+        .form-control, .form-select {
+            height: 50px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            padding-left: 15px;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+            border: none;
+            padding: 12px 30px;
+            font-weight: 600;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0096c7;
+            transform: translateY(-2px);
+        }
+        
+        /* Voyage Cards */
+        .voyage-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            color: var(--dark-color);
+        }
+        
+        .voyage-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .voyage-img {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+        
+        .voyage-body {
+            padding: 20px;
+        }
+        
+        .voyage-title {
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .voyage-price {
+            color: var(--secondary-color);
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .voyage-features {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+        
+        .voyage-features li {
+            margin-bottom: 5px;
+        }
+        
+        .voyage-features i {
+            color: var(--accent-color);
+            margin-right: 8px;
+        }
+        
+        /* Features Section */
+        .feature-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .feature-box:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+        
+        /* Section Titles */
+        .section-title {
+            position: relative;
+            margin-bottom: 50px;
+            font-weight: 700;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background: var(--accent-color);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* Route Badge */
+        .route-badge {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        /* Timeline */
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 15px 0;
+        }
+        
+        .timeline-item {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .timeline-connector {
+            flex: 2;
+            height: 2px;
+            background: var(--secondary-color);
+            margin: 0 10px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+        
+        footer h5 {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        footer h5::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background: #3498db;
+        }
+        
+        .footer-links {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+            list-style: none;
+        }
+        
+        .footer-links a {
+            color: #ecf0f1;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .footer-links a:hover {
+            color: #3498db;
+            padding-left: 5px;
+        }
+        
+        .footer-links i {
+            width: 20px;
+            text-align: center;
+        }
+        
+        .footer-bottom {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+        
+        /* Payment Icons */
+        .payment-methods {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .payment-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-right: 15px;
+        }
+        
+        .payment-group i {
+            margin-right: 5px;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {}
+            .navbar-brand {
+                font-size: 1.5rem;
+            }
+            
+            .search-container {
+                padding: 20px;
+            }
+            
+            .timeline {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .timeline-connector {
+                width: 2px;
+                height: 20px;
+                margin: 5px 0 5px 20px;
+            }
+            
+            /* Footer Styles */
+footer {
+    background-color: #2c3e50;
+    color: #fff;
+}
+
+footer h5 {
+    color: #fff;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+footer h5::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    width: 50px;
+    height: 2px;
+    background: #3498db;
+}
+
+footer a {
+    color: #ecf0f1;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+footer a:hover {
+    color: #3498db;
+    padding-left: 5px;
+}
+
+footer .list-unstyled li {
+    margin-bottom: 0.75rem;
+}
+
+footer .social-icons a {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    margin-right: 8px;
+    transition: all 0.3s;
+}
+
+footer .social-icons a:hover {
+    background: #3498db;
+    color: #fff;
+    transform: translateY(-3px);
+}
+
+footer .payment-methods img {
+    transition: transform 0.3s;
+    border-radius: 4px;
+}
+
+footer .payment-methods img:hover {
+    transform: scale(1.1);
+}
+
+footer hr {
+    opacity: 0.1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    footer h5 {
+        margin-top: 1.5rem;
+    }
+    
+    footer h5::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    footer .text-md-start, 
+    footer .text-md-end {
+        text-align: center !important;
+    }
+    
+    footer .d-flex.justify-content-md-end {
+        justify-content: center !important;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="V2B.png" alt="Visa2Book" style="height: 120px; width: 140px;">
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="fas fa-home"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="flights.html"><i class="fas fa-plane"></i> Flights</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="trains.html"><i class="fas fa-train"></i> Trains</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="buses.html"><i class="fas fa-bus"></i> Buses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="ferries.html"><i class="fas fa-ship"></i> Ferries & Cruises</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cars.html"><i class="fas fa-car"></i> Car Rentals</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <!-- Search Section -->
+        <div class="search-container">
+            <h2>Set Sail on Your Next Adventure</h2>
+            <form>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="departurePort" class="form-label">Departure Port</label>
+                        <input type="text" class="form-control" id="departurePort" placeholder="Where are you sailing from?">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="arrivalPort" class="form-label">Arrival Port</label>
+                        <input type="text" class="form-control" id="arrivalPort" placeholder="Where are you sailing to?">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="departureDate" class="form-label">Departure Date</label>
+                        <input type="date" class="form-control" id="departureDate">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="voyageType" class="form-label">Voyage Type</label>
+                        <select class="form-select" id="voyageType">
+                            <option selected>All Types</option>
+                            <option>Ferry</option>
+                            <option>Cruise</option>
+                            <option>High-Speed Ferry</option>
+                            <option>Luxury Cruise</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="passengers" class="form-label">Passengers</label>
+                        <select class="form-select" id="passengers">
+                            <option selected>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4+</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary w-100 py-3">Find Voyages</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Features Section -->
+        <div class="row mt-5">
+            <div class="col-12 text-center">
+                <h2 class="section-title text-white">Why Sail With Us</h2>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <i class="fas fa-anchor"></i>
+                    </div>
+                    <h4>Trusted Operators</h4>
+                    <p>We partner only with the most reliable and safety-certified ferry and cruise operators</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <i class="fas fa-tag"></i>
+                    </div>
+                    <h4>Best Price Guarantee</h4>
+                    <p>We'll match any competitor's price for the same voyage and cabin class</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <i class="fas fa-life-ring"></i>
+                    </div>
+                    <h4>24/7 Support</h4>
+                    <p>Our nautical experts are always available to assist with your voyage</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Voyage Listings -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <h2 class="section-title text-white">Featured Voyages</h2>
+            </div>
+            
+            <!-- Voyage Card 1 -->
+            <div class="col-lg-6">
+                <div class="voyage-card">
+                    <img src="https://images.unsplash.com/photo-1518544866330-95a5acf73f14?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" class="voyage-img" alt="High-Speed Ferry">
+                    <div class="voyage-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h3 class="voyage-title mb-0">High-Speed Ferry</h3>
+                            <span class="route-badge">Popular Route</span>
+                        </div>
+                        
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <h5>Port A</h5>
+                                <p>08:00 AM</p>
+                            </div>
+                            <div class="timeline-connector"></div>
+                            <div class="timeline-item">
+                                <h5>Port B</h5>
+                                <p>10:30 AM</p>
+                            </div>
+                        </div>
+                        
+                        <ul class="voyage-features">
+                            <li><i class="fas fa-clock"></i> Duration: 2h 30m</li>
+                            <li><i class="fas fa-ship"></i> Vessel: MV Ocean Swift</li>
+                            <li><i class="fas fa-wifi"></i> Free WiFi Available</li>
+                            <li><i class="fas fa-utensils"></i> Onboard Cafe</li>
+                        </ul>
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="voyage-price">$65/person</span>
+                            <a href="#" class="btn btn-primary">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Voyage Card 2 -->
+            <div class="col-lg-6">
+                <div class="voyage-card">
+                    <img src="https://images.unsplash.com/photo-1519046904884-53103b34b206?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" class="voyage-img" alt="Island Cruise">
+                    <div class="voyage-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h3 class="voyage-title mb-0">Island Explorer Cruise</h3>
+                            <span class="route-badge">Scenic Route</span>
+                        </div>
+                        
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <h5>Mainland Port</h5>
+                                <p>09:00 AM</p>
+                            </div>
+                            <div class="timeline-connector"></div>
+                            <div class="timeline-item">
+                                <h5>Island Paradise</h5>
+                                <p>04:30 PM</p>
+                            </div>
+                        </div>
+                        
+                        <ul class="voyage-features">
+                            <li><i class="fas fa-clock"></i> Duration: 7h 30m</li>
+                            <li><i class="fas fa-ship"></i> Vessel: MS Island Dream</li>
+                            <li><i class="fas fa-swimming-pool"></i> Pool & Sundeck</li>
+                            <li><i class="fas fa-utensils"></i> Buffet Lunch Included</li>
+                        </ul>
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="voyage-price">$120/person</span>
+                            <a href="#" class="btn btn-primary">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Voyage Card 3 -->
+            <div class="col-lg-6">
+                <div class="voyage-card">
+                    <img src="https://images.unsplash.com/photo-1471922694854-ff1b63b20054?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1172&q=80" class="voyage-img" alt="Luxury Cruise">
+                    <div class="voyage-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h3 class="voyage-title mb-0">Luxury Sunset Cruise</h3>
+                            <span class="route-badge">Premium Experience</span>
+                        </div>
+                        
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <h5>Harbor Point</h5>
+                                <p>05:00 PM</p>
+                            </div>
+                            <div class="timeline-connector"></div>
+                            <div class="timeline-item">
+                                <h5>Ocean View</h5>
+                                <p>08:00 PM</p>
+                            </div>
+                        </div>
+                        
+                        <ul class="voyage-features">
+                            <li><i class="fas fa-clock"></i> Duration: 3h</li>
+                            <li><i class="fas fa-ship"></i> Vessel: SY Luxury Liner</li>
+                            <li><i class="fas fa-glass-cheers"></i> Champagne Reception</li>
+                            <li><i class="fas fa-utensils"></i> Gourmet Dinner Included</li>
+                        </ul>
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="voyage-price">$175/person</span>
+                            <a href="#" class="btn btn-primary">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Voyage Card 4 -->
+            <div class="col-lg-6">
+                <div class="voyage-card">
+                    <img src="https://images.unsplash.com/photo-1518544866330-95a5acf73f14?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" class="voyage-img" alt="Vehicle Ferry">
+                    <div class="voyage-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h3 class="voyage-title mb-0">Vehicle Ferry</h3>
+                            <span class="route-badge">Car Transport</span>
+                        </div>
+                        
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <h5>North Port</h5>
+                                <p>07:30 AM</p>
+                            </div>
+                            <div class="timeline-connector"></div>
+                            <div class="timeline-item">
+                                <h5>South Port</h5>
+                                <p>10:00 AM</p>
+                            </div>
+                        </div>
+                        
+                        <ul class="voyage-features">
+                            <li><i class="fas fa-clock"></i> Duration: 2h 30m</li>
+                            <li><i class="fas fa-ship"></i> Vessel: MV Heavy Transporter</li>
+                            <li><i class="fas fa-car"></i> Car & Driver: $95</li>
+                            <li><i class="fas fa-user"></i> Passenger Only: $35</li>
+                        </ul>
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="voyage-price">From $35</span>
+                            <a href="#" class="btn btn-primary">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5>Company Information</h5>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-info-circle"></i> About Us</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> Contact Us</a></li>
+                        <li><a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+                        <li><a href="#"><i class="fas fa-file-contract"></i> Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5>Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-undo"></i> Refund Policy</a></li>
+                        <li><a href="#"><i class="fas fa-question-circle"></i> FAQs</a></li>
+                        <li><a href="#"><i class="fas fa-headset"></i> Customer Support</a></li>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Track Your Booking</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-4">
+                    <h5>Connect With Us</h5>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                        <li><a href="#"><i class="fab fa-linkedin-in"></i> LinkedIn</a></li>
+                        <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <h6>Download Our App</h6>
+                <div class="d-flex gap-2">
+                    <a href="#" class="btn btn-sm btn-dark">
+                        <i class="fab fa-apple"></i> App Store
+                    </a>
+                    <a href="#" class="btn btn-sm btn-dark">
+                        <i class="fab fa-google-play"></i> Play Store
+                    </a>
+                </div>
+            </div>
+            
+            <div class="row footer-bottom mt-4">
+                <div class="col-md-12 mb-3">
+                    <p class="mb-2">Accepted Payment Methods:</p>
+                    <div class="payment-methods">
+                        <!-- Credit/Debit Cards -->
+                        <div class="payment-group">
+                            <i class="fab fa-cc-visa fa-2x" style="color: #1a1f71;"></i>
+                            <i class="fab fa-cc-mastercard fa-2x" style="color: #eb001b;"></i>
+                            <span>Cards</span>
+                        </div>
+                        
+                        <!-- UPI -->
+                        <div class="payment-group">
+                            <i class="fas fa-rupee-sign fa-2x" style="color: #6cbe45;"></i>
+                            <span>UPI</span>
+                        </div>
+                        
+                        <!-- Wallets -->
+                        <div class="payment-group">
+                            <i class="fab fa-google-pay fa-2x" style="color: #4285f4;"></i>
+                            <i class="fas fa-wallet fa-2x" style="color: #ff9500;"></i>
+                            <span>Wallets</span>
+                        </div>
+                        
+                        <!-- Pay Later -->
+                        <div class="payment-group">
+                            <span class="badge bg-light text-dark">Pay Later:</span>
+                            <span class="badge bg-primary">Simple Pay</span>
+                            <span class="badge bg-info text-dark">Lazy Pay</span>
+                        </div>
+                        
+                        <!-- Cash on Delivery -->
+                        <div class="payment-group">
+                            <i class="fas fa-money-bill-wave fa-2x" style="color: #28a745;"></i>
+                            <span>Cash on Delivery</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-2">Customer Support: +91 1234567890</p>
+                    <p class="mb-2">Email: support@visa2book.com</p>
+                    <p class="mb-0">&copy; 2023 Visa2Book. All Rights Reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+    <style>
+
+
+ /* Footer Styles */
+ footer {
+        background-color: #1a2a3a;
+        position: relative;
+        z-index: 1;
+    }
+
+    .footer-brand img {
+        filter: brightness(0) invert(1);
+    }
+
+    .footer-heading {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #fff;
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+    .footer-heading::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 50px;
+        height: 2px;
+        background: var(--accent-color);
+    }
+
+    .footer-links a {
+        color: #d1d5db !important;
+        text-decoration: none;
+        transition: all 0.3s;
+        font-size: 0.9rem;
+    }
+
+    .footer-links a:hover {
+        color: var(--accent-color) !important;
+        padding-left: 5px;
+    }
+
+    .footer-contact span {
+        font-size: 0.9rem;
+        color: #d1d5db;
+    }
+
+    .footer-contact i {
+        color: var(--accent-color);
+        min-width: 20px;
+    }
+
+    .social-icons a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+        margin-right: 10px;
+        transition: all 0.3s;
+    }
+
+    .social-icons a:hover {
+        background: var(--accent-color);
+        transform: translateY(-3px);
+    }
+
+    .payment-methods img {
+        height: 25px;
+        object-fit: contain;
+        filter: grayscale(100%) brightness(150%);
+        transition: all 0.3s;
+    }
+
+    .payment-methods img:hover {
+        filter: none;
+        transform: scale(1.1);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .footer-heading {
+            margin-top: 1.5rem;
+        }
+        
+        .footer-heading::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .app-download {
+            justify-content: center !important;
+        }
+        
+        .payment-methods {
+            justify-content: center;
+        }
+        
+        .text-md-start, 
+        .text-md-end {
+            text-align: center !important;
+        }
+    }
+
+    </style>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

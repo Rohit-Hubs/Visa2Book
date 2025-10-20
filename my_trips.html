@@ -1,0 +1,1734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Trips | Visa2Book</title>
+    <link rel="shortcut icon" href="V2B.png" type="image/png">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3a86ff;
+            --primary-dark: #2667d9;
+            --secondary: #8338ec;
+            --accent: #ff006e;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            --glass: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc;
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Premium Glass Navigation */
+        .navbar {
+            background: var(--glass) !important;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: var(--shadow);
+            padding: 0.8rem 2rem;
+            border-bottom: 1px solid var(--glass-border);
+            transition: all 0.4s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.95) !important;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand img {
+            height: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand:hover img {
+            transform: scale(1.05);
+        }
+
+        .nav-link {
+            color: var(--dark) !important;
+            font-weight: 500;
+            padding: 0.6rem 1.5rem !important;
+            margin: 0 0.5rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::before, .nav-link.active::before {
+            width: 60%;
+        }
+
+        .nav-link i {
+            margin-right: 8px;
+            font-size: 1rem;
+        }
+
+        /* Hero Dashboard */
+        .dashboard-hero {
+            background: linear-gradient(rgba(26, 26, 46, 0.85), rgba(26, 26, 46, 0.85)), 
+                        url('https://images.unsplash.com/photo-1499678329028-101435549a4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding: 5rem 0 3rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path fill="%23f8fafc" d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25"/><path fill="%23f8fafc" d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5"/><path fill="%23f8fafc" d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"/></svg>');
+            background-size: cover;
+        }
+
+        .user-profile {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .user-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid white;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Trip Cards - Premium Design */
+        .trip-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            height: 100%;
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .trip-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient);
+        }
+
+        .trip-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .trip-card-header {
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trip-card-header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient);
+            opacity: 0.9;
+            z-index: 1;
+        }
+
+        .trip-status {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: white;
+            color: var(--primary);
+            padding: 0.25rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .trip-card-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+        }
+
+        .trip-dates {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            backdrop-filter: blur(5px);
+        }
+
+        .trip-date {
+            text-align: center;
+        }
+
+        .trip-date-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .trip-date-value {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .trip-card-body {
+            padding: 2rem;
+        }
+
+        .trip-detail-item {
+            display: flex;
+            margin-bottom: 1.2rem;
+            align-items: center;
+        }
+
+        .trip-detail-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(58, 134, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        /* Action Buttons */
+        .btn-trip {
+            border-radius: 50px;
+            padding: 0.7rem 1.8rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary-trip {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .btn-primary-trip:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(58, 134, 255, 0.3);
+            color: white;
+        }
+
+        .btn-secondary-trip {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-secondary-trip:hover {
+            background: #f8f9fa;
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--dark);
+            position: relative;
+            margin-bottom: 2rem;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .section-title.light {
+            color: white;
+        }
+
+        .section-title.light::after {
+            background: white;
+        }
+
+        /* Travel Documents Section */
+        .documents-section {
+            position: relative;
+            padding: 5rem 0;
+        }
+
+        .document-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            height: 100%;
+            border-top: 3px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .document-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 0;
+        }
+
+        .document-card:hover::before {
+            opacity: 0.05;
+        }
+
+        .document-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .document-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(58, 134, 255, 0.1);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .document-card:hover .document-icon {
+            background: var(--gradient);
+            color: white;
+            transform: rotate(10deg) scale(1.1);
+        }
+
+        /* Weather Widget */
+        .weather-widget {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            height: 100%;
+        }
+
+        .weather-header {
+            padding: 1.5rem;
+            background: var(--gradient);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .weather-header::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(30deg);
+        }
+
+        .weather-current {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem;
+        }
+
+        .weather-icon {
+            font-size: 3rem;
+            color: var(--primary);
+        }
+
+        .weather-temp {
+            text-align: right;
+        }
+
+        .weather-temp h1 {
+            font-weight: 700;
+            margin-bottom: 0;
+            line-height: 1;
+        }
+
+        .weather-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            background: rgba(58, 134, 255, 0.05);
+        }
+
+        .detail-item {
+            text-align: center;
+            padding: 0.8rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .detail-item:hover {
+            background: rgba(58, 134, 255, 0.1);
+        }
+
+        .detail-item i {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .weather-forecast {
+            display: flex;
+            justify-content: space-between;
+            padding: 1.5rem;
+        }
+
+        .forecast-day {
+            text-align: center;
+        }
+
+        .forecast-day i {
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin: 0.5rem 0;
+        }
+
+        /* Packing Checklist */
+        .checklist-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            height: 100%;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+
+        .checklist-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            margin-right: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .checklist-checkbox.checked {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .checklist-text {
+            flex-grow: 1;
+            transition: all 0.3s ease;
+        }
+
+        .checklist-text.checked {
+            text-decoration: line-through;
+            color: #999;
+        }
+
+        .checklist-delete {
+            color: #ff6b6b;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .checklist-item:hover .checklist-delete {
+            opacity: 1;
+        }
+
+        .add-item-form {
+            display: flex;
+            margin-top: 1.5rem;
+        }
+
+        /* Local Tips */
+        .tips-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            height: 100%;
+        }
+
+        .tips-header {
+            height: 150px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+        }
+
+        .tips-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+        }
+
+        .tips-header h3 {
+            color: white;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 0;
+        }
+
+        .tips-body {
+            padding: 1.5rem;
+        }
+
+        .tip-category {
+            margin-bottom: 1.5rem;
+        }
+
+        .tip-category h5 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .tip-category h5 i {
+            margin-right: 0.8rem;
+        }
+
+        /* Emergency Contacts */
+        .emergency-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            height: 100%;
+        }
+
+        .emergency-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .emergency-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 0, 110, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        /* Footer */
+
+        /* ========== Footer Styles ========== */
+        
+        
+
+        .main-footer .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .main-footer .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .main-footer .footer-links i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .main-footer .btn-outline-light {
+            border-radius: 30px;
+            padding: 0.25rem 0.75rem;
+        }
+
+        .main-footer .payment-methods i {
+            opacity: 0.9;
+            transition: all 0.3s ease;
+        }
+
+        .main-footer .payment-methods i:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .main-footer .payment-group {
+            margin-right: 1.5rem;
+            padding-right: 1.5rem;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .main-footer .payment-group:last-child {
+            border-right: none;
+        }
+
+        .main-footer hr {
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 6rem 0 2rem;
+            margin-top: 5rem;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path fill="%23f8fafc" d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25"/><path fill="%23f8fafc" d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5"/><path fill="%23f8fafc" d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"/></svg>');
+            background-size: cover;
+        }
+
+        .footer-logo img {
+            height: 50px;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links h5 {
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-links h5::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .footer-link {
+            color: #94a3b8;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.8rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .footer-link::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .footer-link:hover::before {
+            opacity: 1;
+            left: 5px;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .dashboard-hero {
+                padding: 4rem 0 2rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0.8rem 1rem;
+            }
+            
+            .dashboard-hero {
+                background-attachment: scroll;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .weather-forecast {
+                flex-wrap: wrap;
+            }
+            
+            .forecast-day {
+                width: 20%;
+                margin-bottom: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .nav-link {
+                padding: 0.5rem 1rem !important;
+                margin: 0.25rem 0;
+            }
+            
+            .forecast-day {
+                width: 33%;
+            }
+            
+            .btn-trip {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Premium Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="V2B.png" alt="Visa2Book" style="height: 120px; width: 140px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="my_trips.html">
+                            <i class="fas fa-suitcase-rolling"></i>
+                            <span>My Trips</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="modify_cancel_booking.html">
+                            <i class="fas fa-edit"></i>
+                            <span>Modify/Cancel</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="check_pnr_status.html">
+                            <i class="fas fa-search"></i>
+                            <span>PNR Status</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="refund_cancellation_policy.html">
+                            <i class="fas fa-file-contract"></i>
+                            <span>Refund Policy</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Hero -->
+    <div class="dashboard-hero">
+        <div class="container">
+            <div class="user-profile" data-aos="fade-up">
+                <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="User" class="user-avatar">
+                <h2>Welcome back, Sarah!</h2>
+                <p class="mb-0">Manage your upcoming and past trips</p>
+            </div>
+            
+            <div class="stats-grid" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-card">
+                    <h3>3</h3>
+                    <p class="mb-0">Upcoming Trips</p>
+                </div>
+                <div class="stat-card">
+                    <h3>12</h3>
+                    <p class="mb-0">Completed Trips</p>
+                </div>
+                <div class="stat-card">
+                    <h3>4,850</h3>
+                    <p class="mb-0">Loyalty Points</p>
+                </div>
+                <div class="stat-card">
+                    <h3>2</h3>
+                    <p class="mb-0">Active Bookings</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Current Trips Section -->
+    <div class="container my-5 py-5">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-title">Your Current Trips</h2>
+                <p class="lead">Manage your upcoming journeys and explore itinerary details</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Paris Trip -->
+            <div class="col-lg-6" data-aos="fade-up">
+                <div class="trip-card">
+                    <div class="trip-card-header">
+                        <span class="trip-status">Active</span>
+                        <div class="trip-card-content">
+                            <h3>Paris, France</h3>
+                            <p class="mb-0">Romantic Getaway</p>
+                            
+                            <div class="trip-dates">
+                                <div class="trip-date">
+                                    <div class="trip-date-label">Departure</div>
+                                    <div class="trip-date-value">May 15, 2023</div>
+                                </div>
+                                <div class="trip-date">
+                                    <div class="trip-date-label">Return</div>
+                                    <div class="trip-date-value">May 22, 2023</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="trip-card-body">
+                        <div class="trip-detail-item">
+                            <div class="trip-detail-icon">
+                                <i class="fas fa-hotel"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">Hotel Eiffel Palace</h6>
+                                <p class="text-muted mb-0">Deluxe Room with Eiffel Tower View</p>
+                            </div>
+                        </div>
+                        
+                        <div class="trip-detail-item">
+                            <div class="trip-detail-icon">
+                                <i class="fas fa-plane-departure"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">Flight AF 387</h6>
+                                <p class="text-muted mb-0">Air France (Business Class)</p>
+                            </div>
+                        </div>
+                        
+                        <div class="trip-detail-item">
+                            <div class="trip-detail-icon">
+                                <i class="fas fa-tag"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">Booking Reference</h6>
+                                <p class="text-muted mb-0">V2B-PARIS-5X8Z9</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex flex-wrap mt-4">
+                            <button class="btn btn-primary-trip me-3 mb-2">
+                                <i class="fas fa-map-marked-alt me-2"></i> Itinerary
+                            </button>
+                            <button class="btn btn-secondary-trip me-3 mb-2">
+                                <i class="fas fa-edit me-2"></i> Modify
+                            </button>
+                            <button class="btn btn-secondary-trip mb-2">
+                                <i class="fas fa-print me-2"></i> Print
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tokyo Trip -->
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="trip-card">
+                    <div class="trip-card-header">
+                        <span class="trip-status">Upcoming</span>
+                        <div class="trip-card-content">
+                            <h3>Tokyo, Japan</h3>
+                            <p class="mb-0">Cultural Exploration</p>
+                            
+                            <div class="trip-dates">
+                                <div class="trip-date">
+                                    <div class="trip-date-label">Departure</div>
+                                    <div class="trip-date-value">June 10, 2023</div>
+                                </div>
+                                <div class="trip-date">
+                                    <div class="trip-date-label">Return</div>
+                                    <div class="trip-date-value">June 25, 2023</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="trip-card-body">
+                        <div class="trip-detail-item">
+                            <div class="trip-detail-icon">
+                                <i class="fas fa-hotel"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">Sakura Garden Hotel</h6>
+                                <p class="text-muted mb-0">Executive Suite</p>
+                            </div>
+                        </div>
+                        
+                        <div class="trip-detail-item">
+                            <div class="trip-detail-icon">
+                                <i class="fas fa-plane-departure"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">Flight JL 712</h6>
+                                <p class="text-muted mb-0">Japan Airlines (Premium Economy)</p>
+                            </div>
+                        </div>
+                        
+                        <div class="trip-detail-item">
+                            <div class="trip-detail-icon">
+                                <i class="fas fa-tag"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">Booking Reference</h6>
+                                <p class="text-muted mb-0">V2B-TOKYO-3Y4V7</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex flex-wrap mt-4">
+                            <button class="btn btn-primary-trip me-3 mb-2">
+                                <i class="fas fa-tasks me-2"></i> Checklist
+                            </button>
+                            <button class="btn btn-secondary-trip me-3 mb-2">
+                                <i class="fas fa-edit me-2"></i> Modify
+                            </button>
+                            <button class="btn btn-secondary-trip mb-2">
+                                <i class="fas fa-passport me-2"></i> Visa Info
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Travel Documents Section -->
+    <div class="documents-section">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="section-title">Your Travel Documents</h2>
+                    <p class="lead">All important documents in one secure place</p>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3" data-aos="fade-up">
+                    <div class="document-card">
+                        <div class="document-icon">
+                            <i class="fas fa-passport"></i>
+                        </div>
+                        <h4>Passport</h4>
+                        <p class="text-muted">Expires: 15/05/2025</p>
+                        <div class="d-flex">
+                            <button class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-eye me-1"></i> View
+                            </button>
+                            <button class="btn btn-sm btn-outline-secondary ms-2">
+                                <i class="fas fa-download me-1"></i> Download
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                    <div class="document-card">
+                        <div class="document-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h4>Visa</h4>
+                        <p class="text-muted">Valid until: 22/06/2023</p>
+                        <div class="d-flex">
+                            <button class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-eye me-1"></i> View
+                            </button>
+                            <button class="btn btn-sm btn-outline-secondary ms-2">
+                                <i class="fas fa-download me-1"></i> Download
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                    <div class="document-card">
+                        <div class="document-icon">
+                            <i class="fas fa-plane-ticket"></i>
+                        </div>
+                        <h4>E-Tickets</h4>
+                        <p class="text-muted">Flight & Hotel</p>
+                        <div class="d-flex">
+                            <button class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-eye me-1"></i> View
+                            </button>
+                            <button class="btn btn-sm btn-outline-secondary ms-2">
+                                <i class="fas fa-download me-1"></i> Download
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                    <div class="document-card">
+                        <div class="document-icon">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
+                        <h4>Insurance</h4>
+                        <p class="text-muted">Coverage: Worldwide</p>
+                        <div class="d-flex">
+                            <button class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-eye me-1"></i> View
+                            </button>
+                            <button class="btn btn-sm btn-outline-secondary ms-2">
+                                <i class="fas fa-download me-1"></i> Download
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Destination Weather Section -->
+    <div class="container my-5 py-5">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-title">Destination Weather</h2>
+                <p class="lead">Prepare for your trip with accurate weather forecasts</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-6" data-aos="fade-up">
+                <div class="weather-widget">
+                    <div class="weather-header">
+                        <h3>Paris, France</h3>
+                        <p class="mb-0">May 15 - May 22, 2023</p>
+                    </div>
+                    <div class="weather-current">
+                        <div class="weather-icon">
+                            <i class="fas fa-sun"></i>
+                        </div>
+                        <div class="weather-temp">
+                            <h1>22°C</h1>
+                            <p class="mb-0">Sunny</p>
+                        </div>
+                    </div>
+                    <div class="weather-details">
+                        <div class="detail-item">
+                            <i class="fas fa-wind"></i>
+                            <span>12 km/h</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-tint"></i>
+                            <span>45%</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-umbrella"></i>
+                            <span>10%</span>
+                        </div>
+                    </div>
+                    <div class="weather-forecast">
+                        <div class="forecast-day">
+                            <p>Mon</p>
+                            <i class="fas fa-sun"></i>
+                            <p>21°</p>
+                        </div>
+                        <div class="forecast-day">
+                            <p>Tue</p>
+                            <i class="fas fa-cloud-sun"></i>
+                            <p>19°</p>
+                        </div>
+                        <div class="forecast-day">
+                            <p>Wed</p>
+                            <i class="fas fa-cloud"></i>
+                            <p>17°</p>
+                        </div>
+                        <div class="forecast-day">
+                            <p>Thu</p>
+                            <i class="fas fa-cloud-rain"></i>
+                            <p>15°</p>
+                        </div>
+                        <div class="forecast-day">
+                            <p>Fri</p>
+                            <i class="fas fa-cloud-sun"></i>
+                            <p>18°</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="weather-widget">
+                    <div class="weather-header">
+                        <h3>Tokyo, Japan</h3>
+                        <p class="mb-0">June 10 - June 25, 2023</p>
+                    </div>
+                    <div class="weather-current">
+                        <div class="weather-icon">
+                            <i class="fas fa-cloud-sun"></i>
+                        </div>
+                        <div class="weather-temp">
+                            <h1>26°C</h1>
+                            <p class="mb-0">Partly Cloudy</p>
+                        </div>
+                    </div>
+                    <div class="weather-details">
+                        <div class="detail-item">
+                            <i class="fas fa-wind"></i>
+                            <span>8 km/h</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-tint"></i>
+                            <span>65%</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-umbrella"></i>
+                            <span>30%</span>
+                        </div>
+                    </div>
+                    <div class="weather-forecast">
+                        <div class="forecast-day">
+                            <p>Mon</p>
+                            <i class="fas fa-cloud-rain"></i>
+                            <p>22°</p>
+                        </div>
+                        <div class="forecast-day">
+                            <p>Tue</p>
+                            <i class="fas fa-cloud"></i>
+                            <p>24°</p>
+                        </div>
+                        <div class="forecast-day">
+                            <p>Wed</p>
+                            <i class="fas fa-sun"></i>
+                            <p>27°</p>
+                        </div>
+                        <div class="forecast-day">
+                            <p>Thu</p>
+                            <i class="fas fa-sun"></i>
+                            <p>29°</p>
+                        </div>
+                        <div class="forecast-day">
+                            <p>Fri</p>
+                            <i class="fas fa-cloud-sun"></i>
+                            <p>26°</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Packing Checklist Section -->
+    <div class="container my-5 py-5">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-title">Packing Checklists</h2>
+                <p class="lead">Customize your packing list for each destination</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-6" data-aos="fade-up">
+                <div class="checklist-card">
+                    <h4><i class="fas fa-map-marker-alt me-2" style="color: var(--primary);"></i> Paris Essentials</h4>
+                    
+                    <div class="checklist-item">
+                        <div class="checklist-checkbox checked">
+                            <i class="fas fa-check" style="font-size: 0.7rem;"></i>
+                        </div>
+                        <div class="checklist-text checked">Passport & Visa</div>
+                        <div class="checklist-delete">
+                            <i class="fas fa-times"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <div class="checklist-checkbox checked">
+                            <i class="fas fa-check" style="font-size: 0.7rem;"></i>
+                        </div>
+                        <div class="checklist-text checked">Travel Adapter</div>
+                        <div class="checklist-delete">
+                            <i class="fas fa-times"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <div class="checklist-checkbox">
+                        </div>
+                        <div class="checklist-text">Umbrella</div>
+                        <div class="checklist-delete">
+                            <i class="fas fa-times"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <div class="checklist-checkbox">
+                        </div>
+                        <div class="checklist-text">Comfortable Walking Shoes</div>
+                        <div class="checklist-delete">
+                            <i class="fas fa-times"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <div class="checklist-checkbox">
+                        </div>
+                        <div class="checklist-text">Light Jacket</div>
+                        <div class="checklist-delete">
+                            <i class="fas fa-times"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="add-item-form">
+                        <input type="text" class="form-control" placeholder="Add new item">
+                        <button class="btn btn-primary ms-2">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="checklist-card">
+                    <h4><i class="fas fa-map-marker-alt me-2" style="color: var(--primary);"></i> Tokyo Essentials</h4>
+                    
+                    <div class="checklist-item">
+                        <div class="checklist-checkbox">
+                        </div>
+                        <div class="checklist-text">Passport & Visa</div>
+                        <div class="checklist-delete">
+                            <i class="fas fa-times"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <div class="checklist-checkbox">
+                        </div>
+                        <div class="checklist-text">Japan Rail Pass</div>
+                        <div class="checklist-delete">
+                            <i class="fas fa-times"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <div class="checklist-checkbox">
+                        </div>
+                        <div class="checklist-text">Portable WiFi</div>
+                        <div class="checklist-delete">
+                            <i class="fas fa-times"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <div class="checklist-checkbox">
+                        </div>
+                        <div class="checklist-text">Comfortable Shoes</div>
+                        <div class="checklist-delete">
+                            <i class="fas fa-times"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <div class="checklist-checkbox">
+                        </div>
+                        <div class="checklist-text">Light Rain Jacket</div>
+                        <div class="checklist-delete">
+                            <i class="fas fa-times"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="add-item-form">
+                        <input type="text" class="form-control" placeholder="Add new item">
+                        <button class="btn btn-primary ms-2">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Local Tips Section -->
+    <div class="container my-5 py-5">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-title">Local Tips & Recommendations</h2>
+                <p class="lead">Insider knowledge for your destinations</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-6" data-aos="fade-up">
+                <div class="tips-card">
+                    <div class="tips-header" style="background-image: url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80');">
+                        <h3>Paris, France</h3>
+                    </div>
+                    <div class="tips-body">
+                        <div class="tip-category">
+                            <h5><i class="fas fa-utensils"></i> Must-Try Food</h5>
+                            <p>Croissants at Du Pain et des Idées, Steak Frites at Le Relais de l'Entrecôte</p>
+                        </div>
+                        
+                        <div class="tip-category">
+                            <h5><i class="fas fa-map-marked-alt"></i> Hidden Gem</h5>
+                            <p>Rue Crémieux - A colorful street perfect for photos</p>
+                        </div>
+                        
+                        <div class="tip-category">
+                            <h5><i class="fas fa-subway"></i> Transport Tip</h5>
+                            <p>Buy a carnet of 10 metro tickets for €16.90 (cheaper than single tickets)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="tips-card">
+                    <div class="tips-header" style="background-image: url('https://images.unsplash.com/photo-1492571350019-22de08371fd3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2053&q=80');">
+                        <h3>Tokyo, Japan</h3>
+                    </div>
+                    <div class="tips-body">
+                        <div class="tip-category">
+                            <h5><i class="fas fa-utensils"></i> Must-Try Food</h5>
+                            <p>Sushi at Tsukiji Outer Market, Ramen at Ichiran</p>
+                        </div>
+                        
+                        <div class="tip-category">
+                            <h5><i class="fas fa-map-marked-alt"></i> Hidden Gem</h5>
+                            <p>Ghibli Museum for anime fans, requires advance booking</p>
+                        </div>
+                        
+                        <div class="tip-category">
+                            <h5><i class="fas fa-subway"></i> Transport Tip</h5>
+                            <p>Get a Suica/Pasmo card for easy access to all public transport</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Emergency Contacts Section -->
+    <div class="container my-5 py-5">
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-title">Emergency Contacts</h2>
+                <p class="lead">Important numbers for your destinations</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-6" data-aos="fade-up">
+                <div class="emergency-card">
+                    <h4><i class="fas fa-flag me-2" style="color: var(--primary);"></i> Paris, France</h4>
+                    
+                    <div class="emergency-item">
+                        <div class="emergency-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div>
+                            <h5>Emergency Number</h5>
+                            <p class="text-muted mb-0">112 (All emergencies)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="emergency-item">
+                        <div class="emergency-icon">
+                            <i class="fas fa-hospital"></i>
+                        </div>
+                        <div>
+                            <h5>Nearest Hospital</h5>
+                            <p class="text-muted mb-0">Hôpital Européen Georges-Pompidou</p>
+                            <p class="text-muted mb-0">20 Rue Leblanc, 75015 Paris</p>
+                        </div>
+                    </div>
+                    
+                    <div class="emergency-item">
+                        <div class="emergency-icon">
+                            <i class="fas fa-ambulance"></i>
+                        </div>
+                        <div>
+                            <h5>Ambulance</h5>
+                            <p class="text-muted mb-0">15 (Medical emergencies)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="emergency-card">
+                    <h4><i class="fas fa-flag me-2" style="color: var(--primary);"></i> Tokyo, Japan</h4>
+                    
+                    <div class="emergency-item">
+                        <div class="emergency-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div>
+                            <h5>Emergency Number</h5>
+                            <p class="text-muted mb-0">110 (Police), 119 (Ambulance/Fire)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="emergency-item">
+                        <div class="emergency-icon">
+                            <i class="fas fa-hospital"></i>
+                        </div>
+                        <div>
+                            <h5>Nearest Hospital</h5>
+                            <p class="text-muted mb-0">St. Luke's International Hospital</p>
+                            <p class="text-muted mb-0">9-1 Akashi-cho, Chuo-ku, Tokyo</p>
+                        </div>
+                    </div>
+                    
+                    <div class="emergency-item">
+                        <div class="emergency-icon">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div>
+                            <h5>Tourist Help</h5>
+                            <p class="text-muted mb-0">Japan Helpline: 0570-000-911</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+<footer class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase mb-4">Company Information</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-info-circle me-2"></i> About</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-envelope me-2"></i> Contact Us</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-shield-alt me-2"></i> Privacy Policy</a></li>
+                        <li><a href="#" class="text-white"><i class="fas fa-file-contract me-2"></i> Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase mb-4">Quick Links</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-undo me-2"></i> Refund Policy</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-question-circle me-2"></i> FAQs</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fas fa-headset me-2"></i> Customer Support</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="text-uppercase mb-4">Connect With Us</h5>
+                    <ul class="list-unstyled footer-links mb-4">
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-facebook-f me-2"></i> Facebook</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-twitter me-2"></i> Twitter</a></li>
+                        <li class="mb-3"><a href="#" class="text-white"><i class="fab fa-instagram me-2"></i> Instagram</a></li>
+                        <li><a href="#" class="text-white"><i class="fab fa-linkedin-in me-2"></i> LinkedIn</a></li>
+                    </ul>
+                    <div class="mb-4">
+                        <h6 class="mb-3">Download Our App</h6>
+                        <div class="d-flex gap-2">
+                            <a href="#" class="btn btn-sm btn-outline-light">
+                                <i class="fab fa-apple me-2"></i> App Store
+                            </a>
+                            <a href="#" class="btn btn-sm btn-outline-light">
+                                <i class="fab fa-google-play me-2"></i> Play Store
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4 bg-light opacity-10">
+
+            <!-- Payment Methods -->
+            <div class="row align-items-center py-3">
+                <div class="col-md-8 mb-3 mb-md-0">
+                    <h6 class="mb-3">Accepted Payment Methods:</h6>
+                    <div class="payment-methods d-flex flex-wrap gap-3 align-items-center">
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fab fa-cc-visa fa-2x me-2" style="color: #1a1f71;"></i>
+                            <i class="fab fa-cc-mastercard fa-2x me-3" style="color: #eb001b;"></i>
+                            <span class="text-white-50">Cards</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fas fa-rupee-sign fa-2x me-2" style="color: #6cbe45;"></i>
+                            <span class="text-white-50">UPI</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <i class="fab fa-google-pay fa-2x me-2" style="color: #4285f4;"></i>
+                            <i class="fas fa-wallet fa-2x me-3" style="color: #ff9500;"></i>
+                            <span class="text-white-50">Wallets</span>
+                        </div>
+                        
+                        <div class="payment-group d-flex align-items-center">
+                            <span class="badge bg-light text-dark me-2">Pay Later:</span>
+                            <span class="badge bg-primary me-2">Simple Pay</span>
+                            <span class="badge bg-info text-dark">Lazy Pay</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <div class="d-flex flex-column">
+                        <p class="mb-2"><i class="fas fa-phone-alt me-2"></i> 24/7 Support: +1 (555) 987-6543</p>
+                        <p class="mb-0"><i class="fas fa-envelope me-2"></i> support@visa2book.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Animation -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Initialize AOS animation
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Checklist functionality
+        document.querySelectorAll('.checklist-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('click', function() {
+                this.classList.toggle('checked');
+                const text = this.nextElementSibling;
+                text.classList.toggle('checked');
+            });
+        });
+        
+        // Add new item functionality
+        document.querySelectorAll('.add-item-form button').forEach(button => {
+            button.addEventListener('click', function() {
+                const input = this.previousElementSibling;
+                const value = input.value.trim();
+                
+                if (value) {
+                    const checklist = this.closest('.checklist-card').querySelector('.checklist-item:last-child');
+                    const newItem = document.createElement('div');
+                    newItem.className = 'checklist-item';
+                    newItem.innerHTML = `
+                        <div class="checklist-checkbox"></div>
+                        <div class="checklist-text">${value}</div>
+                        <div class="checklist-delete">
+                            <i class="fas fa-times"></i>
+                        </div>
+                    `;
+                    
+                    checklist.after(newItem);
+                    input.value = '';
+                    
+                    // Add event listener to new checkbox
+                    newItem.querySelector('.checklist-checkbox').addEventListener('click', function() {
+                        this.classList.toggle('checked');
+                        const text = this.nextElementSibling;
+                        text.classList.toggle('checked');
+                    });
+                    
+                    // Add event listener to delete button
+                    newItem.querySelector('.checklist-delete').addEventListener('click', function() {
+                        this.closest('.checklist-item').remove();
+                    });
+                }
+            });
+        });
+        
+        // Delete item functionality
+        document.querySelectorAll('.checklist-delete').forEach(button => {
+            button.addEventListener('click', function() {
+                this.closest('.checklist-item').remove();
+            });
+        });
+        
+        // Make checklist items editable on double click
+        document.querySelectorAll('.checklist-text').forEach(item => {
+            item.addEventListener('dblclick', function() {
+                const currentText = this.textContent;
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = currentText;
+                input.className = 'form-control form-control-sm';
+                
+                this.textContent = '';
+                this.appendChild(input);
+                input.focus();
+                
+                input.addEventListener('blur', function() {
+                    const newText = this.value || currentText;
+                    this.parentElement.textContent = newText;
+                });
+                
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        this.blur();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
